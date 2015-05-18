@@ -21,6 +21,6 @@ There is also a `gulp watch` task that minifys on change.
 Known Issues
 ------------
   * Almost nothing work
-  * Only inputs and textare are implemented
-  * No angular material "theme". Looks like an issue with us using $compile in the link function of
-    our directives.  
+  * Only inputs and textarea are implemented
+  * ngModelOptions doesn't work
+  * Angular material theme only works when `$mdThemingProvider.alwaysWatchTheme(true);` is used.
