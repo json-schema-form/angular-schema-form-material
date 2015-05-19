@@ -21,6 +21,7 @@ There is also a `gulp watch` task that minifys on change.
 Known Issues
 ------------
   * Almost nothing work
+  * Needs development branch of angular schema form
   * Only inputs and textarea are implemented
   * ngModelOptions doesn't work
   * Angular material theme only works when `$mdThemingProvider.alwaysWatchTheme(true);` is used.
