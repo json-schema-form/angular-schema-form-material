@@ -252,6 +252,12 @@ var app = angular.module('test', ['schemaForm', 'ngMaterial', 'ui.ace']);
     ngClipProvider.setPath('//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.swf');
   }]);*/
 
+app.config(function($mdThemingProvider) {
+  $mdThemingProvider.setDefaultTheme('default')
+  $mdThemingProvider.alwaysWatchTheme(true);
+});
+
+
 app.controller('TestCtrl', function($scope, $http, $location) {
 
   $scope.tests = [

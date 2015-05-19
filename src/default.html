@@ -25,11 +25,10 @@
          sf-changed="form"
          placeholder="{{form.placeholder}}"
          id="{{form.key.slice(-1)[0]}}"
-         ng-model-options="form.ngModelOptions"
          ng-class="form.fieldHtmlClass"
          ng-disabled="form.readonly"
          name="{{form.key.slice(-1)[0]}}"
          schema-validate="form">
-</md-input-container>
 
-<div sf-message="form.description"></div>
+         <div sf-message="form.description"></div>
+</md-input-container>
