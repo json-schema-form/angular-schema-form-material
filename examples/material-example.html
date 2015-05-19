@@ -38,6 +38,10 @@
     min-height: 1400px;
   }
 
+  body {
+    padding: 15px;
+  }
+
   .alert .form-group {
     margin-bottom: 0px;
   }
@@ -136,10 +140,10 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="col-md-12">
+<div>
   <h1><a href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"></a> Schema Form Example</h1>
-  <div class="row">
-    <div class="col-sm-4">
+  <div layout="row">
+    <div flex="33">
       <h3>The Generated Form</h3>
 
       <form name="ngform"  sf-model="modelData" sf-form="form" sf-schema="schema" ng-submit="submitForm(ngform,modelData)"></form>
@@ -158,7 +162,7 @@
       <h3>Model</h3>
       <pre ng-cloak>{{pretty()}}</pre>
     </div>
-    <div class="col-sm-8">
+    <div flex="66">
       <h3>Select Example</h3>
       <div class="form-group">
         <select class="form-control" id="selectTest"
