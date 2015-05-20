@@ -9,5 +9,11 @@
             schema-validate="form"
             name="{{form.key.slice(-1)[0]}}"></textarea>
 
-  <span class="help-block" sf-message="form.description"></span>
+      <div ng-messages="ngModel.$error">
+        <!--
+           This is a bit of a hack. sf-message does the work, but ng-messages and ng-message
+           is needed for the styling
+        -->
+        <div sf-message ng-message></div>
+     </div>
 </md-input-container>
