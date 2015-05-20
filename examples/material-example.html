@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Bootstrap Schema Form example</title>
+  <title>Angular Material Schema Form example</title>
   <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css">
   <style type="text/css">
   .spinner {
@@ -40,6 +40,10 @@
 
   body {
     padding: 15px;
+  }
+
+  .editors {
+    padding: 0 15px;
   }
 
   .alert .form-group {
@@ -162,7 +166,7 @@
       <h3>Model</h3>
       <pre ng-cloak>{{pretty()}}</pre>
     </div>
-    <div flex="66">
+    <div class="editors" flex="66">
       <h3>Select Example</h3>
       <div class="form-group">
         <select class="form-control" id="selectTest"
