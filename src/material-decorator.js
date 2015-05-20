@@ -3,6 +3,7 @@ angular.module('schemaForm').config(['schemaFormDecoratorsProvider', function(de
 
   decoratorsProvider.defineDecorator('materialDecorator', {
     textarea: {template: base + 'textarea.html'},
+    checkbox: {template: base + 'checkbox.html'},
     'default': {template: base + 'default.html'},
     submit: {template: base + 'submit.html'}
   });
