@@ -3,17 +3,14 @@
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
   <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
   <div class="checkbox" ng-repeat="val in titleMapValues track by $index" >
-    <label>
-      <input type="checkbox"
-             ng-disabled="form.readonly"
-             sf-changed="form"
-             class="{{form.fieldHtmlClass}}"
-             ng-model="titleMapValues[$index]"
-             schema-vaidate="form"
-             name="{{form.key.slice(-1)[0]}}">
+    <md-checkbox ng-model="titleMapValues[$index]"
+                sf-changed="form"
+                ng-disabled="form.readonly"
+                schema-validate="form"
+                name="{{form.key.slice(-1)[0]}}"
+                aria-label="{{form.title || form.key.slice(-1)[0]}}">
       <span ng-bind-html="form.titleMap[$index].name"></span>
-    </label>
-
+    </md-checkbox>
   </div>
   <div class="help-block" sf-message="form.description"></div>
 </div>

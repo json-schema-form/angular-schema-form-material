@@ -61,9 +61,12 @@
       "key": "noenum",
       "type": "select",
       "titleMap": [
-        { "value":"a", "name": "A" },
-        { "value":"b", "name":"B" },
-        { "value":"c", "name":"C" }
+        { "value":"a1", "name": "A1", "group": "A" },
+        { "value":"a2", "name":"A2", "group": "A" },
+        { "value":"a3", "name":"A3", "group": "A" },
+        { "value":"b1", "name": "B1", "group": "B" },
+        { "value":"b2", "name":"B2", "group": "B" },
+        { "value":"b3", "name":"B3", "group": "B" }
       ]
     },
     "array",
