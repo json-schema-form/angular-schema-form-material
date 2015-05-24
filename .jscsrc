@@ -1,0 +1,11 @@
+{
+  "preset": "google",
+  "disallowSpacesInsideObjectBrackets": null,
+  "requireSpacesInsideObjectBrackets": "all",
+  "disallowSpacesInsideArrayBrackets": null,
+  "requireSpacesInsideArrayBrackets": "all",
+  "disallowKeywordsOnNewLine": [ ],
+  "disallowMultipleVarDecl": null,
+  "maximumLineLength": 120,
+  "requireSemicolons": true
+}
