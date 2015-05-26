@@ -1,3 +1,20 @@
+<div class="checkbox schema-form-checkbox {{form.htmlClass}}">
+  <md-checkbox sf-changed="form"
+               ng-disabled="form.readonly"
+               schema-validate="form"
+               name="{{form.key.slice(-1)[0]}}"
+               ng-model="$$value$$" aria-label="{{::form.title}}">
+    <span ng-bind-html="form.title"></span>
+  </md-checkbox>
+  <div ng-messages="ngModel.$error">
+    <!--
+       This is a bit of a hack. sf-message does the work, but ng-messages and ng-message
+       is needed for the styling
+    -->
+    <div sf-message ng-message></div>
+  </div>
+</div>
+<!--
 <div class="checkbox schema-form-checkbox {{form.htmlClass}}"
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
     <md-checkbox ng-model="$$value$$"
@@ -12,3 +29,4 @@
   </md-checkbox>
   <div class="help-block md-caption" sf-message="form.description"></div>
 </div>
+-->

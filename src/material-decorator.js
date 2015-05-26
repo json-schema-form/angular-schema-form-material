@@ -1,7 +1,14 @@
 angular.module('schemaForm').config(['schemaFormDecoratorsProvider', function(decoratorsProvider) {
   var base = 'decorators/material/';
 
-  decoratorsProvider.createDecorator('materialDecorator', {
+  decoratorsProvider.defineDecorator('materialDecorator', {
+    textarea: {template: base + 'textarea.html'},
+    checkbox: {template: base + 'checkbox.html'},
+    'default': {template: base + 'default.html'},
+    submit: {template: base + 'submit.html'}
+  });
+
+/*  decoratorsProvider.createDecorator('materialDecorator', {
     textarea: base + 'textarea.html',
     fieldset: base + 'fieldset.html',
     array: base + 'array.html',
@@ -22,5 +29,5 @@ angular.module('schemaForm').config(['schemaFormDecoratorsProvider', function(de
     radiobuttons: base + 'radio-buttons.html',
     help: base + 'help.html',
     'default': base + 'default.html'
-  }, []);
+  });*/
 }]);

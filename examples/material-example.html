@@ -136,8 +136,9 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="col-md-12">
-  <h1><a href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"></a> Angular Schema Form example</h1>
+
+<div>
+  <h1><a href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"></a> Schema Form Example</h1>
   <h2>Material Design</h2>
   <div layout="row" layout-margin>
     <div layout="column" flex="45">
@@ -244,15 +245,15 @@
 //var app = angular.module('test', ['schemaForm', 'ui.ace', 'ngClipboard', 'ui.bootstrap.tooltip']);
 var app = angular.module('test', ['schemaForm', 'ngMaterial', 'ui.ace'])
 
-app.config(function($mdThemingProvider) {
-    $mdThemingProvider.theme('default')
-      .primaryPalette('indigo')
-      .accentPalette('green');
-  });
-
 /*app.config(['ngClipProvider', function(ngClipProvider) {
     ngClipProvider.setPath('//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.swf');
   }]);*/
+
+app.config(function($mdThemingProvider) {
+  $mdThemingProvider.setDefaultTheme('default')
+  $mdThemingProvider.alwaysWatchTheme(true);
+});
+
 
 app.controller('TestCtrl', function($scope, $http, $location) {
 
