@@ -1,6 +1,5 @@
 <md-input-container class="{{form.htmlClass}} schema-form-textarea">
   <label ng-show="showTitle()" for="{{form.key.slice(-1)[0]}}">{{form.title}}</label>
-
   <textarea ng-class="form.fieldHtmlClass"
             id="{{form.key.slice(-1)[0]}}"
             sf-changed="form"
@@ -8,7 +7,6 @@
             ng-model="$$value$$"
             schema-validate="form"
             name="{{form.key.slice(-1)[0]}}"></textarea>
-
       <div ng-messages="ngModel.$error">
         <!--
            This is a bit of a hack. sf-message does the work, but ng-messages and ng-message

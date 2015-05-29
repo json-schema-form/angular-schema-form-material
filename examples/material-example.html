@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Angular Material Schema Form example</title>
+  <title>Material Design Schema Form example</title>
   <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css">
   <style type="text/css">
   .spinner {
@@ -36,14 +36,6 @@
 
   body,html {
     min-height: 1400px;
-  }
-
-  body {
-    padding: 15px;
-  }
-
-  .editors {
-    padding: 0 15px;
   }
 
   .alert .form-group {
@@ -144,10 +136,12 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+
 <div>
   <h1><a href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"></a> Schema Form Example</h1>
-  <div layout="row">
-    <div flex="33">
+  <h2>Material Design</h2>
+  <div layout="row" layout-margin>
+    <div layout="column" flex="45">
       <h3>The Generated Form</h3>
 
       <form name="ngform"  sf-model="modelData" sf-form="form" sf-schema="schema" ng-submit="submitForm(ngform,modelData)"></form>
@@ -166,13 +160,12 @@
       <h3>Model</h3>
       <pre ng-cloak>{{pretty()}}</pre>
     </div>
-    <div class="editors" flex="66">
+    <div layout="column" flex>
       <h3>Select Example</h3>
       <div class="form-group">
-        <select class="form-control" id="selectTest"
-                ng-model="selectedTest"
-                ng-options="obj.name for obj in tests">
-        </select>
+        <md-select id="selectTest" ng-model="selectedTest" placeholder="{{form.placeholder}}">
+          <md-option ng-value="obj" ng-repeat="obj in tests">{{ obj.name }}</md-option>
+        </md-select>
         <span class="btw">
           By the way, there is also an example of
           <a href="custom-validators.html">custom (async) validators</a> example.
@@ -250,7 +243,7 @@
 // To test the tinymce addon, uncomment the files above and inject 'tx-tinymce' below.
 /*global alert*/
 //var app = angular.module('test', ['schemaForm', 'ui.ace', 'ngClipboard', 'ui.bootstrap.tooltip']);
-var app = angular.module('test', ['schemaForm', 'ngMaterial', 'ui.ace']);
+var app = angular.module('test', ['schemaForm', 'ngMaterial', 'ui.ace'])
 
 /*app.config(['ngClipProvider', function(ngClipProvider) {
     ngClipProvider.setPath('//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.swf');
@@ -267,11 +260,11 @@ app.controller('TestCtrl', function($scope, $http, $location) {
   $scope.tests = [
     { name: "Simple", data: 'data/simple.json' },
     { name: "Basic JSON Schema Type", data: 'data/types.json' },
+    { name: "TitleMap Examples", data: 'data/titlemaps.json' },
     { name: "Bootstrap Grid", data: 'data/grid.json' },
     { name: "Complex Key Support", data: 'data/complex-keys.json' },
     { name: "Array", data: 'data/array.json' },
     { name: "Tab Array", data: 'data/tabarray.json' },
-    { name: "TitleMap Examples", data: 'data/titlemaps.json' },
     { name: "Kitchen Sink", data: 'data/sink.json' },
     { name: "Hack: Conditional required", data: 'data/conditional-required.json' },
   ];
