@@ -29,6 +29,7 @@
          ng-class="form.fieldHtmlClass"
          ng-disabled="form.readonly"
          name="{{form.key.slice(-1)[0]}}"
+         sf-type-parser="form.schema"
          schema-validate="form">
          <div ng-messages="ngModel.$error">
            <!--
