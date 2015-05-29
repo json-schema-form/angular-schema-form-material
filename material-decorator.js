@@ -2,10 +2,10 @@ angular.module("schemaForm").run(["$templateCache", function($templateCache) {$t
 $templateCache.put("decorators/material/actions.html","<div class=\"btn-group schema-form-actions {{form.htmlClass}}\"><input ng-repeat-start=\"item in form.items\" type=\"submit\" class=\"btn {{ item.style || \'btn-default\' }} {{form.fieldHtmlClass}}\" value=\"{{item.title}}\" ng-if=\"item.type === \'submit\'\"> <button ng-repeat-end=\"\" class=\"btn {{ item.style || \'btn-default\' }} {{form.fieldHtmlClass}}\" type=\"button\" ng-disabled=\"form.readonly\" ng-if=\"item.type !== \'submit\'\" ng-click=\"buttonClick($event,item)\">{{item.title}}</button></div>");
 $templateCache.put("decorators/material/array.html","<div sf-array=\"form\" class=\"schema-form-array {{form.htmlClass}}\" ng-model=\"$$value$$\" ng-model-options=\"form.ngModelOptions\"><h3 ng-show=\"form.title && form.notitle !== true\">{{ form.title }}</h3><ol class=\"list-group\" ng-model=\"modelArray\" ui-sortable=\"\"><li class=\"list-group-item {{form.fieldHtmlClass}}\" ng-repeat=\"item in modelArray track by $index\"><button ng-hide=\"form.readonly || form.remove === null\" ng-click=\"deleteFromArray($index)\" style=\"position: relative; z-index: 20;\" type=\"button\" class=\"close pull-right\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button><sf-decorator ng-init=\"arrayIndex = $index\" form=\"copyWithIndex($index)\"></sf-decorator></li></ol><div class=\"clearfix\" style=\"padding: 15px;\"><button ng-hide=\"form.readonly || form.add === null\" ng-click=\"appendToArray()\" type=\"button\" class=\"btn {{ form.style.add || \'btn-default\' }} pull-right\"><i class=\"glyphicon glyphicon-plus\"></i> {{ form.add || \'Add\'}}</button></div><div class=\"help-block\" ng-show=\"(hasError() && errorMessage(schemaError())) || form.description\" ng-bind-html=\"(hasError() && errorMessage(schemaError())) || form.description\"></div></div>");
 $templateCache.put("decorators/material/checkbox.html","<div class=\"checkbox schema-form-checkbox {{form.htmlClass}}\"><md-checkbox sf-changed=\"form\" ng-disabled=\"form.readonly\" schema-validate=\"form\" name=\"{{form.key.slice(-1)[0]}}\" ng-model=\"$$value$$\" aria-label=\"{{::form.title}}\"><span ng-bind-html=\"form.title\"></span></md-checkbox><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></div>");
-$templateCache.put("decorators/material/checkboxes.html","<div sf-array=\"form\" ng-model=\"$$value$$\" class=\"form-group schema-form-checkboxes {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\"><label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label><div class=\"checkbox\" ng-repeat=\"val in titleMapValues track by $index\"><md-checkbox ng-model=\"titleMapValues[$index]\" sf-changed=\"form\" ng-disabled=\"form.readonly\" schema-validate=\"form\" name=\"{{form.key.slice(-1)[0]}}\" aria-label=\"{{form.title || form.key.slice(-1)[0]}}\"><span ng-bind-html=\"form.titleMap[$index].name\"></span></md-checkbox></div><div class=\"help-block md-caption\" sf-message=\"form.description\"></div></div>");
-$templateCache.put("decorators/material/default.html","<md-input-container class=\"schema-form-{{form.type}} {{form.htmlClass}}\"><label ng-show=\"showTitle()\" for=\"{{form.key.slice(-1)[0]}}\">{{form.title}}</label><input ng-model=\"$$value$$\" ng-show=\"form.key\" type=\"{{form.type}}\" step=\"any\" sf-changed=\"form\" placeholder=\"{{form.placeholder}}\" id=\"{{form.key.slice(-1)[0]}}\" ng-class=\"form.fieldHtmlClass\" ng-disabled=\"form.readonly\" name=\"{{form.key.slice(-1)[0]}}\" schema-validate=\"form\"><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></md-input-container>");
-$templateCache.put("decorators/material/fieldset-trcl.html","<fieldset ng-disabled=\"form.readonly\" class=\"schema-form-fieldset {{form.htmlClass}}\"><legend ng-show=\"form.title\">{{ form.title }}</legend><div class=\"help-block\" ng-show=\"form.description\" ng-bind-html=\"form.description\"></div><div ng-transclude=\"\"></div></fieldset>");
-$templateCache.put("decorators/material/fieldset.html","<fieldset ng-disabled=\"form.readonly\" class=\"schema-form-fieldset {{form.htmlClass}}\"><legend ng-show=\"form.title\">{{ form.title }}</legend><div class=\"help-block\" ng-show=\"form.description\" ng-bind-html=\"form.description\"></div><sf-decorator ng-repeat=\"item in form.items\" form=\"item\"></sf-decorator></fieldset>");
+$templateCache.put("decorators/material/checkboxes.html","<div sf-array=\"form\" ng-model=\"$$value$$\" class=\"form-group schema-form-checkboxes {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\"><label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label><div class=\"checkbox\" ng-repeat=\"val in titleMapValues track by $index\"><md-checkbox ng-model=\"titleMapValues[$index]\" sf-changed=\"form\" ng-disabled=\"form.readonly\" name=\"{{form.key.slice(-1)[0]}}\" ng-true-value=\"true\" ng-false-value=\"false\" aria-label=\"{{form.title || form.key.slice(-1)[0]}}\"><span ng-bind-html=\"form.titleMap[$index].name\"></span></md-checkbox></div><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></div>");
+$templateCache.put("decorators/material/default.html","<md-input-container class=\"schema-form-{{form.type}} {{form.htmlClass}}\"><label ng-show=\"showTitle()\" for=\"{{form.key.slice(-1)[0]}}\">{{form.title}}</label><input ng-model=\"$$value$$\" ng-show=\"form.key\" type=\"{{form.type}}\" step=\"any\" sf-changed=\"form\" placeholder=\"{{form.placeholder}}\" id=\"{{form.key.slice(-1)[0]}}\" ng-class=\"form.fieldHtmlClass\" ng-disabled=\"form.readonly\" name=\"{{form.key.slice(-1)[0]}}\" sf-type-parser=\"form.schema\" schema-validate=\"form\"><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></md-input-container>");
+$templateCache.put("decorators/material/fieldset-trcl.html","<fieldset ng-disabled=\"form.readonly\" class=\"standard {{form.htmlClass}}\" flex=\"\"><legend ng-show=\"form.title\">{{ form.title }}</legend><div ng-transclude=\"\"></div></fieldset>");
+$templateCache.put("decorators/material/fieldset.html","<fieldset ng-disabled=\"form.readonly\" class=\"standard {{form.htmlClass}}\" flex=\"\"><legend ng-show=\"form.title\">{{ form.title }}</legend><sf-decorator ng-repeat=\"item in form.items\" form=\"item\"></sf-decorator></fieldset>");
 $templateCache.put("decorators/material/help.html","<div class=\"helpvalue schema-form-helpvalue {{form.htmlClass}}\" ng-bind-html=\"form.helpvalue\"></div>");
 $templateCache.put("decorators/material/radio-buttons.html","<div class=\"form-group schema-form-radiobuttons {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\"><div><label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label></div><div class=\"btn-group\"><label class=\"btn {{ (item.value === $$value$$) ? form.style.selected || \'btn-default\' : form.style.unselected || \'btn-default\'; }}\" ng-class=\"{ active: item.value === $$value$$ }\" ng-repeat=\"item in form.titleMap\"><input type=\"radio\" class=\"{{form.fieldHtmlClass}}\" sf-changed=\"form\" style=\"display: none;\" ng-disabled=\"form.readonly\" ng-model=\"$$value$$\" ng-model-options=\"form.ngModelOptions\" schema-validate=\"form\" ng-value=\"item.value\" name=\"{{form.key.join(\'.\')}}\"> <span ng-bind-html=\"item.name\"></span></label></div><div class=\"help-block\" sf-message=\"form.description\"></div></div>");
 $templateCache.put("decorators/material/radios-inline.html","<div class=\"form-group schema-form-radios-inline {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\"><label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label><md-radio-group layout=\"row\" ng-model=\"$$value$$\" ng-model-options=\"form.ngModelOptions\" class=\"{{form.fieldHtmlClass}}\" ng-class=\"{ active: item.value === $$value$$ }\" sf-changed=\"form\" schema-validate=\"form\" ng-disabled=\"form.readonly\" name=\"{{form.key.join(\'.\')}}\"><md-radio-button ng-repeat=\"item in form.titleMap\" ng-value=\"item.value\"><span ng-bind-html=\"item.name\"></span></md-radio-button></md-radio-group><div class=\"help-block md-caption\" sf-message=\"form.description\"></div></div>");
@@ -22,7 +22,7 @@ angular.module('schemaForm')
 
     decoratorsProvider.defineDecorator('materialDecorator', {
       textarea: { template: base + 'textarea.html' },
-      checkbox: { template: base + 'checkbox.html' },
+      fieldset: { template: base + 'fieldset.html' },
       'default': { template: base + 'default.html' },
       select: { template: base + 'select.html' },
       checkbox: { template: base + 'checkbox.html' },
@@ -56,3 +56,51 @@ angular.module('schemaForm')
         'default': base + 'default.html'
       });*/
   }]);
+
+/**
+ * It might be a bug, but currently input[type=number] does not add
+ * a parser, so the model gets populated with a string. It does however stop non numbers so it
+ * must have some preproccessing. Anyway, this adds parser before schema-validate hooks into it.
+ * FIXME: this is still not a complete solution. Inputting a string in an input[type=number] results
+ * in parsers never firing and ngModel value removed. So no validation from schema-validate either.
+ */
+angular.module('schemaForm').directive('sfTypeParser', function() {
+  return {
+    restrict: 'A',
+    scope: false,
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModel) {
+      var once = scope.$watch(attrs.sfTypeParser, function(schema) {
+        if (!schema) {
+          return;
+        }
+
+        var isNumber  = schema.type.indexOf('number') !== -1;
+        var isInteger = schema.type.indexOf('integer') !== -1;
+        var numberRE  = /^[0-9]*$/;
+        // Use index of since type can be either an array with two values or a string.
+        if (isNumber || isInteger) {
+          // The timing here seems to work. i.e. we get in before schema-validate
+          ngModel.$parsers.push(function(viewValue) {
+            var value;
+            if (isNumber) {
+              value = parseFloat(viewValue);
+            } else if (numberRE.test(viewValue)) {
+              // We test the value to check that it's a valid integer, otherwise we can easily
+              // get float -> integer parsing behind the scenes.
+              value = parseInt(viewValue, 10);
+            }
+            console.log('parser', numberRE.test(viewValue), viewValue, value)
+            if (value === undefined || isNaN(value)) {
+              //Let the validation fail. @FIXME: it fails with "required" for some reason.
+              return viewValue;
+            }
+            return value;
+          });
+        }
+
+        once();
+      });
+    }
+  };
+});
