@@ -1,3 +1,14 @@
+<md-tabs md-selected="selected" ng-init="selected = { tab: 0 }" class="schema-form-tabs {{form.htmlClass}}">
+  <img ng-src="img/angular.png" class="centered">
+  <md-tab ng-repeat="tab in form.tabs" md-on-select="onTabSelected(tab)" md-on-deselect="announceDeselected(tab)" ng-disabled="form.readonly">
+    <md-tab-label>{{tab.title}}</md-tab-label>
+    <md-tab-body>
+      <material-decorator ng-repeat="item in tab.items" form="item">
+      </material-decorator>
+    </md-tab-body>
+  </md-tab>
+</md-tabs>
+<!--
 <div ng-init="selected = { tab: 0 }" class="schema-form-tabs {{form.htmlClass}}">
   <ul class="nav nav-tabs">
     <li ng-repeat="tab in form.tabs"
@@ -14,8 +25,9 @@
          ng-repeat="tab in form.tabs"
          ng-show="selected.tab === $index"
          ng-class="{active: selected.tab === $index}">
-         <bootstrap-decorator ng-repeat="item in tab.items" form="item">
-         </bootstrap-decorator>
+         <material-decorator ng-repeat="item in tab.items" form="item">
+         </material-decorator>
     </div>
   </div>
 </div>
+-->

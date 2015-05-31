@@ -1,9 +1,13 @@
-<div class="checkbox schema-form-checkbox {{form.htmlClass}}">
-  <md-checkbox sf-changed="form"
+<div class="checkbox schema-form-checkbox {{form.htmlClass}}"
+     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
+  <md-checkbox ng-model="$$value$$"
+               ng-model-options="form.ngModelOptions"
+               sf-changed="form"
                ng-disabled="form.readonly"
                schema-validate="form"
+               class="{{form.fieldHtmlClass}}"
                name="{{form.key.slice(-1)[0]}}"
-               ng-model="$$value$$" aria-label="{{::form.title}}">
+               aria-label="{{form.title || form.key.slice(-1)[0]}}">
     <span ng-bind-html="form.title"></span>
   </md-checkbox>
   <div ng-messages="ngModel.$error">
@@ -14,19 +18,3 @@
     <div sf-message ng-message></div>
   </div>
 </div>
-<!--
-<div class="checkbox schema-form-checkbox {{form.htmlClass}}"
-     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
-    <md-checkbox ng-model="$$value$$"
-                 ng-model-options="form.ngModelOptions"
-                 sf-changed="form"
-                 ng-disabled="form.readonly"
-                 schema-validate="form"
-                 class="{{form.fieldHtmlClass}}"
-                 name="{{form.key.slice(-1)[0]}}"
-                 aria-label="{{form.title || form.key.slice(-1)[0]}}">
-    <span ng-bind-html="form.title"></span>
-  </md-checkbox>
-  <div class="help-block md-caption" sf-message="form.description"></div>
-</div>
--->

@@ -1,7 +1,6 @@
 <div sf-array="form" ng-model="$$value$$"
      class="form-group schema-form-checkboxes {{form.htmlClass}}"
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
-    
   <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
   <div class="checkbox" ng-repeat="val in titleMapValues track by $index" >
     <md-checkbox ng-model="titleMapValues[$index]"
@@ -21,5 +20,4 @@
     -->
     <div sf-message ng-message></div>
   </div>
-
 </div>
