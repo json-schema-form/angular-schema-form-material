@@ -1,7 +1,6 @@
 <div class="checkbox schema-form-checkbox {{form.htmlClass}}"
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
-  <md-checkbox ng-model="$$value$$"
-               ng-model-options="form.ngModelOptions"
+  <md-checkbox sf-field-model
                sf-changed="form"
                ng-disabled="form.readonly"
                schema-validate="form"

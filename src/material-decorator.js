@@ -1,18 +1,26 @@
 angular.module('schemaForm')
-  .config([ 'schemaFormDecoratorsProvider', function(decoratorsProvider) {
+  .config([ 'schemaFormDecoratorsProvider', 'sfBuilderProvider',
+function(decoratorsProvider, sfBuilderProvider) {
     var base = 'decorators/material/';
 
+    var simpleTransclusion  = sfBuilderProvider.builders.simpleTransclusion;
+    var ngModelOptions = sfBuilderProvider.builders.ngModelOptions;
+    var ngModel        = sfBuilderProvider.builders.ngModel;
+    var sfField        = sfBuilderProvider.builders.sfField;
+
+    var defaults = [ sfField, ngModel, ngModelOptions ];
+
     decoratorsProvider.defineDecorator('materialDecorator', {
-      textarea: { template: base + 'textarea.html' },
-      fieldset: { template: base + 'fieldset.html' },
-      'default': { template: base + 'default.html' },
-      select: { template: base + 'select.html' },
-      checkbox: { template: base + 'checkbox.html' },
-      checkboxes: { template: base + 'checkboxes.html' },
-      radios: { template: base + 'radios.html' },
-      'radios-inline': { template: base + 'radios-inline.html' },
-      radiobuttons: { template: base + 'radio-buttons.html' },
-      submit: { template: base + 'submit.html' }
+      textarea: { template: base + 'textarea.html', builder: defaults },
+      fieldset: { template: base + 'fieldset.html', builder: [ sfField, simpleTransclusion ] },
+      'default': { template: base + 'default.html', builder: defaults },
+      select: { template: base + 'select.html', builder: defaults },
+      checkbox: { template: base + 'checkbox.html', builder: defaults },
+      checkboxes: { template: base + 'checkboxes.html', builder: defaults },
+      radios: { template: base + 'radios.html', builder: defaults },
+      'radios-inline': { template: base + 'radios-inline.html', builder: defaults },
+      radiobuttons: { template: base + 'radio-buttons.html', builder: defaults },
+      submit: { template: base + 'submit.html', builder: defaults }
     });
 
     /*  decoratorsProvider.createDecorator('materialDecorator', {

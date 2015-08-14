@@ -1,6 +1,6 @@
 <div class="form-group {{form.htmlClass}} schema-form-select"
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}">
-  <md-select ng-model="$$value$$">
+  <md-select sf-field-model>
     <md-select-label ng-show="showTitle()">{{form.title}}</md-select-label>
     <md-optgroup ng-repeat-start="(key, opt) in form.titleMap | orderBy:'group' as optGroups"
                  ng-if="opt.group && opt.group != optGroups[key-1].group"

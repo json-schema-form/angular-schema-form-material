@@ -19,16 +19,16 @@
     "tests"
   ],
   "dependencies": {
-    "angular-schema-form": "development",
+    "angular-schema-form": ">=0.8.6",
     "angular": "1.4.0-beta.6",
     "angular-material": "master",
     "angular-animate": "1.4",
     "angular-sanitize": "1.4"
   },
-  "resolutions": {
-    "angular": ">1.4.0-beta.0"
-  },
   "devDependencies": {
     "angular-ui-ace": "~0.2.3"
+  },
+  "resolutions": {
+    "angular": "1.4.4"
   }
 }

@@ -2,8 +2,8 @@
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
   <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
   <md-radio-group layout="row"
+                  sf-field-model="replaceAll"
                   ng-model="$$value$$"
-                  ng-model-options="form.ngModelOptions"
                   class="{{form.fieldHtmlClass}}"
                   ng-class="{ active: item.value === $$value$$ }"
                   sf-changed="form"

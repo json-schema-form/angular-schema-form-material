@@ -1,6 +1,6 @@
 <div class="form-group schema-form-chips {{form.htmlClass}}"
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}">
-  <md-chips ng-model="$$value$$" readonly="form.readonly" flex
+  <md-chips sf-field-model readonly="form.readonly" flex
             placeholder="{{form.title || form.key.slice(-1)[0]}}">
     <md-chip-template>
       <!-- should include an optional template from form.template -->
