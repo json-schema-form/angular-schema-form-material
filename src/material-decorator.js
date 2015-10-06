@@ -20,7 +20,8 @@ function(decoratorsProvider, sfBuilderProvider) {
       radios: { template: base + 'radios.html', builder: defaults },
       'radios-inline': { template: base + 'radios-inline.html', builder: defaults },
       radiobuttons: { template: base + 'radio-buttons.html', builder: defaults },
-      submit: { template: base + 'submit.html', builder: defaults }
+      submit: { template: base + 'submit.html', builder: defaults },
+      switch: { template: base +  'switch.html', builder: defaults}
     });
 
     /*  decoratorsProvider.createDecorator('materialDecorator', {

@@ -1,0 +1,13 @@
+<div>
+	<md-switch
+			id="{{form.key.slice(-1)[0]}}"
+			sf-field-model
+			sf-changed="form"
+			ng-disabled="form.readonly"
+			schema-validate="form"
+			class="{{form.fieldHtmlClass}}"
+			name="{{form.key.slice(-1)[0]}}"
+			aria-label="{{form.title || form.key.slice(-1)[0]}}">
+		{{form.title || form.key.slice(-1)[0]}}
+	</md-switch>
+</div>

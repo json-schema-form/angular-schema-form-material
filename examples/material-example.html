@@ -195,8 +195,8 @@
   </div>
 </script>
 
-<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/g/jquery.ui@1.10"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="http://cdn.jsdelivr.net/g/jquery.ui@1.10"></script>
 <script type="text/javascript" src="../bower_components/tv4/tv4.js"></script>
 <script type="text/javascript" src="../bower_components/ace-builds/src-min-noconflict/ace.js"></script>
 <script type="text/javascript" src="../bower_components/angular/angular.js"></script>
@@ -230,7 +230,7 @@
 -->
 
 <script type="text/javascript" src="../bower_components/angular-schema-form/dist/schema-form.js"></script>
-<script type="text/javascript" src="../material-decorator.min.js"></script>
+<script type="text/javascript" src="../material-decorator.js"></script>
 
 <!--
 <script type="text/javascript" src="../bower_components/angular-schema-form-datepicker/bootstrap-datepicker.min.js"></script>
@@ -258,6 +258,7 @@ app.config(function($mdThemingProvider) {
 app.controller('TestCtrl', function($scope, $http, $location) {
 
   $scope.tests = [
+    { name: "Switch", data: 'data/switch.json' },
     { name: "Simple", data: 'data/simple.json' },
     { name: "Basic JSON Schema Type", data: 'data/types.json' },
     { name: "TitleMap Examples", data: 'data/titlemaps.json' },
