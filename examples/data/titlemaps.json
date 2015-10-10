@@ -93,6 +93,7 @@
       "type": "radiobuttons",
       "titleMap": [
         {"value": false, "name": "No way"},
+        {"value": null, "name": "Maybe"},
         {"value": true,  "name": "OK"}
       ]
     }

@@ -7,6 +7,11 @@
         "title": "Name",
         "type": "string"
       },
+      "date":  {
+        "title": "Date",
+        "type": "string",
+        "format":"date"
+      },
       "email":  {
         "title": "Email",
         "type": "string",
@@ -24,6 +29,7 @@
   },
   "form": [
     "name",
+    "date",
     "email",
     {
       "key": "comment",

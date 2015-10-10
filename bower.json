@@ -26,7 +26,8 @@
     "angular-sanitize": "1.4"
   },
   "devDependencies": {
-    "angular-ui-ace": "~0.2.3"
+    "angular-ui-ace": "~0.2.3",
+    "moment": "~2.10.6"
   },
   "resolutions": {
     "angular": "1.4.4"

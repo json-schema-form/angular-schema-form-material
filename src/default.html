@@ -30,12 +30,12 @@
          ng-disabled="form.readonly"
          name="{{form.key.slice(-1)[0]}}"
          sf-type-parser="form.schema"
-         schema-validate="form">
-         <div ng-messages="ngModel.$error">
-           <!--
-              This is a bit of a hack. sf-message does the work, but ng-messages and ng-message
-              is needed for the styling
-           -->
-           <div sf-message ng-message></div>
-        </div>
+         schema-validate="form" />
+  <div ng-messages="ngModel.$error">
+    <!--
+      This is a bit of a hack. sf-message does the work, but ng-messages and ng-message
+      is needed for the styling
+    -->
+    <div sf-message ng-message></div>
+  </div>
 </md-input-container>

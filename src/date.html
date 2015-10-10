@@ -1,0 +1,16 @@
+<md-input-container class="schema-form-date {{form.htmlClass}}">
+  <md-datepicker sf-field-model
+                 sf-changed="form"
+                 sf-type-parser="form.schema"
+                 schema-validate="form"
+                 id="{{form.key.slice(-1)[0]}}"
+                 ng-show="form.key"
+                 ng-class="form.fieldHtmlClass"
+                 ng-disabled="form.readonly"
+                 md-min-date="minDate"
+                 md-max-date="maxDate"
+                 md-placeholder="Enter date">
+    <label  ng-show="showTitle()" for="{{form.key.slice(-1)[0]}}">{{form.title}}</label>
+    <div sf-messages />
+  </md-datepicker>
+</md-input-container>
