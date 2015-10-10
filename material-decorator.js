@@ -5,7 +5,7 @@ $templateCache.put("decorators/material/autocomplete.html","<div class=\"form-gr
 $templateCache.put("decorators/material/checkbox.html","<div class=\"checkbox schema-form-checkbox {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\"><md-checkbox sf-field-model=\"\" sf-changed=\"form\" ng-disabled=\"form.readonly\" schema-validate=\"form\" class=\"{{form.fieldHtmlClass}}\" name=\"{{form.key.slice(-1)[0]}}\" aria-label=\"{{form.title || form.key.slice(-1)[0]}}\"><span ng-bind-html=\"form.title\"></span></md-checkbox><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></div>");
 $templateCache.put("decorators/material/checkboxes.html","<div sf-array=\"form\" sf-field-model=\"\" class=\"form-group schema-form-checkboxes {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\"><label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label><div class=\"checkbox\" ng-repeat=\"val in titleMapValues track by $index\"><md-checkbox ng-model=\"titleMapValues[$index]\" sf-changed=\"form\" ng-disabled=\"form.readonly\" name=\"{{form.key.slice(-1)[0]}}\" ng-true-value=\"true\" ng-false-value=\"false\" aria-label=\"{{form.title || form.key.slice(-1)[0]}}\"><span ng-bind-html=\"form.titleMap[$index].name\"></span></md-checkbox></div><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></div>");
 $templateCache.put("decorators/material/chips.html","<div class=\"form-group schema-form-chips {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\"><md-chips sf-field-model=\"\" readonly=\"form.readonly\" flex=\"\" placeholder=\"{{form.title || form.key.slice(-1)[0]}}\"><md-chip-template><strong ng-if=\"!form.template\">{{$chip}}</strong></md-chip-template></md-chips><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></div>");
-$templateCache.put("decorators/material/date.html","<md-input-container class=\"schema-form-date {{form.htmlClass}}\"><md-datepicker sf-field-model=\"\" sf-changed=\"form\" sf-type-parser=\"form.schema\" schema-validate=\"form\" id=\"{{form.key.slice(-1)[0]}}\" ng-show=\"form.key\" ng-class=\"form.fieldHtmlClass\" ng-disabled=\"form.readonly\" md-min-date=\"minDate\" md-max-date=\"maxDate\" md-placeholder=\"Enter date\"><label ng-show=\"showTitle()\" for=\"{{form.key.slice(-1)[0]}}\">{{form.title}}</label><div sf-messages=\"\"></div></md-datepicker></md-input-container>");
+$templateCache.put("decorators/material/date.html","<md-input-container class=\"schema-form-date {{form.htmlClass}}\"><md-datepicker sf-field-model=\"\" sf-changed=\"form\" sf-type-parser=\"form.schema\" schema-validate=\"form\" id=\"{{form.key.slice(-1)[0]}}\" ng-show=\"form.key\" ng-class=\"form.fieldHtmlClass\" ng-disabled=\"form.readonly\" md-min-date=\"minDate\" md-max-date=\"maxDate\" md-placeholder=\"Enter date\"><label ng-show=\"showTitle()\" for=\"{{form.key.slice(-1)[0]}}\">{{form.title}}</label><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></md-datepicker></md-input-container>");
 $templateCache.put("decorators/material/default.html","<md-input-container class=\"schema-form-{{form.type}} {{form.htmlClass}}\"><label ng-show=\"showTitle()\" for=\"{{form.key.slice(-1)[0]}}\">{{form.title}}</label><input sf-field-model=\"\" ng-show=\"form.key\" type=\"{{form.type}}\" step=\"any\" sf-changed=\"form\" placeholder=\"{{form.placeholder}}\" id=\"{{form.key.slice(-1)[0]}}\" ng-class=\"form.fieldHtmlClass\" ng-disabled=\"form.readonly\" name=\"{{form.key.slice(-1)[0]}}\" sf-type-parser=\"form.schema\" schema-validate=\"form\"><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></md-input-container>");
 $templateCache.put("decorators/material/fieldset-trcl.html","<fieldset ng-disabled=\"form.readonly\" class=\"standard {{form.htmlClass}}\" flex=\"\"><legend ng-show=\"form.title\">{{ form.title }}</legend><div ng-transclude=\"\"></div></fieldset>");
 $templateCache.put("decorators/material/fieldset.html","<fieldset ng-disabled=\"form.readonly\" class=\"standard {{form.htmlClass}}\" flex=\"\"><legend ng-show=\"form.title\">{{ form.title }}</legend></fieldset>");
@@ -18,18 +18,21 @@ $templateCache.put("decorators/material/select.html","<md-input-container class=
 $templateCache.put("decorators/material/submit.html","<section class=\"schema-form-submit {{form.htmlClass}}\"><md-button class=\"md-raised {{ form.style || \'md-primary\' }} {{form.fieldHtmlClass}}\" ng-disabled=\"form.readonly\">{{form.title}}</md-button></section>");
 $templateCache.put("decorators/material/switch.html","<md-input-container class=\"schema-form-switch {{form.htmlClass}}\"><md-switch sf-field-model=\"\" sf-changed=\"form\" sf-type-parser=\"form.schema\" schema-validate=\"form\" id=\"{{form.key.slice(-1)[0]}}\" aria-label=\"{{form.title}}\" ng-true-value=\"\'yup\'\" ng-false-value=\"\'nope\'\" ng-show=\"form.key\" ng-class=\"form.fieldHtmlClass\" ng-disabled=\"form.readonly\"><label ng-show=\"showTitle()\" for=\"{{form.key.slice(-1)[0]}}\">{{form.title}}</label><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></md-switch></md-input-container>");
 $templateCache.put("decorators/material/tabarray.html","<div sf-array=\"form\" ng-init=\"selected = { tab: 0 }\" class=\"clearfix schema-form-tabarray schema-form-tabarray-{{form.tabType || \'left\'}} {{form.htmlClass}}\"><div ng-if=\"!form.tabType || form.tabType !== \'right\'\" ng-class=\"{\'col-xs-3\': !form.tabType || form.tabType === \'left\'}\"><ul class=\"nav nav-tabs\" ng-class=\"{ \'tabs-left\': !form.tabType || form.tabType === \'left\'}\"><li ng-repeat=\"item in modelArray track by $index\" ng-click=\"$event.preventDefault() || (selected.tab = $index)\" ng-class=\"{active: selected.tab === $index}\"><a href=\"#\">{{interp(form.title,{\'$index\':$index, value: item}) || $index}}</a></li><li ng-hide=\"form.readonly\" ng-click=\"$event.preventDefault() || (selected.tab = appendToArray().length - 1)\"><a href=\"#\"><i class=\"glyphicon glyphicon-plus\"></i> {{ form.add || \'Add\'}}</a></li></ul></div><div ng-class=\"{\'col-xs-9\': !form.tabType || form.tabType === \'left\' || form.tabType === \'right\'}\"><div class=\"tab-content {{form.fieldHtmlClass}}\"><div class=\"tab-pane clearfix\" ng-repeat=\"item in modelArray track by $index\" ng-show=\"selected.tab === $index\" ng-class=\"{active: selected.tab === $index}\"><sf-decorator ng-init=\"arrayIndex = $index\" form=\"copyWithIndex($index)\"></sf-decorator><button ng-hide=\"form.readonly\" ng-click=\"selected.tab = deleteFromArray($index).length - 1\" type=\"button\" class=\"btn {{ form.style.remove || \'btn-default\' }} pull-right\"><i class=\"glyphicon glyphicon-trash\"></i> {{ form.remove || \'Remove\'}}</button></div></div></div><div ng-if=\"form.tabType === \'right\'\" class=\"col-xs-3\"><ul class=\"nav nav-tabs tabs-right\"><li ng-repeat=\"item in modelArray track by $index\" ng-click=\"$event.preventDefault() || (selected.tab = $index)\" ng-class=\"{active: selected.tab === $index}\"><a href=\"#\">{{interp(form.title,{\'$index\':$index, value: item}) || $index}}</a></li><li ng-hide=\"form.readonly\" ng-click=\"$event.preventDefault() || appendToArray()\"><a href=\"#\"><i class=\"glyphicon glyphicon-plus\"></i> {{ form.add || \'Add\'}}</a></li></ul></div></div>");
-$templateCache.put("decorators/material/tabs.html","<md-tabs md-selected=\"selected\" ng-init=\"selected = { tab: 0 }\" class=\"schema-form-tabs {{form.htmlClass}}\"><img ng-src=\"img/angular.png\" class=\"centered\"><md-tab ng-repeat=\"tab in form.tabs\" md-on-select=\"onTabSelected(tab)\" md-on-deselect=\"announceDeselected(tab)\" ng-disabled=\"form.readonly\"><md-tab-label>{{tab.title}}</md-tab-label><md-tab-body><material-decorator ng-repeat=\"item in tab.items\" form=\"item\"></material-decorator></md-tab-body></md-tab></md-tabs>");
-$templateCache.put("decorators/material/textarea.html","<md-input-container class=\"{{form.htmlClass}} schema-form-textarea\"><label ng-show=\"showTitle()\" for=\"{{form.key.slice(-1)[0]}}\">{{form.title}}</label> <textarea ng-class=\"form.fieldHtmlClass\" id=\"{{form.key.slice(-1)[0]}}\" sf-changed=\"form\" ng-disabled=\"form.readonly\" sf-field-model=\"\" schema-validate=\"form\" name=\"{{form.key.slice(-1)[0]}}\"></textarea><div sf-messages=\"\"></div></md-input-container>");}]);
+$templateCache.put("decorators/material/tabs.html","<div sf-field-model=\"\" class=\"schema-form-tabs {{form.htmlClass}}\"><md-tabs md-dynamic-height=\"\" md-selected=\"selected\" md-autoselect=\"\" ng-init=\"selected = 0\"></md-tabs></div>");
+$templateCache.put("decorators/material/textarea.html","<md-input-container class=\"{{form.htmlClass}} schema-form-textarea\"><label ng-show=\"showTitle()\" for=\"{{form.key.slice(-1)[0]}}\">{{form.title}}</label> <textarea ng-class=\"form.fieldHtmlClass\" id=\"{{form.key.slice(-1)[0]}}\" sf-changed=\"form\" ng-disabled=\"form.readonly\" sf-field-model=\"\" schema-validate=\"form\" name=\"{{form.key.slice(-1)[0]}}\"></textarea><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></md-input-container>");}]);
 angular.module('schemaForm')
   .config([ 'schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfBuilderProvider', 'sfPathProvider',
     function(schemaFormProvider, decoratorsProvider, sfBuilderProvider, sfPathProvider) {
       var base = 'decorators/material/';
 
-      var transclusion   = sfBuilderProvider.builders.simpleTransclusion;
-      var ngModelOptions = sfBuilderProvider.builders.ngModelOptions;
-      var ngModel        = sfBuilderProvider.builders.ngModel;
-      var sfField        = sfBuilderProvider.builders.sfField;
-      var sfMessages     = function(args) {
+      var simpleTransclusion = sfBuilderProvider.builders.simpleTransclusion;
+      var ngModelOptions     = sfBuilderProvider.builders.ngModelOptions;
+      var ngModel            = sfBuilderProvider.builders.ngModel;
+      var sfField            = sfBuilderProvider.builders.sfField;
+      var condition          = sfBuilderProvider.builders.condition;
+      var array              = sfBuilderProvider.builders.array;
+
+      var sfMessages = function(args) {
         var messagesDiv = args.fieldFrag.querySelector('[sf-messages]');
         if(messagesDiv) {
           messagesDiv.setAttribute('ng-messages', 'ngModel.$error');
@@ -40,22 +43,49 @@ angular.module('schemaForm')
         }
       };
 
+      var tabs = function(args) {
+        if (args.form.tabs && args.form.tabs.length > 0) {
+          var tabContainer = args.fieldFrag.querySelector('md-tabs');
+
+          args.form.tabs.forEach(function(tab, index) {
+            var mdTab = document.createElement('md-tab');
+            var mdTabLabel = document.createElement('md-tab-label');
+            var mdTabLabelText = document.createTextNode('{{'+args.path + '.tabs[' + index + '].title}}');
+            var mdTabBody = document.createElement('md-tab-body');
+            var childFrag = args.build(tab.items, args.path + '.tabs[' + index + '].items', args.state);
+            mdTabLabel.appendChild(mdTabLabelText);
+            mdTabBody.appendChild(childFrag);
+            mdTab.appendChild(mdTabLabel);
+            mdTab.appendChild(mdTabBody);
+            tabContainer.appendChild(mdTab);
+          });
+        }
+      };
+
       var defaults = [ sfField, ngModel, ngModelOptions, sfMessages ];
 
       decoratorsProvider.defineDecorator('materialDecorator', {
-        textarea: { template: base + 'textarea.html', builder: defaults },
-        fieldset: { template: base + 'fieldset.html', builder: [ sfField, transclusion ] },
-        'default': { template: base + 'default.html', builder: defaults },
-        select: { template: base + 'select.html', builder: defaults },
-        date: { template: base + 'date.html', builder: defaults },
+        actions: { template: base + 'actions.html', builder: defaults},
+        array: { template: base + 'array.html', builder: [sfField, ngModelOptions, ngModel, array, condition]},
+        button: { template: base + 'submit.html', builder: defaults},
         checkbox: { template: base + 'checkbox.html', builder: defaults },
-        checkboxes: { template: base + 'checkboxes.html', builder: defaults },
+        checkboxes: { template: base + 'checkboxes.html', builder: [sfField, ngModelOptions, ngModel, array, condition]},
+        date: { template: base + 'date.html', builder: defaults },
+        'default': { template: base + 'default.html', builder: defaults },
+        fieldset: { template: base + 'fieldset.html', builder: [ sfField, simpleTransclusion, condition ] },
+        help: { template: base + 'help.html', builder: defaults},
+        number: { template: base + 'default.html', builder: defaults},
+        password: {template: base + 'default.html', builder: defaults},
         radios: { template: base + 'radios.html', builder: defaults },
         'radios-inline': { template: base + 'radios-inline.html', builder: defaults },
         radiobuttons: { template: base + 'radio-buttons.html', builder: defaults },
-        submit: { template: base + 'submit.html', builder: defaults }
+        section: { template: base + 'section.html', builder: [sfField, simpleTransclusion, condition]},
+        select: { template: base + 'select.html', builder: defaults },
+        submit: { template: base + 'submit.html', builder: defaults },
+        tabs: { template: base + 'tabs.html', builder: [sfField, tabs, condition]},
+        tabarray: { template: base + 'tabarray.html', builder: [sfField, ngModelOptions, ngModel, array, condition]},
+        textarea: { template: base + 'textarea.html', builder: defaults }
       });
-
       /*  decoratorsProvider.createDecorator('materialDecorator', {
         textarea: base + 'textarea.html',
         fieldset: base + 'fieldset.html',

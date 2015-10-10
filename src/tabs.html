@@ -1,33 +1,3 @@
-<md-tabs md-selected="selected" ng-init="selected = { tab: 0 }" class="schema-form-tabs {{form.htmlClass}}">
-  <img ng-src="img/angular.png" class="centered">
-  <md-tab ng-repeat="tab in form.tabs" md-on-select="onTabSelected(tab)" md-on-deselect="announceDeselected(tab)" ng-disabled="form.readonly">
-    <md-tab-label>{{tab.title}}</md-tab-label>
-    <md-tab-body>
-      <material-decorator ng-repeat="item in tab.items" form="item">
-      </material-decorator>
-    </md-tab-body>
-  </md-tab>
-</md-tabs>
-<!--
-<div ng-init="selected = { tab: 0 }" class="schema-form-tabs {{form.htmlClass}}">
-  <ul class="nav nav-tabs">
-    <li ng-repeat="tab in form.tabs"
-        ng-disabled="form.readonly"
-        ng-click="$event.preventDefault() || (selected.tab = $index)"
-        ng-class="{active: selected.tab === $index}">
-        <a href="#">{{ tab.title }}</a>
-    </li>
-  </ul>
-
-  <div class="tab-content {{form.fieldHtmlClass}}">
-    <div class="tab-pane"
-         ng-disabled="form.readonly"
-         ng-repeat="tab in form.tabs"
-         ng-show="selected.tab === $index"
-         ng-class="{active: selected.tab === $index}">
-         <material-decorator ng-repeat="item in tab.items" form="item">
-         </material-decorator>
-    </div>
-  </div>
+<div sf-field-model class="schema-form-tabs {{form.htmlClass}}">
+  <md-tabs md-dynamic-height md-selected="selected" md-autoselect ng-init="selected = 0"></md-tabs>
 </div>
--->

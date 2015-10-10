@@ -255,7 +255,7 @@
 -->
 
 <script type="text/javascript" src="../bower_components/angular-schema-form/dist/schema-form.js"></script>
-<script type="text/javascript" src="../material-decorator.min.js"></script>
+<script type="text/javascript" src="../material-decorator.js"></script>
 
 <!--
 <script type="text/javascript" src="../bower_components/angular-schema-form-datepicker/bootstrap-datepicker.min.js"></script>
@@ -287,13 +287,15 @@ app.config(function($mdThemingProvider, $mdDateLocaleProvider) {
 app.controller('TestCtrl', function($scope, $http, $location) {
 
   $scope.tests = [
+    /*{ name: "Autocomplete", data: 'data/autocomplete.json' },*/
     { name: "Simple", data: 'data/simple.json' },
     { name: "Basic JSON Schema Type", data: 'data/types.json' },
     { name: "TitleMap Examples", data: 'data/titlemaps.json' },
-    { name: "Bootstrap Grid", data: 'data/grid.json' },
-    { name: "Complex Key Support", data: 'data/complex-keys.json' },
-    { name: "Array", data: 'data/array.json' },
-    { name: "Tab Array", data: 'data/tabarray.json' },
+    /*{ name: "Material FLex Grid", data: 'data/grid.json' },*/
+    /*{ name: "Complex Key Support", data: 'data/complex-keys.json' },*/
+    /*{ name: "Array", data: 'data/array.json' },*/
+    /*{ name: "Tab Array", data: 'data/tabarray.json' },*/
+    { name: "Tabs", data: 'data/tabs.json' },
     { name: "Kitchen Sink", data: 'data/sink.json' },
     { name: "Hack: Conditional required", data: 'data/conditional-required.json' },
   ];

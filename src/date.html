@@ -11,6 +11,12 @@
                  md-max-date="maxDate"
                  md-placeholder="Enter date">
     <label  ng-show="showTitle()" for="{{form.key.slice(-1)[0]}}">{{form.title}}</label>
-    <div sf-messages />
+    <div ng-messages="ngModel.$error">
+      <!--
+         This is a bit of a hack. sf-message does the work, but ng-messages and ng-message
+         is needed for the styling
+      -->
+      <div sf-message ng-message></div>
+    </div>
   </md-datepicker>
 </md-input-container>
