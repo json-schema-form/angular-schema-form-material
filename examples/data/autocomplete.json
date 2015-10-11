@@ -1,67 +1,38 @@
 {
   "schema": {
     "type": "object",
-    "title": "Comment",
-    "required": ["comments"],
+    "title": "Arnold Schwarzenegger",
     "properties": {
-      "comments": {
-        "type": "array",
-        "maxItems": 2,
-        "items": {
-          "type": "object",
-          "properties": {
-            "name":  {
-              "title": "Name",
-              "type": "string"
-            },
-            "email":  {
-              "title": "Email",
-              "type": "string",
-              "pattern": "^\\S+@\\S+$",
-              "description": "Email will be used for evil."
-            },
-            "spam": {
-              "title": "Spam",
-              "type": "boolean",
-              "default": true
-            },
-            "comment": {
-              "title": "Comment",
-              "type": "string",
-              "maxLength": 20,
-              "validationMessage": "Don't be greedy!"
-            }
-          },
-          "required": ["name","comment"]
-        }
+      "first": {
+        "title": "What is your favourite Schwarzenegger movie?",
+        "type": "string"
+      },
+      "second": {
+        "title": "What is your favourite Schwarzenegger movie?",
+        "type": "string"
       }
     }
   },
   "form": [
     {
-      "type": "help",
-      "helpvalue": "<h4>Array Example</h4><p>Try adding a couple of forms, reorder by drag'n'drop.</p>"
+      "key": "first",
+      "type": "autocomplete",
+      "optionFilter": "querySearch"
     },
     {
-      "key": "comments",
-  	  "add": "New",
-  	  "style": {
-  		"add": "btn-success"
-	  },
-      "items": [
-        "comments[].name",
-        "comments[].email",
-        {
-          "key": "comments[].spam",
-          "type": "checkbox",
-          "title": "Yes I want spam.",
-          "condition": "model.comments[arrayIndex].email"
-        },
-        {
-          "key": "comments[].comment",
-          "type": "textarea"
-        }
-      ]
+      "type": "help",
+      "helpvalue": "I only need at least 1 character"
+    },
+    {
+      "title": "What is your second favourite Schwarzenegger movie?",
+      "key": "second",
+      "type": "autocomplete",
+      "optionFilter": "querySearch",
+      "minLength": 4
+    },
+    {
+      "type": "help",
+      "helpvalue": "I need at least 4 characters"
     },
     {
       "type": "submit",

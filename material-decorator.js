@@ -1,7 +1,7 @@
 angular.module("schemaForm").run(["$templateCache", function($templateCache) {$templateCache.put("decorators/material/actions-trcl.html","<div class=\"btn-group schema-form-actions {{form.htmlClass}}\" ng-transclude=\"\"></div>");
 $templateCache.put("decorators/material/actions.html","<div class=\"btn-group schema-form-actions {{form.htmlClass}}\"><input ng-repeat-start=\"item in form.items\" type=\"submit\" class=\"btn {{ item.style || \'btn-default\' }} {{form.fieldHtmlClass}}\" value=\"{{item.title}}\" ng-if=\"item.type === \'submit\'\"> <button ng-repeat-end=\"\" class=\"btn {{ item.style || \'btn-default\' }} {{form.fieldHtmlClass}}\" type=\"button\" ng-disabled=\"form.readonly\" ng-if=\"item.type !== \'submit\'\" ng-click=\"buttonClick($event,item)\">{{item.title}}</button></div>");
 $templateCache.put("decorators/material/array.html","<div sf-array=\"form\" class=\"schema-form-array {{form.htmlClass}}\" ng-model=\"$$value$$\" ng-model-options=\"form.ngModelOptions\"><h3 ng-show=\"form.title && form.notitle !== true\">{{ form.title }}</h3><ol class=\"list-group\" ng-model=\"modelArray\" ui-sortable=\"\"><li class=\"list-group-item {{form.fieldHtmlClass}}\" ng-repeat=\"item in modelArray track by $index\"><md-button ng-hide=\"form.readonly || form.remove === null\" ng-click=\"deleteFromArray($index)\" style=\"position: relative; z-index: 20;\" type=\"button\" class=\"close pull-right\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></md-button><sf-decorator ng-init=\"arrayIndex = $index\" form=\"copyWithIndex($index)\"></sf-decorator></li></ol><div class=\"clearfix\" style=\"padding: 15px;\"><md-button ng-hide=\"form.readonly || form.add === null\" ng-click=\"appendToArray()\" type=\"button\" class=\"btn {{ form.style.add || \'btn-default\' }} pull-right\"><i class=\"glyphicon glyphicon-plus\"></i> {{ form.add || \'Add\'}}</md-button></div><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></div>");
-$templateCache.put("decorators/material/autocomplete.html","<div class=\"form-group {{form.htmlClass}} schema-form-select\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\"><md-autocomplete flex=\"\" md-selected-item=\"form.selectedItem\" md-search-text=\"form.searchText\" md-items=\"item in querySearch(form.searchText)\" md-item-text=\"item.label\" md-floating-label=\"{{form.title || form.key.slice(-1)[0]}}\"><span md-highlight-text=\"ctrl.searchText\">{{item.label}}</span></md-autocomplete><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></div>");
+$templateCache.put("decorators/material/autocomplete.html","<div class=\"form-group {{form.htmlClass}} schema-form-select\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\"><md-autocomplete flex=\"\" ng-disabled=\"form.readonly\" ng-model=\"$$value$$\" sf-autocomplete=\"\" sf-field-model=\"replaceAll\" schema-validate=\"form\" md-selected-item=\"$$value$$\" md-search-text=\"searchText\" md-selected-item-change=\"\'todo\';\" md-items=\"item in evalExpr(\'this[\\\'\'+form.optionFilter+\'\\\'](\\\'\'+searchText+\'\\\')\')\" md-item-text=\"item.name\" md-floating-label=\"{{form.title || form.key.slice(-1)[0]}}\" md-menu-class=\"autocomplete-custom-template\"><md-item-template><span md-highlight-text=\"searchText\">{{item.title}}</span></md-item-template><md-not-found>No matches found</md-not-found></md-autocomplete><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></div>");
 $templateCache.put("decorators/material/checkbox.html","<div class=\"checkbox schema-form-checkbox {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\"><md-checkbox sf-field-model=\"\" sf-changed=\"form\" ng-disabled=\"form.readonly\" schema-validate=\"form\" class=\"{{form.fieldHtmlClass}}\" name=\"{{form.key.slice(-1)[0]}}\" aria-label=\"{{form.title || form.key.slice(-1)[0]}}\"><span ng-bind-html=\"form.title\"></span></md-checkbox><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></div>");
 $templateCache.put("decorators/material/checkboxes.html","<div sf-array=\"form\" sf-field-model=\"\" class=\"form-group schema-form-checkboxes {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\"><label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label><div class=\"checkbox\" ng-repeat=\"val in titleMapValues track by $index\"><md-checkbox ng-model=\"titleMapValues[$index]\" sf-changed=\"form\" ng-disabled=\"form.readonly\" name=\"{{form.key.slice(-1)[0]}}\" ng-true-value=\"true\" ng-false-value=\"false\" aria-label=\"{{form.title || form.key.slice(-1)[0]}}\"><span ng-bind-html=\"form.titleMap[$index].name\"></span></md-checkbox></div><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></div>");
 $templateCache.put("decorators/material/chips.html","<div class=\"form-group schema-form-chips {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\"><md-chips sf-field-model=\"\" readonly=\"form.readonly\" flex=\"\" placeholder=\"{{form.title || form.key.slice(-1)[0]}}\"><md-chip-template><strong ng-if=\"!form.template\">{{$chip}}</strong></md-chip-template></md-chips><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></div>");
@@ -21,8 +21,8 @@ $templateCache.put("decorators/material/tabarray.html","<div sf-array=\"form\" n
 $templateCache.put("decorators/material/tabs.html","<div sf-field-model=\"\" class=\"schema-form-tabs {{form.htmlClass}}\"><md-tabs md-dynamic-height=\"\" md-selected=\"selected\" md-autoselect=\"\" ng-init=\"selected = 0\"></md-tabs></div>");
 $templateCache.put("decorators/material/textarea.html","<md-input-container class=\"{{form.htmlClass}} schema-form-textarea\"><label ng-show=\"showTitle()\" for=\"{{form.key.slice(-1)[0]}}\">{{form.title}}</label> <textarea ng-class=\"form.fieldHtmlClass\" id=\"{{form.key.slice(-1)[0]}}\" sf-changed=\"form\" ng-disabled=\"form.readonly\" sf-field-model=\"\" schema-validate=\"form\" name=\"{{form.key.slice(-1)[0]}}\"></textarea><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></md-input-container>");}]);
 angular.module('schemaForm')
-  .config([ 'schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfBuilderProvider', 'sfPathProvider',
-    function(schemaFormProvider, decoratorsProvider, sfBuilderProvider, sfPathProvider) {
+  .config([ 'schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfBuilderProvider', 'sfPathProvider', '$injector',
+    function(schemaFormProvider, decoratorsProvider, sfBuilderProvider, sfPathProvider, $injector) {
       var base = 'decorators/material/';
 
       var simpleTransclusion = sfBuilderProvider.builders.simpleTransclusion;
@@ -34,12 +34,31 @@ angular.module('schemaForm')
 
       var sfMessages = function(args) {
         var messagesDiv = args.fieldFrag.querySelector('[sf-messages]');
-        if(messagesDiv) {
+        if (messagesDiv) {
           messagesDiv.setAttribute('ng-messages', 'ngModel.$error');
           var child = document.createElement('div');
           child.setAttribute('sf-message', '');
           child.setAttribute('ng-message', '');
           messagesDiv.appendChild(child);
+        }
+      };
+
+      var sfAutocomplete = function(args) {
+        var mdAutocomplete = args.fieldFrag.querySelector('[sf-autocomplete]');
+        if (mdAutocomplete) {
+          if (args.form.onChange) {
+            mdAutocomplete.setAttribute('md-selected-item-change', 'args.form.onChange(searchText)');
+          };
+          if (args.form.onChange) {
+            mdAutocomplete.setAttribute('md-search-text-change', 'args.form.onChange(searchText)');
+          };
+          // mdAutocomplete.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
+          var minLength = args.form.minLength || 1;
+          var maxLength = args.form.maxLength || false;
+          mdAutocomplete.setAttribute('md-min-length', minLength);
+          if (maxLength) {
+            mdAutocomplete.setAttribute('md-max-length', maxLength);
+          };
         }
       };
 
@@ -49,65 +68,47 @@ angular.module('schemaForm')
 
           args.form.tabs.forEach(function(tab, index) {
             var mdTab = document.createElement('md-tab');
-            var mdTabLabel = document.createElement('md-tab-label');
-            var mdTabLabelText = document.createTextNode('{{'+args.path + '.tabs[' + index + '].title}}');
+            mdTab.setAttribute('label', '{{' + args.path + '.tabs[' + index + '].title}}');
             var mdTabBody = document.createElement('md-tab-body');
             var childFrag = args.build(tab.items, args.path + '.tabs[' + index + '].items', args.state);
-            mdTabLabel.appendChild(mdTabLabelText);
             mdTabBody.appendChild(childFrag);
-            mdTab.appendChild(mdTabLabel);
             mdTab.appendChild(mdTabBody);
             tabContainer.appendChild(mdTab);
           });
         }
       };
 
-      var defaults = [ sfField, ngModel, ngModelOptions, sfMessages ];
+      var defaults = [ sfField, ngModel, ngModelOptions, sfMessages, condition ];
 
       decoratorsProvider.defineDecorator('materialDecorator', {
-        actions: { template: base + 'actions.html', builder: defaults},
-        array: { template: base + 'array.html', builder: [sfField, ngModelOptions, ngModel, array, condition]},
-        button: { template: base + 'submit.html', builder: defaults},
+        actions: { template: base + 'actions.html', builder: defaults },
+        array: { template: base + 'array.html', builder: [ sfField, ngModelOptions, ngModel, array, condition ] },
+        autocomplete: {
+          template: base + 'autocomplete.html',
+          builder: [ sfField, ngModel, ngModelOptions, sfMessages, condition, sfAutocomplete ]
+        },
+        button: { template: base + 'submit.html', builder: defaults },
         checkbox: { template: base + 'checkbox.html', builder: defaults },
-        checkboxes: { template: base + 'checkboxes.html', builder: [sfField, ngModelOptions, ngModel, array, condition]},
+        checkboxes: {
+          template: base + 'checkboxes.html',
+          builder: [ sfField, ngModelOptions, ngModel, array, condition ]
+        },
         date: { template: base + 'date.html', builder: defaults },
         'default': { template: base + 'default.html', builder: defaults },
         fieldset: { template: base + 'fieldset.html', builder: [ sfField, simpleTransclusion, condition ] },
-        help: { template: base + 'help.html', builder: defaults},
-        number: { template: base + 'default.html', builder: defaults},
-        password: {template: base + 'default.html', builder: defaults},
+        help: { template: base + 'help.html', builder: defaults },
+        number: { template: base + 'default.html', builder: defaults },
+        password: { template: base + 'default.html', builder: defaults },
         radios: { template: base + 'radios.html', builder: defaults },
         'radios-inline': { template: base + 'radios-inline.html', builder: defaults },
         radiobuttons: { template: base + 'radio-buttons.html', builder: defaults },
-        section: { template: base + 'section.html', builder: [sfField, simpleTransclusion, condition]},
+        section: { template: base + 'section.html', builder: [ sfField, simpleTransclusion, condition ] },
         select: { template: base + 'select.html', builder: defaults },
         submit: { template: base + 'submit.html', builder: defaults },
-        tabs: { template: base + 'tabs.html', builder: [sfField, tabs, condition]},
-        tabarray: { template: base + 'tabarray.html', builder: [sfField, ngModelOptions, ngModel, array, condition]},
+        tabs: { template: base + 'tabs.html', builder: [ sfField, tabs, condition ] },
+        tabarray: { template: base + 'tabarray.html', builder: [ sfField, ngModelOptions, ngModel, array, condition ] },
         textarea: { template: base + 'textarea.html', builder: defaults }
       });
-      /*  decoratorsProvider.createDecorator('materialDecorator', {
-        textarea: base + 'textarea.html',
-        fieldset: base + 'fieldset.html',
-        array: base + 'array.html',
-        tabarray: base + 'tabarray.html',
-        tabs: base + 'tabs.html',
-        section: base + 'section.html',
-        conditional: base + 'section.html',
-        actions: base + 'actions.html',
-        select: base + 'select.html',
-        checkbox: base + 'checkbox.html',
-        checkboxes: base + 'checkboxes.html',
-        number: base + 'default.html',
-        password: base + 'default.html',
-        submit: base + 'submit.html',
-        button: base + 'submit.html',
-        radios: base + 'radios.html',
-        'radios-inline': base + 'radios-inline.html',
-        radiobuttons: base + 'radio-buttons.html',
-        help: base + 'help.html',
-        'default': base + 'default.html'
-      });*/
 
       /**
        * Material Datepicker
@@ -124,6 +125,23 @@ angular.module('schemaForm')
       schemaFormProvider.defaults.string.unshift(date);
     }
   ]);
+/*
+  TODO add default filter for autocomplete which allows form.optionFilter or 'autocompleteFilter' to override
+  Something along the following lines...
+  if ($injector.has('autocompleteFilter')) {
+    result = $filter('autocomplete')(input);
+  }
+  else
+  if ($injector.has(args.form.optionFilter + 'Filter')) {
+    result = $filter(args.form.optionFilter)(input);
+  }
+  else {
+    if (args.form.optionFilter) {
+      mdAutocomplete.setAttribute('md-items',
+        'item in evalExpr("this[\""+form.optionFilter+"\"](\""+searchText+"\")")');
+    }
+  }
+*/
 
 /**
  * It might be a bug, but currently input[type=number] does not add
