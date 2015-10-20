@@ -5,11 +5,11 @@
     "properties": {
       "first": {
         "title": "What is your favourite Schwarzenegger movie?",
-        "type": "string"
+        "type": "object"
       },
       "second": {
         "title": "What is your favourite Schwarzenegger movie?",
-        "type": "string"
+        "type": "object"
       }
     }
   },
@@ -32,7 +32,7 @@
     },
     {
       "type": "help",
-      "helpvalue": "I need at least 4 characters"
+      "helpvalue": "I need at least 4 non-space characters"
     },
     {
       "type": "submit",

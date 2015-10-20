@@ -10,14 +10,16 @@ angular.module('schemaForm')
       var condition          = sfBuilderProvider.builders.condition;
       var array              = sfBuilderProvider.builders.array;
 
+      var sfMessagesNode = (function() {
+        var html = '<div ng-if="ngModel.$invalid" ng-messages="ngModel.$error"><div sf-message ng-message></div></div>';
+        var div = document.createElement('div');
+        div.innerHTML = html;
+        return div.firstChild;
+      })();
       var sfMessages = function(args) {
         var messagesDiv = args.fieldFrag.querySelector('[sf-messages]');
-        if (messagesDiv) {
-          messagesDiv.setAttribute('ng-messages', 'ngModel.$error');
-          var child = document.createElement('div');
-          child.setAttribute('sf-message', '');
-          child.setAttribute('ng-message', '');
-          messagesDiv.appendChild(child);
+        if (messagesDiv && sfMessagesNode) {
+          messagesDiv.appendChild(sfMessagesNode);
         }
       };
 
@@ -119,4 +121,19 @@ angular.module('schemaForm')
         'item in evalExpr("this[\""+form.optionFilter+"\"](\""+searchText+"\")")');
     }
   }
+
+  .filter('autocompleteMovieTest', function() {
+    function autocompleteMovieTestFilter(array, input){
+      var current = input;
+      // You could also call multiple filters here using:
+      // current = $filter('filterName')(input)
+      if(typeof current === 'string') {
+        current = current.replace(' ','-').toLowerCase();
+      }
+      current = (!current) ? '_undefined' : current;
+      return current;
+    }
+
+    return externalOptionUriFilter;
+  })
 */
