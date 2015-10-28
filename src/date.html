@@ -1,22 +1,13 @@
-<md-input-container class="schema-form-date {{form.htmlClass}}">
+<div class="schema-form-date {{form.htmlClass}}">
+  <label ng-show="showTitle()" for="{{form.key.slice(-1)[0]}}">{{form.title}}</label>
   <md-datepicker sf-field-model
                  sf-changed="form"
-                 sf-type-parser="form.schema"
                  schema-validate="form"
+                 sf-type-parser="form.schema"
                  id="{{form.key.slice(-1)[0]}}"
                  ng-show="form.key"
                  ng-class="form.fieldHtmlClass"
                  ng-disabled="form.readonly"
-                 md-min-date="minDate"
-                 md-max-date="maxDate"
-                 md-placeholder="Enter date">
-    <label  ng-show="showTitle()" for="{{form.key.slice(-1)[0]}}">{{form.title}}</label>
-    <div ng-messages="ngModel.$error">
-      <!--
-         This is a bit of a hack. sf-message does the work, but ng-messages and ng-message
-         is needed for the styling
-      -->
-      <div sf-message ng-message></div>
-    </div>
+                 md-placeholder="Enter date" sf-messages>
   </md-datepicker>
-</md-input-container>
+</div>

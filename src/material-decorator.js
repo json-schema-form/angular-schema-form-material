@@ -42,6 +42,24 @@ angular.module('schemaForm')
         }
       };
 
+      var mdDatepicker = function(args) {
+        var mdDatepicker = args.fieldFrag.querySelector('md-datepicker');
+        if (mdDatepicker) {
+          if (args.form.onChange) {
+            mdDatepicker.setAttribute('ng-change', 'args.form.onChange(searchText)');
+          };
+          // mdDatepicker.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
+          var minDate = args.form.minimum || false;
+          var maxDate = args.form.maximum || false;
+          if (minDate) {
+            mdDatepicker.setAttribute('md-max-date', minDate);
+          };
+          if (maxDate) {
+            mdDatepicker.setAttribute('md-max-date', maxDate);
+          };
+        }
+      };
+
       var tabs = function(args) {
         if (args.form.tabs && args.form.tabs.length > 0) {
           var tabContainer = args.fieldFrag.querySelector('md-tabs');
@@ -61,19 +79,20 @@ angular.module('schemaForm')
       var defaults = [ sfField, ngModel, ngModelOptions, sfMessages, condition ];
 
       decoratorsProvider.defineDecorator('materialDecorator', {
-        actions: { template: base + 'actions.html', builder: defaults },
+        actions: { template: base + 'actions.html', builder: [ sfField, simpleTransclusion, condition ] },
         array: { template: base + 'array.html', builder: [ sfField, ngModelOptions, ngModel, array, condition ] },
         autocomplete: {
           template: base + 'autocomplete.html',
           builder: [ sfField, ngModel, ngModelOptions, sfMessages, condition, sfAutocomplete ]
         },
+        boolean: { template: base + 'checkbox.html', builder: defaults },
         button: { template: base + 'submit.html', builder: defaults },
         checkbox: { template: base + 'checkbox.html', builder: defaults },
         checkboxes: {
           template: base + 'checkboxes.html',
           builder: [ sfField, ngModelOptions, ngModel, array, condition ]
         },
-        date: { template: base + 'date.html', builder: defaults },
+        date: { template: base + 'date.html', builder: [ sfField, ngModel, ngModelOptions, sfMessages, mdDatepicker, condition ] },
         'default': { template: base + 'default.html', builder: defaults },
         fieldset: { template: base + 'fieldset.html', builder: [ sfField, simpleTransclusion, condition ] },
         help: { template: base + 'help.html', builder: defaults },
@@ -117,7 +136,7 @@ angular.module('schemaForm')
   }
   else {
     if (args.form.optionFilter) {
-      mdAutocomplete.setAttribute('md-items',
+      mdDatepicker.setAttribute('md-items',
         'item in evalExpr("this[\""+form.optionFilter+"\"](\""+searchText+"\")")');
     }
   }
