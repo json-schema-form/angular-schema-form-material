@@ -84,9 +84,33 @@
     border-bottom-right-radius: 4px;
   }
 
+  .schema-form-radiobuttons md-input-container {
+    margin: 0;
+    padding: 0;
+  }
+  .schema-form-radiobuttons md-input-container button {
+    font-size: 16px;
+    margin: 20px 0;
+    padding: 3px 15px 3px 15px;
+    text-transform: none;
+    font-weight: 400;
+    min-width:100px;
+  }
+  .schema-form-radiobuttons md-input-container:first-child button {
+    border-radius: 10px 0 0 10px;
+  }
+  .schema-form-radiobuttons md-input-container:not(:first-child):not(:last-child) button {
+    border-radius: 0;
+    border-left: 1px solid rgba(230, 230, 230, 0.96);
+    border-right: 1px solid rgba(230, 230, 230, 0.96);
+  }
+  .schema-form-radiobuttons md-input-container:last-child button {
+    border-radius: 0 10px 10px 0;
+  }
+
 </style>
 </head>
-<body ng-app="test" ng-controller="TestCtrl" ng-cloak>
+<body ng-app="test" ng-controller="TestCtrl as ctrl" ng-cloak>
 
   <!--- nav hidden until we redo it in angular-material -->
   <nav ng-if="false" class="navbar navbar-default">
@@ -144,15 +168,11 @@
     <div layout="column" flex="45">
       <h3>The Generated Form</h3>
 
-      <form name="ngform"  sf-model="modelData" sf-form="form" sf-schema="schema" ng-submit="submitForm(ngform,modelData)"></form>
-<!--
       <form name="ngform"
             sf-model="modelData"
             sf-form="form"
             sf-schema="schema"
-            ng-submit="submitForm(ngform,modelData)">
-      </form>
--->
+            ng-submit="submitForm(ngform,modelData)"></form>
 
       <div ng-show="ngform.$valid"><em>Form is valid</em></div>
       <div ng-show="ngform.$invalid"><em>Form is not valid</em></div>
@@ -198,6 +218,7 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="http://cdn.jsdelivr.net/g/jquery.ui@1.10"></script>
 <script type="text/javascript" src="../bower_components/tv4/tv4.js"></script>
+<script type="text/javascript" src="../bower_components/moment/moment.js"></script>
 <script type="text/javascript" src="../bower_components/ace-builds/src-min-noconflict/ace.js"></script>
 <script type="text/javascript" src="../bower_components/angular/angular.js"></script>
 <script src="../bower_components/angular-aria/angular-aria.js"></script>
@@ -220,10 +241,6 @@
 <script type="text/javascript" src="../bower_components/angular-ui-ace/ui-ace.js"></script>
 <script type="text/javascript" src="../bower_components/objectpath/lib/ObjectPath.js"></script>
 <!--
-<script type="text/javascript" src="../bower_components/pickadate/lib/picker.js"></script>
-<script type="text/javascript" src="../bower_components/pickadate/lib/picker.date.js"></script>
-<script type="text/javascript" src="../bower_components/pickadate/lib/translations/nl_NL.js"></script>
-
 <script type="text/javascript" src="../bower_components/spectrum/spectrum.js"></script>
 <script type="text/javascript" src="../bower_components/spectrum/i18n/jquery.spectrum-sv.js"></script>
 <script type="text/javascript" src="../bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.min.js"></script>
@@ -249,26 +266,129 @@ var app = angular.module('test', ['schemaForm', 'ngMaterial', 'ui.ace'])
     ngClipProvider.setPath('//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.swf');
   }]);*/
 
-app.config(function($mdThemingProvider) {
+app.config(function($mdThemingProvider, $mdDateLocaleProvider) {
   $mdThemingProvider.setDefaultTheme('default')
   $mdThemingProvider.alwaysWatchTheme(true);
+  $mdDateLocaleProvider.formatDate = function(date) {
+    console.info(moment(date).format('YYYY-MM-DD'));
+    return moment(date).format('YYYY-MM-DD');
+  };
 });
 
 
-app.controller('TestCtrl', function($scope, $http, $location) {
+app.controller('TestCtrl', function($scope, $http, $location, $timeout, $q) {
 
   $scope.tests = [
     { name: "Switch", data: 'data/switch.json' },
+    { name: "Autocomplete", data: 'data/autocomplete.json' },
+    { name: "Material Flex Grid", data: 'data/grid.json' },
     { name: "Simple", data: 'data/simple.json' },
     { name: "Basic JSON Schema Type", data: 'data/types.json' },
     { name: "TitleMap Examples", data: 'data/titlemaps.json' },
-    { name: "Bootstrap Grid", data: 'data/grid.json' },
-    { name: "Complex Key Support", data: 'data/complex-keys.json' },
-    { name: "Array", data: 'data/array.json' },
-    { name: "Tab Array", data: 'data/tabarray.json' },
+    /*{ name: "Complex Key Support", data: 'data/complex-keys.json' },*/
+    /*{ name: "Array", data: 'data/array.json' },*/
+    /*{ name: "Tab Array", data: 'data/tabarray.json' },*/
+    { name: "Tabs", data: 'data/tabs.json' },
     { name: "Kitchen Sink", data: 'data/sink.json' },
     { name: "Hack: Conditional required", data: 'data/conditional-required.json' },
   ];
+
+  /////////////////////////////////////////////////////////////////////////
+  //// Autocomplete code //////////////////////////////////////////////////
+  $scope.arnieFlix = loadFlix();
+  $scope.searchText    = null;
+  $scope.simulateQuery = false;
+  $scope.querySearch   = querySearch;
+  /**
+   * Search for arnieFlix... use $timeout to simulate
+   * remote dataservice call.
+   */
+  function querySearch (query) {
+    var results = query ? $scope.arnieFlix.filter( createFilterFor(query) ) : $scope.arnieFlix,
+        deferred;
+    if ($scope.simulateQuery) {
+      deferred = $q.defer();
+      $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+      return deferred.promise;
+    } else {
+      return results;
+    }
+  };
+
+  /**
+   * Create filter function for a query string
+   */
+  function createFilterFor(query) {
+    var lowercaseQuery = angular.lowercase(query);
+    return function filterFn(item) {
+      return (item.value.indexOf(lowercaseQuery) === 0);
+    };
+  };
+
+  function loadFlix() {
+    var films = [
+      { "year": undefined, "title": "The Legend of Conan" },
+      { "year": undefined, "title": "Triplets" },
+      { "year": 2015, "title": "Terminator Genisys" },
+      { "year": 2015, "title": "Maggie" },
+      { "year": 2014, "title": "The Expendables 3" },
+      { "year": 2014, "title": "Sabotage" },
+      { "year": 2013, "title": "Escape Plan" },
+      { "year": 2013, "title": "The Last Stand" },
+      { "year": 2012, "title": "The Expendables 2" },
+      { "year": 2010, "title": "The Expendables" },
+      { "year": 2005, "title": "The Kid & I" },
+      { "year": 2004, "title": "Around the World in 80 Days" },
+      { "year": 2003, "title": "Welcome to the Jungle" },
+      { "year": 2003, "title": "Terminator 3: Rise of the Machines" },
+      { "year": 2002, "title": "Collateral Damage" },
+      { "year": 2000, "title": "The 6th Day" },
+      { "year": 1999, "title": "End of Days" },
+      { "year": 1997, "title": "Batman & Robin" },
+      { "year": 1996, "title": "Jingle All the Way" },
+      { "year": 1996, "title": "Eraser" },
+      { "year": 1994, "title": "Junior" },
+      { "year": 1994, "title": "True Lies" },
+      { "year": 1993, "title": "Last Action Hero" },
+      { "year": 1993, "title": "Dave" },
+      { "year": 1991, "title": "Terminator 2: Judgment Day" },
+      { "year": 1990, "title": "Kindergarten Cop" },
+      { "year": 1990, "title": "Total Recall" },
+      { "year": 1988, "title": "Twins" },
+      { "year": 1988, "title": "Red Heat" },
+      { "year": 1987, "title": "The Running Man" },
+      { "year": 1987, "title": "Predator" },
+      { "year": 1986, "title": "Raw Deal" },
+      { "year": 1985, "title": "Commando" },
+      { "year": 1985, "title": "Red Sonja" },
+      { "year": 1984, "title": "The Terminator" },
+      { "year": 1984, "title": "Conan the Destroyer" },
+      { "year": 1982, "title": "Conan the Barbarian" },
+      { "year": 1980, "title": "The Jayne Mansfield Story" },
+      { "year": 1979, "title": "Scavenger Hunt" },
+      { "year": 1979, "title": "The Villain" },
+      { "year": 1976, "title": "Stay Hungry" },
+      { "year": 1974, "title": "Happy Anniversary and Goodbye" },
+      { "year": 1973, "title": "The Long Goodbye" },
+      { "year": 1969, "title": "Hercules in New York" },
+      { "year": 1969, "title": "Hercules" }
+    ];
+    return films.map( function (film) {
+      film.name = film.title;
+      film.value = film.title.toLowerCase();
+      return film;
+    });
+  };
+
+  // $scope.autocompleteTmpl = `
+  //   <span class="item-year">
+  //     <span> {{item.year}} </span>
+  //   </span>
+  //   <span class="item-title">
+  //     <strong>{{item.title}}</strong>
+  //   </span>`;
+  //// Autocomplete code end //////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////
 
   $scope.navbarMode = 'default';
   //$scope.hasFlash = swfobject.hasFlashPlayerVersion('9');

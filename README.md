@@ -3,9 +3,14 @@ Angular Material Decorator
 
 For https://github.com/Textalk/angular-schema-form
 
+Work In Progress
+----------------
+As Angular Material has not reached 1.0.0 yet, this decorator is progressing very cautiously until that project hits it's stable milestone.
 
-Very very very much work in progress.
+Meaning that it is __very__ much a __work in progress__.
 
+Testing
+------------
 To test clone repo and:
 ```
 npm install
@@ -20,10 +25,9 @@ There is also a `gulp watch` task that minifys on change.
 
 Known Issues
 ------------
-  * Almost nothing work
-  * Needs development branch of angular schema form
-  * Only inputs and textarea are implemented
-  * ngModelOptions doesn't work
+  * Almost nothing works if the schema uses bootstrap decorator features, it does not have array or complex keys yet and many other features are still missing or have no equivalent.
+  * Needs development branch of angular schema form.
+  * Only basic support for inputs, textarea, radios, radiobuttons, checkboxes, datepicker and tabs are implemented.
   * Angular material theme only works when `$mdThemingProvider.alwaysWatchTheme(true);` is used.
 
 # Components

@@ -40,7 +40,7 @@
         "enum": ["a","b","c"]
       },
       "radiobuttons": {
-        "title": "Radio buttons used to switch a boolean",
+        "title": "Radio buttons used to switch a boolean or multiple values",
         "type": "boolean",
         "default": false
       }
@@ -93,6 +93,7 @@
       "type": "radiobuttons",
       "titleMap": [
         {"value": false, "name": "No way"},
+        {"value": null, "name": "Maybe"},
         {"value": true,  "name": "OK"}
       ]
     }

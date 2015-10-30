@@ -1,7 +1,5 @@
-<md-input-container class="schema-form-{{form.type}} {{form.htmlClass}}">
+<md-input-container class="schema-form-{{form.type}} {{form.htmlClass}}" sf-messages>
   <label  ng-show="showTitle()" for="{{form.key.slice(-1)[0]}}">{{form.title}}</label>
-
-
 <!--
   <input ng-if="!form.fieldAddonLeft && !form.fieldAddonRight"
          ng-show="form.key"
@@ -18,24 +16,16 @@
          name="{{form.key.slice(-1)[0]}}"
          aria-describedby="{{form.key.slice(-1)[0] + 'Status'}}">
 -->
-
   <input sf-field-model
          ng-show="form.key"
          type="{{form.type}}"
          step="any"
          sf-changed="form"
-         placeholder="{{form.placeholder}}"
          id="{{form.key.slice(-1)[0]}}"
          ng-class="form.fieldHtmlClass"
-         ng-disabled="form.readonly"
-         name="{{form.key.slice(-1)[0]}}"
          sf-type-parser="form.schema"
-         schema-validate="form">
-         <div ng-messages="ngModel.$error">
-           <!--
-              This is a bit of a hack. sf-message does the work, but ng-messages and ng-message
-              is needed for the styling
-           -->
-           <div sf-message ng-message></div>
-        </div>
+         ng-disabled="form.readonly"
+         schema-validate="form"
+         name="{{form.key.slice(-1)[0]}}"
+         aria-describedby="{{form.key.slice(-1)[0] + 'Status'}}" />
 </md-input-container>

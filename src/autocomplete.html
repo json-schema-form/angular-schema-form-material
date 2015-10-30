@@ -1,12 +1,24 @@
 <div class="form-group {{form.htmlClass}} schema-form-select"
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}">
   <md-autocomplete flex
-    md-selected-item="form.selectedItem"
-    md-search-text="form.searchText"
-    md-items="item in querySearch(form.searchText)"
-    md-item-text="item.label"
-    md-floating-label="{{form.title || form.key.slice(-1)[0]}}">
-    <span md-highlight-text="ctrl.searchText">{{item.label}}</span>
+    ng-disabled="form.readonly"
+    ng-model="$$value$$"
+    sf-autocomplete
+    sf-field-model="replaceAll"
+    schema-validate="form"
+    md-selected-item="$$value$$"
+    md-search-text="searchText"
+    md-selected-item-change="'todo';"
+    md-items="item in evalExpr('this[\''+form.optionFilter+'\'](\''+searchText+'\')')"
+    md-item-text="item.name"
+    md-floating-label="{{form.title || form.key.slice(-1)[0]}}"
+    md-menu-class="autocomplete-custom-template">
+    <md-item-template>
+      <span md-highlight-text="searchText">{{item.title}}</span>
+    </md-item-template>
+    <md-not-found>
+      No matches found
+    </md-not-found>
   </md-autocomplete>
   <div ng-messages="ngModel.$error">
     <!--
