@@ -24,10 +24,10 @@ gulp.task('build', function() {
 
   stream.done()
   .pipe(concat('material-decorator.js'))
-  .pipe(gulp.dest('./'))
-  .pipe(uglify())
-  .pipe(rename('material-decorator.min.js'))
   .pipe(gulp.dest('./'));
+  //.pipe(uglify())
+  //.pipe(rename('material-decorator.min.js'))
+  //.pipe(gulp.dest('./'));
 
 });
 

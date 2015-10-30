@@ -29,4 +29,28 @@ Known Issues
   * Needs development branch of angular schema form.
   * Only basic support for inputs, textarea, radios, radiobuttons, checkboxes, datepicker and tabs are implemented.
   * Angular material theme only works when `$mdThemingProvider.alwaysWatchTheme(true);` is used.
-  * Until Angular Material hits 1.0.0 there is still chances that features may break again.
+
+# Components
+## Switch
+> [Angular Material Reference](https://material.angularjs.org/0.11.2/#/demo/material.components.switch)
+
+Example:
+
+```json
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "live":  {
+        "title": "Mode",
+        "type": "boolean"
+      }
+    }
+  },
+  "form": [
+    {
+      "key":"live",
+      "type":"switch"
+      }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "live":  {
+        "title": "Mode",
+        "type": "boolean"
+      }
+    }
+  },
+  "form": [
+    {
+      "key":"live",
+      "type":"switch"
+      }
+  ]
+}

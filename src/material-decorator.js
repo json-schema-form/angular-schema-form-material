@@ -106,7 +106,8 @@ angular.module('schemaForm')
         submit: { template: base + 'submit.html', builder: defaults },
         tabs: { template: base + 'tabs.html', builder: [ sfField, tabs, condition ] },
         tabarray: { template: base + 'tabarray.html', builder: [ sfField, ngModelOptions, ngModel, array, condition ] },
-        textarea: { template: base + 'textarea.html', builder: defaults }
+        textarea: { template: base + 'textarea.html', builder: defaults },
+        switch: { template: base +  'switch.html', builder: defaults}
       });
 
       /**
