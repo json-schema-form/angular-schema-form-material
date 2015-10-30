@@ -1,7 +1,5 @@
 # Created by https://www.gitignore.io/api/indow,osx,windows,phpstorm,sublimetext,bower,node
 
-#!! ERROR: indow is undefined. Use list command to see defined gitignore types !!#
-
 ### OSX ###
 .DS_Store
 .AppleDouble
