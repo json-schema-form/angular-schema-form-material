@@ -4,10 +4,11 @@ var gulp = require('gulp'),
   templateCache = require('gulp-angular-templatecache'),
   concat = require('gulp-concat'),
   rename = require('gulp-rename'),
-  uglify = require('gulp-uglify');
+  uglify = require('gulp-uglify'),
+  jscs = require('gulp-jscs');
 
 gulp.task('build', function() {
-  var stream = streamqueue({objectMode: true});
+  var stream = streamqueue({ objectMode: true });
   stream.queue(
     gulp.src('./src/**/*.html')
     .pipe(minifyHtml({
@@ -31,9 +32,13 @@ gulp.task('build', function() {
 
 });
 
-
-gulp.task('watch', function() {
-  gulp.watch('./src/**/*', ['default']);
+gulp.task('jscs', function() {
+  gulp.src('./src/**/*.js')
+      .pipe(jscs());
 });
 
-gulp.task('default', ['build']);
+gulp.task('watch', function() {
+  gulp.watch('./src/**/*', [ 'default' ]);
+});
+
+gulp.task('default', [ 'build' ]);

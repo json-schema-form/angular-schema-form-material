@@ -30,3 +30,7 @@ Known Issues
   * Only basic support for inputs, textarea, radios, radiobuttons, checkboxes, datepicker and tabs are implemented.
   * Angular material theme only works when `$mdThemingProvider.alwaysWatchTheme(true);` is used.
   * Until Angular Material hits 1.0.0 there is still chances that features may break again.
+
+Contributing
+------------
+Contributions are welcome! Please see [Contributing.md](CONTRIBUTING.md) for more info.
