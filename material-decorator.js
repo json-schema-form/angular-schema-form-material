@@ -45,46 +45,46 @@ angular.module('schemaForm')
         }
       };
 
-      var sfAutocomplete = function(args) {
-        var mdAutocomplete = args.fieldFrag.querySelector('[sf-autocomplete]');
-        if (mdAutocomplete) {
+      var mdAutocomplete = function(args) {
+        var mdAutocompleteFrag = args.fieldFrag.querySelector('md-autocomplete');
+        if (mdAutocompleteFrag) {
           if (args.form.onChange) {
-            mdAutocomplete.setAttribute('md-selected-item-change', 'args.form.onChange(searchText)');
+            mdAutocompleteFrag.setAttribute('md-selected-item-change', 'args.form.onChange(searchText)');
           };
           if (args.form.onChange) {
-            mdAutocomplete.setAttribute('md-search-text-change', 'args.form.onChange(searchText)');
+            mdAutocompleteFrag.setAttribute('md-search-text-change', 'args.form.onChange(searchText)');
           };
-          // mdAutocomplete.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
+          // mdAutocompleteFrag.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
           var minLength = args.form.minLength || 1;
           var maxLength = args.form.maxLength || false;
-          mdAutocomplete.setAttribute('md-min-length', minLength);
+          mdAutocompleteFrag.setAttribute('md-min-length', minLength);
           if (maxLength) {
-            mdAutocomplete.setAttribute('md-max-length', maxLength);
+            mdAutocompleteFrag.setAttribute('md-max-length', maxLength);
           };
         }
       };
 
       var mdDatepicker = function(args) {
-        var mdDatepicker = args.fieldFrag.querySelector('md-datepicker');
-        if (mdDatepicker) {
+        var mdDatepickerFrag = args.fieldFrag.querySelector('md-datepicker');
+        if (mdDatepickerFrag) {
           if (args.form.onChange) {
-            mdDatepicker.setAttribute('ng-change', 'args.form.onChange(searchText)');
+            mdDatepickerFrag.setAttribute('ng-change', 'args.form.onChange(searchText)');
           };
-          // mdDatepicker.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
+          // mdDatepickerFrag.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
           var minDate = args.form.minimum || false;
           var maxDate = args.form.maximum || false;
           if (minDate) {
-            mdDatepicker.setAttribute('md-max-date', minDate);
+            mdDatepickerFrag.setAttribute('md-max-date', minDate);
           };
           if (maxDate) {
-            mdDatepicker.setAttribute('md-max-date', maxDate);
+            mdDatepickerFrag.setAttribute('md-max-date', maxDate);
           };
         }
       };
 
-      var tabs = function(args) {
+      var mdTabs = function(args) {
         if (args.form.tabs && args.form.tabs.length > 0) {
-          var tabContainer = args.fieldFrag.querySelector('md-tabs');
+          var mdTabsFrag = args.fieldFrag.querySelector('md-tabs');
 
           args.form.tabs.forEach(function(tab, index) {
             var mdTab = document.createElement('md-tab');
@@ -93,7 +93,7 @@ angular.module('schemaForm')
             var childFrag = args.build(tab.items, args.path + '.tabs[' + index + '].items', args.state);
             mdTabBody.appendChild(childFrag);
             mdTab.appendChild(mdTabBody);
-            tabContainer.appendChild(mdTab);
+            mdTabsFrag.appendChild(mdTab);
           });
         }
       };
@@ -105,7 +105,7 @@ angular.module('schemaForm')
         array: { template: base + 'array.html', builder: [ sfField, ngModelOptions, ngModel, array, condition ] },
         autocomplete: {
           template: base + 'autocomplete.html',
-          builder: [ sfField, ngModel, ngModelOptions, sfMessages, condition, sfAutocomplete ]
+          builder: [ sfField, ngModel, ngModelOptions, sfMessages, condition, mdAutocomplete ]
         },
         boolean: { template: base + 'checkbox.html', builder: defaults },
         button: { template: base + 'submit.html', builder: defaults },
@@ -114,7 +114,10 @@ angular.module('schemaForm')
           template: base + 'checkboxes.html',
           builder: [ sfField, ngModelOptions, ngModel, array, condition ]
         },
-        date: { template: base + 'date.html', builder: [ sfField, ngModel, ngModelOptions, sfMessages, mdDatepicker, condition ] },
+        date: {
+          template: base + 'date.html',
+          builder: [ sfField, ngModel, ngModelOptions, sfMessages, mdDatepicker, condition ]
+        },
         'default': { template: base + 'default.html', builder: defaults },
         fieldset: { template: base + 'fieldset.html', builder: [ sfField, simpleTransclusion, condition ] },
         help: { template: base + 'help.html', builder: defaults },
@@ -126,7 +129,7 @@ angular.module('schemaForm')
         section: { template: base + 'section.html', builder: [ sfField, simpleTransclusion, condition ] },
         select: { template: base + 'select.html', builder: defaults },
         submit: { template: base + 'submit.html', builder: defaults },
-        tabs: { template: base + 'tabs.html', builder: [ sfField, tabs, condition ] },
+        tabs: { template: base + 'tabs.html', builder: [ sfField, mdTabs, condition ] },
         tabarray: { template: base + 'tabarray.html', builder: [ sfField, ngModelOptions, ngModel, array, condition ] },
         textarea: { template: base + 'textarea.html', builder: defaults }
       });
@@ -158,7 +161,7 @@ angular.module('schemaForm')
   }
   else {
     if (args.form.optionFilter) {
-      mdDatepicker.setAttribute('md-items',
+      mdAutocomplete.setAttribute('md-items',
         'item in evalExpr("this[\""+form.optionFilter+"\"](\""+searchText+"\")")');
     }
   }
