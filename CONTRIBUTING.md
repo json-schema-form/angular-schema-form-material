@@ -22,12 +22,9 @@ request a heck of a lot easier for us.
 Please **avoid including the material-decorator.js or material-decorator.min.js** as that can make merging harder, and we
 will always generate these files when we make a new release.
 
-If its a new field type consider making it an add-on instead,
-especially if it has external dependencies. See [extending Schema Form documentation.](docs/extending.md)
-
 With new features we love to see updates to the docs as well as tests, that makes it super
 easy and fast for us to merge it!
 
-Also consider running any code through the code style checker [jscs](https://github.com/mdevils/node-jscs)
+Also consider running any code through the **JavaScript Code Style** checker [jscs](https://github.com/mdevils/node-jscs)
 (or even better use it in your editor) using the .jscsrc file in the repo root, which should be picked up by the IDE. You can also us `gulp jscs` to
 check your code.

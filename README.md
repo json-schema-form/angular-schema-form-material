@@ -7,7 +7,7 @@ Work In Progress
 ----------------
 As Angular Material has not reached 1.0.0 yet, this decorator is progressing very cautiously until that project hits it's stable milestone.
 
-Meaning that it is __very__ much a __work in progress__.
+Meaning that it is **very** much a **work in progress**.
 
 Testing
 ------------
@@ -34,3 +34,9 @@ Known Issues
 Contributing
 ------------
 Contributions are welcome! Please see [Contributing.md](CONTRIBUTING.md) for more info.
+
+Future
+------
+Using the new builder opens up for a lot of optimization. Primarily we can get rid of a lot of small
+watches by using build helpers. For instance, slapping on a `sf-changed` directive *only* if the
+form definition has an `onChange` option.
