@@ -1,4 +1,4 @@
-<md-input-container class="schema-form-{{form.type}} {{form.htmlClass}}" sf-messages>
+<md-input-container class="schema-form-{{form.type}} {{form.htmlClass}}" ng-class="{'md-input-has-value':model['{{form.key.slice(-1)[0]}}']}" sf-messages>
   <label  ng-show="showTitle()" for="{{form.key.slice(-1)[0]}}">{{form.title}}</label>
 <!--
   <input ng-if="!form.fieldAddonLeft && !form.fieldAddonRight"
