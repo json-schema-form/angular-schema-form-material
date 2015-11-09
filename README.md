@@ -1,6 +1,8 @@
 Angular Material Decorator
 ==========================
 
+[![Join the chat at https://gitter.im/Textalk/angular-schema-form-material](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Textalk/angular-schema-form-material?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 For https://github.com/Textalk/angular-schema-form
 
 Work In Progress
