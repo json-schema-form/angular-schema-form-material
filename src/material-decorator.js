@@ -28,17 +28,28 @@ angular.module('schemaForm')
         if (mdAutocompleteFrag) {
           if (args.form.onChange) {
             mdAutocompleteFrag.setAttribute('md-selected-item-change', 'args.form.onChange(searchText)');
-          };
+          }
           if (args.form.onChange) {
             mdAutocompleteFrag.setAttribute('md-search-text-change', 'args.form.onChange(searchText)');
-          };
+          }
           // mdAutocompleteFrag.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
           var minLength = args.form.minLength || 1;
           var maxLength = args.form.maxLength || false;
           mdAutocompleteFrag.setAttribute('md-min-length', minLength);
           if (maxLength) {
             mdAutocompleteFrag.setAttribute('md-max-length', maxLength);
-          };
+          }
+        }
+      };
+
+      var mdSwitch = function(args) {
+        var mdSwitchFrag = args.fieldFrag.querySelector('md-switch');
+        if (args.form.schema.titleMap) {
+          mdSwitchFrag.setAttribute('ng-true-value',args.form.schema.titleMap.true);
+          mdSwitchFrag.setAttribute('ng-false-value',args.form.schema.titleMap.false);
+        }
+        if (args.form.schema.ink) {
+          mdSwitchFrag.setIdAttribute('md-no-ink',args.form.schema.ink);
         }
       };
 
@@ -47,16 +58,16 @@ angular.module('schemaForm')
         if (mdDatepickerFrag) {
           if (args.form.onChange) {
             mdDatepickerFrag.setAttribute('ng-change', 'args.form.onChange(searchText)');
-          };
+          }
           // mdDatepickerFrag.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
           var minDate = args.form.minimum || false;
           var maxDate = args.form.maximum || false;
           if (minDate) {
             mdDatepickerFrag.setAttribute('md-max-date', minDate);
-          };
+          }
           if (maxDate) {
             mdDatepickerFrag.setAttribute('md-max-date', maxDate);
-          };
+          }
         }
       };
 
@@ -109,7 +120,11 @@ angular.module('schemaForm')
         submit: { template: base + 'submit.html', builder: defaults },
         tabs: { template: base + 'tabs.html', builder: [ sfField, mdTabs, condition ] },
         tabarray: { template: base + 'tabarray.html', builder: [ sfField, ngModelOptions, ngModel, array, condition ] },
-        textarea: { template: base + 'textarea.html', builder: defaults }
+        textarea: { template: base + 'textarea.html', builder: defaults },
+        switch: {
+          template: base + 'switch.html',
+          builder: [ sfField, ngModel, ngModelOptions, sfMessages, condition, mdSwitch ]
+        }
       });
 
       /**

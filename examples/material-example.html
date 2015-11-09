@@ -184,6 +184,7 @@ app.config(function($mdThemingProvider, $mdDateLocaleProvider) {
 app.controller('TestCtrl', function($scope, $http, $location, $timeout, $q) {
 
   $scope.tests = [
+    { name: "Switch", data: 'data/switch.json'},
     { name: "Material Flex Grid", data: 'data/grid.json' },
     { name: "Autocomplete", data: 'data/autocomplete.json' },
     { name: "Simple", data: 'data/simple.json' },

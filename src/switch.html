@@ -5,12 +5,10 @@
              schema-validate="form"
              id="{{form.key.slice(-1)[0]}}"
              aria-label="{{form.title}}"
-             ng-true-value="'yup'"
-             ng-false-value="'nope'"
              ng-show="form.key"
              ng-class="form.fieldHtmlClass"
              ng-disabled="form.readonly">
-    <label  ng-show="showTitle()" for="{{form.key.slice(-1)[0]}}">{{form.title}}</label>
+    <span  ng-show="showTitle()" for="{{form.key.slice(-1)[0]}}">{{form.title}}</span>
     <div ng-messages="ngModel.$error">
       <!--
          This is a bit of a hack. sf-message does the work, but ng-messages and ng-message
