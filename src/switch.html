@@ -1,20 +1,14 @@
-<md-input-container class="schema-form-switch {{form.htmlClass}}">
+<md-input-container class="schema-form-switch {{::form.htmlClass}}">
   <md-switch sf-field-model
              sf-changed="form"
              sf-type-parser="form.schema"
+             sf-messages
              schema-validate="form"
-             id="{{form.key.slice(-1)[0]}}"
+             id="{{::form.key|sfCamelKey}}"
              aria-label="{{form.title}}"
-             ng-show="form.key"
+             ng-show="::form.key"
              ng-class="form.fieldHtmlClass"
-             ng-disabled="form.readonly">
-    <span  ng-show="showTitle()" for="{{form.key.slice(-1)[0]}}">{{form.title}}</span>
-    <div ng-messages="ngModel.$error">
-      <!--
-         This is a bit of a hack. sf-message does the work, but ng-messages and ng-message
-         is needed for the styling
-      -->
-      <div sf-message ng-message></div>
-    </div>
+             ng-disabled="::form.readonly">
+    <span  ng-show="showTitle()" for="{{::form.key|sfCamelKey}}">{{::form.title}}</span>
   </md-switch>
 </md-input-container>

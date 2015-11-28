@@ -1,23 +1,17 @@
 <div sf-array="form" sf-field-model
-     class="form-group schema-form-checkboxes {{form.htmlClass}}"
-     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
-  <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
+     class="form-group schema-form-checkboxes {{::form.htmlClass}}"
+     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}"
+     sf-messages>
+  <label class="control-label" ng-show="showTitle()">{{::form.title}}</label>
   <div class="checkbox" ng-repeat="val in titleMapValues track by $index" >
     <md-checkbox ng-model="titleMapValues[$index]"
-                sf-changed="form"
-                ng-disabled="form.readonly"
-                name="{{form.key.slice(-1)[0]}}"
-                ng-true-value="true"
-                ng-false-value="false"
-                aria-label="{{form.title || form.key.slice(-1)[0]}}">
-      <span ng-bind-html="form.titleMap[$index].name"></span>
+                 sf-changed="form"
+                 ng-disabled="::form.readonly"
+                 name="{{::form.key|sfCamelKey}}"
+                 ng-true-value="true"
+                 ng-false-value="false"
+                 aria-label="{{::form.title}}">
+      {{::form.titleMap[$index].name}}
     </md-checkbox>
-  </div>
-  <div ng-messages="ngModel.$error">
-    <!--
-       This is a bit of a hack. sf-message does the work, but ng-messages and ng-message
-       is needed for the styling
-    -->
-    <div sf-message ng-message></div>
   </div>
 </div>

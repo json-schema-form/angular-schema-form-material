@@ -5,7 +5,7 @@
   <md-list class="list-group" sf-field-model ui-sortable="form.sortOptions">
     <md-list-item layout="row" class="list-group-item"
              sf-field-model="ng-repeat"
-             ng-repeat="item in $$value$$ track by $index"
+             ng-repeat="item in modelArray track by $index"
              schema-form-array-items
              class="{{form.fieldHtmlClass}}">
       <md-button flex="none" flex-order="2"
@@ -15,7 +15,7 @@
                  ng-disabled="form.schema.minItems >= modelArray.length"
                  class="md-icon-button" aria-label="More"
                  style="position: relative; z-index: 20;">
-        <md-icon md-svg-icon="img/icons/ic_clear_black_18px.svg"></md-icon>
+        <md-icon>close</md-icon>
       </md-button>
     </md-list-item>
   </md-list>

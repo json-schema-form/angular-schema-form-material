@@ -187,14 +187,9 @@
     },
     "soul",
     {
-      "type": "conditional",
       "condition": "modelData.soul",
-      "items": [
-        {
-          "key": "soulserial",
-          "placeholder": "ex. 666"
-        }
-      ]
+      "key": "soulserial",
+      "placeholder": "ex. 666"
     },
     {
       "key": "date",

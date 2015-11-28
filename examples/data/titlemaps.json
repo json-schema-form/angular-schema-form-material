@@ -16,7 +16,8 @@
         "type": "string",
         "enum": ["a","b","c"]
       },
-      "noenum": { "type": "string", "title": "No enum, but forms says it's a select" },
+      "noenum": { "type": "string", "title": "No enum, but forms says it's a select", "default": "a3" },
+      "selectOptionData": { "type": "string", "title": "Dynamic Options", "default": "The Terminator" },
       "array": {
         "title": "Array with enum defaults to 'checkboxes'",
         "type": "array",
@@ -47,26 +48,40 @@
     }
   },
   "form": [
-    "select",
     {
-      "key": "select2",
-      "type": "select",
-      "titleMap": {
-        "a": "A",
-        "b": "B",
-        "c": "C"
-      }
-    },
-    {
-      "key": "noenum",
-      "type": "select",
-      "titleMap": [
-        { "value":"a1", "name": "A1", "group": "A" },
-        { "value":"a2", "name":"A2", "group": "A" },
-        { "value":"a3", "name":"A3", "group": "A" },
-        { "value":"b1", "name": "B1", "group": "B" },
-        { "value":"b2", "name":"B2", "group": "B" },
-        { "value":"b3", "name":"B3", "group": "B" }
+      "type": "section",
+      "grid": {
+        "flex": true,
+        "layout": "row"
+      },
+      "items": [
+        "select",
+        {
+          "key": "select2",
+          "type": "select",
+          "titleMap": {
+            "a": "A",
+            "b": "B",
+            "c": "C"
+          }
+        },
+        {
+          "key": "noenum",
+          "type": "select",
+          "titleMap": [
+            { "value":"a1", "name": "A1", "group": "A" },
+            { "value":"a2", "name":"A2", "group": "A" },
+            { "value":"a3", "name":"A3", "group": "A" },
+            { "value":"b1", "name": "B1", "group": "B" },
+            { "value":"b2", "name":"B2", "group": "B" },
+            { "value":"b3", "name":"B3", "group": "B" }
+          ]
+        },
+        {
+          "key": "selectOptionData",
+          "type": "select",
+          "optionData": "arnieFlix"
+        }
       ]
     },
     "array",

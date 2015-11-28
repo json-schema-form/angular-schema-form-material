@@ -1,7 +1,7 @@
-<md-input-container class="schema-form-{{form.type}} {{form.htmlClass}}"
+<md-input-container class="schema-form-{{::form.type}} {{::form.htmlClass}}"
                     ng-class="{'md-input-has-value': model['{{form.key.join('\'][\'')}}']}"
-                    sf-messages>
-  <label  ng-show="showTitle()" for="{{form.key.slice(-1)[0]}}">{{form.title}}</label>
+                    sf-messages sf-layout>
+  <label  ng-show="showTitle()" for="{{::form.key|sfCamelKey}}">{{::form.title}}</label>
 <!--
   <input ng-if="!form.fieldAddonLeft && !form.fieldAddonRight"
          ng-show="form.key"
@@ -19,15 +19,15 @@
          aria-describedby="{{form.key.slice(-1)[0] + 'Status'}}">
 -->
   <input sf-field-model
-         ng-show="form.key"
-         type="{{form.type}}"
+         ng-show="::form.key"
+         type="{{::form.type}}"
          step="any"
          sf-changed="form"
-         id="{{form.key.slice(-1)[0]}}"
-         ng-class="form.fieldHtmlClass"
+         id="{{::form.key|sfCamelKey}}"
+         ng-class="::form.fieldHtmlClass"
          sf-type-parser="form.schema"
-         ng-disabled="form.readonly"
+         ng-disabled="::form.readonly"
          schema-validate="form"
-         name="{{form.key.slice(-1)[0]}}"
-         aria-describedby="{{form.key.slice(-1)[0] + 'Status'}}" />
+         name="{{::form.key|sfCamelKey}}"
+         aria-describedby="{{::form.key|sfCamelKey}}Status" />
 </md-input-container>

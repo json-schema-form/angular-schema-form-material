@@ -4,9 +4,11 @@
   <meta charset="utf-8">
   <title>Material Design Schema Form Example</title>
   <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style type="text/css">
   body,html {
     min-height: 1400px;
+    outline: none;
   }
 
   .form {  height: 400px;  }
@@ -184,12 +186,12 @@ app.config(function($mdThemingProvider, $mdDateLocaleProvider) {
 app.controller('TestCtrl', function($scope, $http, $location, $timeout, $q) {
 
   $scope.tests = [
-    { name: "Switch", data: 'data/switch.json'},
+    { name: "TitleMap Examples", data: 'data/titlemaps.json' },
     { name: "Material Flex Grid", data: 'data/grid.json' },
-    { name: "Autocomplete", data: 'data/autocomplete.json' },
     { name: "Simple", data: 'data/simple.json' },
     { name: "Basic JSON Schema Type", data: 'data/types.json' },
-    { name: "TitleMap Examples", data: 'data/titlemaps.json' },
+    { name: "Autocomplete", data: 'data/autocomplete.json' },
+    { name: "Switch", data: 'data/switch.json'},
     /*{ name: "Complex Key Support", data: 'data/complex-keys.json' },*/
     /*{ name: "Array", data: 'data/array.json' },*/
     /*{ name: "Tab Array", data: 'data/tabarray.json' },*/

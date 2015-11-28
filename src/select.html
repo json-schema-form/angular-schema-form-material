@@ -1,22 +1,19 @@
-<md-input-container class="form-group {{form.htmlClass}} schema-form-select"
-     ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}">
-  <label ng-show="showTitle()">{{form.title}}</label>
+<md-input-container
+    class="form-group {{::form.htmlClass}} schema-form-select"
+    ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}"
+    sf-messages sf-layout>
+  <label ng-show="::showTitle()">{{::form.title}}</label>
   <md-select sf-field-model>
-    <md-optgroup ng-repeat-start="(key, opt) in form.titleMap | orderBy:'group' as optGroups"
+    <md-optgroup ng-repeat-start="(key, opt) in form.getOptions(form, evalExpr) | orderBy:'group' as optGroups"
                  ng-if="opt.group && opt.group != optGroups[key-1].group"
-                 label="{{opt.group}}">
-      <md-option ng-repeat="(key, filtered) in form.titleMap | filter: {group: opt.group} | orderBy:'name' as opts"
-                 ng-value="filtered.value">{{filtered.name}}</md-option>
+                 label="{{::opt.group}}"
+                 aria-label="{{::opt.group}}">
+      <md-option ng-repeat="(key, filtered) in form.getOptions(form, evalExpr) | filter: {group: opt.group} | orderBy:'name' as opts"
+                 ng-value="::filtered.value"
+                 aria-label="{{::filtered.name}}">{{::filtered.name}}</md-option>
     </md-optgroup>
-    <md-option ng-repeat-end
-               ng-if="!opt.group"
-               ng-value="opt.value">{{opt.name}}</md-option>
+    <md-option   ng-if="!opt.group"
+                 ng-value="::opt.value"
+                 ng-repeat-end>{{::opt.name}}</md-option>
   </md-select>
-  <div ng-messages="ngModel.$error">
-    <!--
-       This is a bit of a hack. sf-message does the work, but ng-messages and ng-message
-       is needed for the styling
-    -->
-    <div sf-message ng-message></div>
-  </div>
 </md-input-container>
