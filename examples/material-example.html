@@ -122,13 +122,15 @@
     <div layout="column" flex>
       <h3>Select Example</h3>
       <div class="form-group">
-        <md-select id="selectTest" ng-model="selectedTest" placeholder="{{form.placeholder}}">
-          <md-option ng-value="obj" ng-repeat="obj in tests">{{ obj.name }}</md-option>
-        </md-select>
-        <span class="btw">
+        <md-input-container>
+          <md-select id="selectTest" ng-model="selectedTest">
+            <md-option ng-value="obj" ng-repeat="obj in tests">{{::obj.name}}</md-option>
+          </md-select>
+        </md-input-container>
+        <div class="btw">
           By the way, there is also an example of
           <a href="custom-validators.html">custom (async) validators</a> example.
-        </span>
+        </div>
       </div>
       <h3>Form</h3>
       <div ui-ace="{ theme: 'monokai',mode:'json'}"
