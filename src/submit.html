@@ -2,6 +2,7 @@
   <md-button class="md-raised {{ form.style || 'md-primary' }} {{form.fieldHtmlClass}}"
              ng-disabled="form.readonly"
              aria-label="{{::form.title}}">
+    <md-tooltip ng-if="::form.tip">{{::form.tip}}</md-tooltip>
     {{::form.title}}
   </md-button>
 </section>
