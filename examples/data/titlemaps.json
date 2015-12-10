@@ -17,7 +17,23 @@
         "enum": ["a","b","c"]
       },
       "noenum": { "type": "string", "title": "No enum, but forms says it's a select", "default": "a3" },
-      "selectOptionData": { "type": "string", "title": "Dynamic Options", "default": "The Terminator" },
+      "selectOptionData": {
+        "type": "string",
+        "title": "Dynamic Options",
+        "default": "The Terminator"
+      },
+      "radios": {
+        "title": "Basic radio button example to pick remote dataset",
+        "type": "string",
+        "enum": ["books","movies"]
+      },
+      "selectOptionRemote": {
+        "type": "string",
+        "title": "Remote Options",
+        "links":[
+          { "rel": "options", "href": "./data/remote-titlemap-{radios}.json" }
+        ]
+      },
       "array": {
         "title": "Array with enum defaults to 'checkboxes'",
         "type": "array",
@@ -34,11 +50,6 @@
           "type": "string",
           "enum": ["a","b","c"]
         }
-      },
-      "radios": {
-        "title": "Basic radio button example",
-        "type": "string",
-        "enum": ["a","b","c"]
       },
       "radiobuttons": {
         "title": "Radio buttons used to switch a boolean or multiple values",
@@ -81,6 +92,18 @@
           "key": "selectOptionData",
           "type": "select",
           "optionData": "arnieFlix"
+        },
+        {
+          "key": "radios",
+          "type": "radios",
+          "titleMap": [
+            { "value":"books", "name": "Books" },
+            { "value":"movies", "name":"Movies" }
+          ]
+        },
+        {
+          "key": "selectOptionRemote",
+          "type": "select"
         }
       ]
     },
@@ -92,15 +115,6 @@
         { "value":"a", "name": "A" },
         { "value":"b", "name":"B" },
         { "value":"c", "name":"C" }
-      ]
-    },
-    {
-      "key": "radios",
-      "type": "radios",
-      "titleMap": [
-        { "value":"c", "name": "C" },
-        { "value":"b", "name":"B" },
-        { "value":"a", "name":"A" }
       ]
     },
     {

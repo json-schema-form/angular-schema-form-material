@@ -23,17 +23,19 @@ $templateCache.put("decorators/material/switch.html","<md-input-container class=
 $templateCache.put("decorators/material/tabarray.html","<div sf-array=\"form\" ng-init=\"selected = { tab: 0 }\" class=\"clearfix schema-form-tabarray schema-form-tabarray-{{form.tabType || \'left\'}} {{form.htmlClass}}\"><div ng-if=\"!form.tabType || form.tabType !== \'right\'\" ng-class=\"{\'col-xs-3\': !form.tabType || form.tabType === \'left\'}\"><ul class=\"nav nav-tabs\" ng-class=\"{ \'tabs-left\': !form.tabType || form.tabType === \'left\'}\"><li ng-repeat=\"item in modelArray track by $index\" ng-click=\"$event.preventDefault() || (selected.tab = $index)\" ng-class=\"{active: selected.tab === $index}\"><a href=\"#\">{{interp(form.title,{\'$index\':$index, value: item}) || $index}}</a></li><li ng-hide=\"form.readonly\" ng-click=\"$event.preventDefault() || (selected.tab = appendToArray().length - 1)\"><a href=\"#\"><i class=\"glyphicon glyphicon-plus\"></i> {{ form.add || \'Add\'}}</a></li></ul></div><div ng-class=\"{\'col-xs-9\': !form.tabType || form.tabType === \'left\' || form.tabType === \'right\'}\"><div class=\"tab-content {{form.fieldHtmlClass}}\"><div class=\"tab-pane clearfix\" ng-repeat=\"item in modelArray track by $index\" ng-show=\"selected.tab === $index\" ng-class=\"{active: selected.tab === $index}\"><sf-decorator ng-init=\"arrayIndex = $index\" form=\"copyWithIndex($index)\"></sf-decorator><button ng-hide=\"form.readonly\" ng-click=\"selected.tab = deleteFromArray($index).length - 1\" type=\"button\" class=\"btn {{ form.style.remove || \'btn-default\' }} pull-right\"><i class=\"glyphicon glyphicon-trash\"></i> {{ form.remove || \'Remove\'}}</button></div></div></div><div ng-if=\"form.tabType === \'right\'\" class=\"col-xs-3\"><ul class=\"nav nav-tabs tabs-right\"><li ng-repeat=\"item in modelArray track by $index\" ng-click=\"$event.preventDefault() || (selected.tab = $index)\" ng-class=\"{active: selected.tab === $index}\"><a href=\"#\">{{interp(form.title,{\'$index\':$index, value: item}) || $index}}</a></li><li ng-hide=\"form.readonly\" ng-click=\"$event.preventDefault() || appendToArray()\"><a href=\"#\"><i class=\"glyphicon glyphicon-plus\"></i> {{ form.add || \'Add\'}}</a></li></ul></div></div>");
 $templateCache.put("decorators/material/tabs.html","<div sf-field-model=\"\" class=\"schema-form-tabs {{::form.htmlClass}}\"><md-tabs md-dynamic-height=\"\" md-selected=\"selected\" md-autoselect=\"\" ng-init=\"selected = 0\"></md-tabs></div>");
 $templateCache.put("decorators/material/textarea.html","<md-input-container class=\"{{::form.htmlClass}} schema-form-textarea\" sf-messages=\"\"><label ng-show=\"showTitle()\" for=\"{{::form.key|sfCamelKey}}\">{{::form.title}}</label> <textarea ng-class=\"::form.fieldHtmlClass\" id=\"{{::form.key|sfCamelKey}}\" sf-changed=\"form\" ng-disabled=\"::form.readonly\" sf-field-model=\"\" schema-validate=\"form\" name=\"{{::form.key|sfCamelKey}}\"></textarea></md-input-container>");}]);
-(function (angular, undefined) {'use strict';
+(function(angular, undefined) {'use strict';
   angular
     .module('schemaForm')
     .config(materialDecoratorConfig)
+    .directive('sfmExternalOptions', sfmExternalOptionsDirective)
     .filter('sfCamelKey', sfCamelKeyFilter);
 
   materialDecoratorConfig.$inject = [
     'schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfBuilderProvider', 'sfPathProvider', '$injector'
   ];
 
-  function materialDecoratorConfig(schemaFormProvider, decoratorsProvider, sfBuilderProvider, sfPathProvider, $injector) {
+  function materialDecoratorConfig(
+      schemaFormProvider, decoratorsProvider, sfBuilderProvider, sfPathProvider, $injector) {
     var base = 'decorators/material/';
 
     var simpleTransclusion = sfBuilderProvider.builders.simpleTransclusion;
@@ -134,31 +136,47 @@ $templateCache.put("decorators/material/textarea.html","<md-input-container clas
     };
 
     function sfOptionsBuilder(args) {
+      var mdSelectFrag = args.fieldFrag.querySelector('md-select');
       var enumTitleMap = [];
       var i;
       var mdSelectFrag;
 
+      args.form.selectOptions = [];
       args.form.getOptions = getOptionsHandler;
 
-      if (args.form.titleMap) {
-        args.form.selectOptions = args.form.titleMap;
-      }
-      else if (args.form.enum && args.form.enum.length) {
-        for (i = 0; i < args.form.enum.length; i++) {
-          if (args.form.enum[i] && args.form.enum[i].length) {
-            enumTitleMap.push({ name:args.form.enum[i], value:args.form.enum[i] });
+      if (args.form.schema.links && (typeof args.form.schema.links) === 'object') {
+        var link;
+        var related = /({)([^}]*)(})/gm;
+        var source = /{{([^}]*)}}/gm;
+        var matched;
+
+        for (i = 0; i < args.form.schema.links.length; i++) {
+          link = args.form.schema.links[i];
+          if (link.rel === 'options') {
+            // TODO enable filter to allow processing results
+            // args.form.optionSource = link.href.replace(related, '$1$1 model.$2 | _externalOptionUri $3$3');
+            args.form.optionSource = link.href.replace(related, '$1$1 model.$2 $3$3');
+            // args.form.watchList = [];
+            // matched = args.form.optionSource.match(source);
+            // while ((matched = source.exec(args.form.optionSource)) !== null) {
+            //   args.form.watchList.push(matched);
+            // };
           };
         };
-        args.form.selectOptions = enumTitleMap;
+
+        mdSelectFrag.setAttribute('sfm-external-options', args.form.optionSource);
+      }
+      else {
+        args.form.selectOptions = sfOptionsProcessor(args.form);
       };
 
       // TODO implement $watch for remote data loading after the page loads
-      function getOptionsHandler(form, evalExpr, $watch) {
-        if(form.optionData) {
+      function getOptionsHandler(form, evalExpr) {
+        if (form.optionData) {
           return evalExpr(form.optionData);
         };
 
-        if(form.selectOptions) {
+        if (form.selectOptions) {
           return form.selectOptions;
         };
 
@@ -214,17 +232,54 @@ $templateCache.put("decorators/material/textarea.html","<md-input-container clas
     };
   };
 
+  function sfOptionsProcessor(data) {
+    var enumTitleMap = [];
+
+    if (data.titleMap) {
+      return data.titleMap;
+    }
+    else if (data.enum && data.enum.length) {
+      for (i = 0; i < data.enum.length; i++) {
+        if (data.enum[i] && data.enum[i].length) {
+          enumTitleMap.push({ name: data.enum[i], value: data.enum[i] });
+        };
+      };
+    };
+
+    return enumTitleMap;
+  };
+
+  sfmExternalOptionsDirective.$inject = [ '$http' ];
+
+  function sfmExternalOptionsDirective($http) {
+    var directive = {
+      link: link,
+      restrict: 'A'
+    };
+
+    return directive;
+
+    function link(scope, element, attrs) {
+      attrs.$observe('sfmExternalOptions', function(dataURI) {
+        $http.get(dataURI)
+          .then(function(response) {
+            scope.form.selectOptions = sfOptionsProcessor(response.data);
+          });
+      });
+    };
+  };
+
   /**
    * sfCamelKey Filter
    */
-  function sfCamelKeyFilter () {
-    return function (formKey) {
-      if(!formKey) return '';
+  function sfCamelKeyFilter() {
+    return function(formKey) {
+      if (!formKey) { return ''; };
       var part, i, key;
       key = formKey.slice();
-      for(i=0;i<key.length; i++){
+      for (i = 0; i < key.length; i++) {
         part = key[i].toLowerCase().split('');
-        if(i && part.length) part[0] = part[0].toUpperCase();
+        if (i && part.length) { part[0] = part[0].toUpperCase(); };
         key[i] = part.join('');
       };
       return key.join('');

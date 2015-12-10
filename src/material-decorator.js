@@ -1,14 +1,16 @@
-(function (angular, undefined) {'use strict';
+(function(angular, undefined) {'use strict';
   angular
     .module('schemaForm')
     .config(materialDecoratorConfig)
+    .directive('sfmExternalOptions', sfmExternalOptionsDirective)
     .filter('sfCamelKey', sfCamelKeyFilter);
 
   materialDecoratorConfig.$inject = [
     'schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfBuilderProvider', 'sfPathProvider', '$injector'
   ];
 
-  function materialDecoratorConfig(schemaFormProvider, decoratorsProvider, sfBuilderProvider, sfPathProvider, $injector) {
+  function materialDecoratorConfig(
+      schemaFormProvider, decoratorsProvider, sfBuilderProvider, sfPathProvider, $injector) {
     var base = 'decorators/material/';
 
     var simpleTransclusion = sfBuilderProvider.builders.simpleTransclusion;
@@ -109,31 +111,47 @@
     };
 
     function sfOptionsBuilder(args) {
+      var mdSelectFrag = args.fieldFrag.querySelector('md-select');
       var enumTitleMap = [];
       var i;
       var mdSelectFrag;
 
+      args.form.selectOptions = [];
       args.form.getOptions = getOptionsHandler;
 
-      if (args.form.titleMap) {
-        args.form.selectOptions = args.form.titleMap;
-      }
-      else if (args.form.enum && args.form.enum.length) {
-        for (i = 0; i < args.form.enum.length; i++) {
-          if (args.form.enum[i] && args.form.enum[i].length) {
-            enumTitleMap.push({ name:args.form.enum[i], value:args.form.enum[i] });
+      if (args.form.schema.links && (typeof args.form.schema.links) === 'object') {
+        var link;
+        var related = /({)([^}]*)(})/gm;
+        var source = /{{([^}]*)}}/gm;
+        var matched;
+
+        for (i = 0; i < args.form.schema.links.length; i++) {
+          link = args.form.schema.links[i];
+          if (link.rel === 'options') {
+            // TODO enable filter to allow processing results
+            // args.form.optionSource = link.href.replace(related, '$1$1 model.$2 | _externalOptionUri $3$3');
+            args.form.optionSource = link.href.replace(related, '$1$1 model.$2 $3$3');
+            // args.form.watchList = [];
+            // matched = args.form.optionSource.match(source);
+            // while ((matched = source.exec(args.form.optionSource)) !== null) {
+            //   args.form.watchList.push(matched);
+            // };
           };
         };
-        args.form.selectOptions = enumTitleMap;
+
+        mdSelectFrag.setAttribute('sfm-external-options', args.form.optionSource);
+      }
+      else {
+        args.form.selectOptions = sfOptionsProcessor(args.form);
       };
 
       // TODO implement $watch for remote data loading after the page loads
-      function getOptionsHandler(form, evalExpr, $watch) {
-        if(form.optionData) {
+      function getOptionsHandler(form, evalExpr) {
+        if (form.optionData) {
           return evalExpr(form.optionData);
         };
 
-        if(form.selectOptions) {
+        if (form.selectOptions) {
           return form.selectOptions;
         };
 
@@ -189,17 +207,54 @@
     };
   };
 
+  function sfOptionsProcessor(data) {
+    var enumTitleMap = [];
+
+    if (data.titleMap) {
+      return data.titleMap;
+    }
+    else if (data.enum && data.enum.length) {
+      for (i = 0; i < data.enum.length; i++) {
+        if (data.enum[i] && data.enum[i].length) {
+          enumTitleMap.push({ name: data.enum[i], value: data.enum[i] });
+        };
+      };
+    };
+
+    return enumTitleMap;
+  };
+
+  sfmExternalOptionsDirective.$inject = [ '$http' ];
+
+  function sfmExternalOptionsDirective($http) {
+    var directive = {
+      link: link,
+      restrict: 'A'
+    };
+
+    return directive;
+
+    function link(scope, element, attrs) {
+      attrs.$observe('sfmExternalOptions', function(dataURI) {
+        $http.get(dataURI)
+          .then(function(response) {
+            scope.form.selectOptions = sfOptionsProcessor(response.data);
+          });
+      });
+    };
+  };
+
   /**
    * sfCamelKey Filter
    */
-  function sfCamelKeyFilter () {
-    return function (formKey) {
-      if(!formKey) return '';
+  function sfCamelKeyFilter() {
+    return function(formKey) {
+      if (!formKey) { return ''; };
       var part, i, key;
       key = formKey.slice();
-      for(i=0;i<key.length; i++){
+      for (i = 0; i < key.length; i++) {
         part = key[i].toLowerCase().split('');
-        if(i && part.length) part[0] = part[0].toUpperCase();
+        if (i && part.length) { part[0] = part[0].toUpperCase(); };
         key[i] = part.join('');
       };
       return key.join('');
