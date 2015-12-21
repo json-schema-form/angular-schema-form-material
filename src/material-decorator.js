@@ -131,11 +131,6 @@
             // TODO enable filter to allow processing results
             // args.form.optionSource = link.href.replace(related, '$1$1 model.$2 | _externalOptionUri $3$3');
             args.form.optionSource = link.href.replace(related, '$1$1 model.$2 $3$3');
-            // args.form.watchList = [];
-            // matched = args.form.optionSource.match(source);
-            // while ((matched = source.exec(args.form.optionSource)) !== null) {
-            //   args.form.watchList.push(matched);
-            // };
           };
         };
 
@@ -143,19 +138,6 @@
       }
       else {
         args.form.selectOptions = sfOptionsProcessor(args.form);
-      };
-
-      // TODO implement $watch for remote data loading after the page loads
-      function getOptionsHandler(form, evalExpr) {
-        if (form.optionData) {
-          return evalExpr(form.optionData);
-        };
-
-        if (form.selectOptions) {
-          return form.selectOptions;
-        };
-
-        return [];
       };
     };
 
@@ -205,6 +187,18 @@
         return f;
       }
     };
+  };
+
+  function getOptionsHandler(form, evalExpr) {
+    if (form.optionData) {
+      return evalExpr(form.optionData);
+    };
+
+    if (form.selectOptions) {
+      return form.selectOptions;
+    };
+
+    return [];
   };
 
   function sfOptionsProcessor(data) {
