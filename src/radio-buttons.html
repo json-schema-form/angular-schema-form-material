@@ -1,5 +1,5 @@
 <div class="form-group schema-form-radiobuttons {{form.htmlClass}}"
-     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
+     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}" sf-layout sf-messages>
   <div>
     <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
   </div>
@@ -22,5 +22,4 @@
       </md-button>
     </md-input-container>
   </section>
-  <div class="help-block" sf-message="form.description"></div>
 </div>

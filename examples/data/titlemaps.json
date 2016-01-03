@@ -23,7 +23,7 @@
         "default": "The Terminator"
       },
       "radios": {
-        "title": "Basic radio button example to pick remote dataset",
+        "title": "Basic radio button example to pick remote dataset for below select 'Remote Options'",
         "type": "string",
         "enum": ["books","movies"]
       },
@@ -61,24 +61,33 @@
   "form": [
     {
       "type": "section",
-      "grid": {
-        "flex": true,
-        "layout": "row"
-      },
+      "grid": { "flex": "", "layout": "row" },
       "items": [
-        "select",
+        {
+          "key": "select",
+          "type": "select",
+          "grid": { "flex": "" }
+        },
         {
           "key": "select2",
           "type": "select",
+          "grid": { "flex": "" },
           "titleMap": {
             "a": "A",
             "b": "B",
             "c": "C"
           }
-        },
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "grid": { "flex": "", "layout": "row" },
+      "items": [
         {
           "key": "noenum",
           "type": "select",
+          "grid": { "flex": "" },
           "titleMap": [
             { "value":"a1", "name": "A1", "group": "A" },
             { "value":"a2", "name":"A2", "group": "A" },
@@ -91,21 +100,24 @@
         {
           "key": "selectOptionData",
           "type": "select",
+          "grid": { "flex": "" },
           "optionData": "arnieFlix"
-        },
-        {
-          "key": "radios",
-          "type": "radios",
-          "titleMap": [
-            { "value":"books", "name": "Books" },
-            { "value":"movies", "name":"Movies" }
-          ]
-        },
-        {
-          "key": "selectOptionRemote",
-          "type": "select"
         }
       ]
+    },
+    {
+      "key": "radios",
+      "type": "radios",
+      "grid": { "layout": "row" },
+      "titleMap": [
+        { "value":"books", "name": "Books" },
+        { "value":"movies", "name":"Movies" }
+      ]
+    },
+    {
+      "key": "selectOptionRemote",
+      "type": "select",
+      "grid": { "flex": 100, "layout": "column" }
     },
     "array",
     {

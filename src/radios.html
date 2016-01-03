@@ -1,23 +1,19 @@
 <div class="form-group schema-form-radios {{form.htmlClass}}"
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
-  <label class="control-label" ng-show="showTitle()" aria-label="{{form.title}}">{{form.title}} {{form.titleMap | json}}</label>
-  <md-radio-group sf-field-model
-                  sf-changed="form"
-                  ng-disabled="form.readonly"
-                  name="{{form.key.join('.')}}">
-    <md-radio-button ng-repeat="item in form.titleMap"
-                     ng-value="item.value"
-                     class="{{form.fieldHtmlClass}}"
-                     sf-field-model="ng-class"
-                     ng-class="{ active: item.value === $$value$$ }">
-      <span ng-bind-html="item.name"></span>
-    </md-radio-button>
-  </md-radio-group>
-  <div ng-messages="ngModel.$error">
-    <!--
-       This is a bit of a hack. sf-message does the work, but ng-messages and ng-message
-       is needed for the styling
-    -->
-    <div sf-message ng-message></div>
+  <label class="control-label" ng-show="showTitle()" aria-label="{{form.title}}" layout="row">{{form.title}} {{form.titleMap | json}}</label>
+  <div>
+    <md-radio-group sf-field-model
+                    sf-changed="form"
+                    ng-disabled="form.readonly"
+                    name="{{form.key.join('.')}}"
+                    sf-layout sf-messages>
+      <md-radio-button ng-repeat="item in form.titleMap"
+                       ng-value="item.value"
+                       class="{{form.fieldHtmlClass}}"
+                       sf-field-model="ng-class"
+                       ng-class="{ active: item.value === $$value$$ }">
+        <span ng-bind-html="item.name"></span>
+      </md-radio-button>
+    </md-radio-group>
   </div>
 </div>

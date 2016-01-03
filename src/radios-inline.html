@@ -1,5 +1,5 @@
 <div class="form-group schema-form-radios-inline {{form.htmlClass}}"
-     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
+     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}" sf-layout sf-messages>
   <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
   <md-radio-group layout="row"
                   sf-field-model="replaceAll"
@@ -14,11 +14,4 @@
       <span ng-bind-html="item.name"></span>
     </md-radio-button>
   </md-radio-group>
-  <div ng-messages="ngModel.$error">
-    <!--
-       This is a bit of a hack. sf-message does the work, but ng-messages and ng-message
-       is needed for the styling
-    -->
-    <div sf-message ng-message></div>
-  </div>
 </div>
