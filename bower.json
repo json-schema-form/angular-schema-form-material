@@ -30,6 +30,7 @@
     "moment": "~2.10.6"
   },
   "resolutions": {
-    "angular": "1.4.4"
+    "angular": "^1.4.8",
+    "angular-material": "~1.0.1"
   }
 }

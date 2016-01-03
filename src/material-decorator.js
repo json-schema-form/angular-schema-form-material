@@ -20,6 +20,7 @@
     var condition          = sfBuilderProvider.builders.condition;
     var array              = sfBuilderProvider.builders.array;
 
+    var sfLayout           = sfLayout;
     var sfMessagesNode     = sfMessagesNodeHandler();
     var sfMessages         = sfMessagesBuilder;
     var sfOptions          = sfOptionsBuilder;
@@ -27,8 +28,9 @@
     var mdSwitch           = mdSwitchBuilder;
     var mdDatepicker       = mdDatepickerBuilder;
     var mdTabs             = mdTabsBuilder;
+    var textarea           = textareaBuilder;
 
-    var core = [ sfField, ngModel, ngModelOptions, condition ];
+    var core = [ sfField, ngModel, ngModelOptions, condition, sfLayout ];
     var defaults = core.concat(sfMessages);
     var arrays = core.concat(array);
 
@@ -51,14 +53,24 @@
       radios: { template: base + 'radios.html', builder: defaults },
       'radios-inline': { template: base + 'radios-inline.html', builder: defaults },
       radiobuttons: { template: base + 'radio-buttons.html', builder: defaults },
-      section: { template: base + 'section.html', builder: [ sfField, simpleTransclusion, condition ] },
+      section: { template: base + 'section.html', builder: [ sfField, simpleTransclusion, condition, sfLayout ] },
       select: { template: base + 'select.html', builder: defaults.concat(sfOptions) },
       submit: { template: base + 'submit.html', builder: defaults },
       tabs: { template: base + 'tabs.html', builder: [ sfField, mdTabs, condition ] },
       tabarray: { template: base + 'tabarray.html', builder: arrays },
-      textarea: { template: base + 'textarea.html', builder: defaults },
+      textarea: { template: base + 'textarea.html', builder: defaults.concat(textarea) },
       switch: { template: base + 'switch.html', builder: defaults.concat(mdSwitch) }
     });
+
+    function sfLayout(args) {
+      var layoutDiv = args.fieldFrag.querySelector('[sf-layout]');
+
+      if (args.form.grid) {
+        Object.getOwnPropertyNames(args.form.grid).forEach(function(property, idx, array) {
+          layoutDiv.setAttribute(property, args.form.grid[property]);
+        });
+      };
+    };
 
     function sfMessagesNodeHandler() {
       var html = '<div ng-if="ngModel.$invalid" ng-messages="ngModel.$error"><div sf-message ng-message></div></div>';
@@ -73,6 +85,14 @@
         var child = sfMessagesNode.cloneNode();
         messagesDiv.appendChild(child);
       }
+    };
+
+    function textareaBuilder(args) {
+      var textareaFrag = args.fieldFrag.querySelector('textarea');
+      var maxLength = args.form.maxlength || false;
+      if (textareaFrag && maxLength) {
+        textareaFrag.setAttribute('md-maxlength', maxLength);
+      };
     };
 
     function mdAutocompleteBuilder(args) {
@@ -104,9 +124,6 @@
       if (args.form.schema.titleMap) {
         mdSwitchFrag.setAttribute('ng-true-value', args.form.schema.titleMap.true);
         mdSwitchFrag.setAttribute('ng-false-value', args.form.schema.titleMap.false);
-      }
-      if (args.form.schema.ink) {
-        mdSwitchFrag.setIdAttribute('md-no-ink', args.form.schema.ink);
       }
     };
 

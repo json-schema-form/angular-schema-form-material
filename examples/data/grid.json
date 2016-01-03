@@ -52,23 +52,19 @@
     },
     {
       "type": "section",
-      "grid": {
-        "layout": "column"
-      },
+      "grid": { "layout": "column" },
       "items": [
         {
           "type": "section",
-          "grid": {
-            "layout": "row"
-          },
+          "grid": { "layout": "row" },
           "items": [
             {
               "key": "firstname",
-              "grid": { "flex": 50, "layout": "column" }
+              "grid": { "flex": 50 }
             },
             {
               "key": "lastname",
-              "grid": { "flex": 50, "layout": "column" }
+              "grid": { "flex": "" }
             }
           ]
         },
@@ -82,30 +78,26 @@
         },
         {
           "type": "section",
-          "grid": {
-            "layout": "row"
-          },
+          "grid": { "layout": "row" },
           "items": [
             {
               "key": "city",
-              "grid": { "flex": 50, "layout": "column" }
+              "grid": { "flex": 33, "layout": "column" }
             },
             {
               "key": "state",
               "type":"select",
-              "grid": { "state": 25, "layout": "column" }
+              "grid": { "flex": 33, "layout": "column" }
             },
             {
               "key": "postcode",
-              "grid": { "postcode": 25, "layout": "column" }
+              "grid": { "flex": 33, "layout": "column" }
             }
           ]
         },
         {
           "type": "section",
-          "grid": {
-            "layout": "row"
-          },
+          "grid": { "layout": "row" },
           "items": ["email"]
         }
       ]
