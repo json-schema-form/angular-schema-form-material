@@ -99,13 +99,13 @@
           "type": "section",
           "grid": { "layout": "row" },
           "items": ["email"]
+        },
+        {
+          "key": "comment",
+          "type": "textarea",
+          "placeholder": "Make a comment"
         }
       ]
-    },
-    {
-      "key": "comment",
-      "type": "textarea",
-      "placeholder": "Make a comment"
     },
     {
       "type": "submit",
