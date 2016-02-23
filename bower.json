@@ -24,9 +24,10 @@
   "dependencies": {
     "angular-schema-form": ">=0.8.13",
     "angular": "1.5.5",
-    "angular-material": "1.0.7",
-    "angular-animate": "1.4",
-    "angular-sanitize": "1.4"
+    "angular-material": "1.0.9",
+    "angular-animate": "1.5.5",
+    "angular-sanitize": "1.5.5",
+    "angular-messages": "1.5.5"
   },
   "devDependencies": {
     "angular-ui-ace": "~0.2.3",

@@ -73,7 +73,7 @@
     };
 
     function sfMessagesNodeHandler() {
-      var html = '<div ng-if="ngModel.$invalid" ng-messages="ngModel.$error"><div sf-message ng-message></div></div>';
+      var html = '<div ng-if="ngModel.$invalid" ng-messages="ngModel.$error"><div sf-message></div></div>';
       var div = document.createElement('div');
       div.innerHTML = html;
       return div.firstChild;
@@ -82,7 +82,7 @@
     function sfMessagesBuilder(args) {
       var messagesDiv = args.fieldFrag.querySelector('[sf-messages]');
       if (messagesDiv && sfMessagesNode) {
-        var child = sfMessagesNode.cloneNode();
+        var child = sfMessagesNode.cloneNode(true);
         messagesDiv.appendChild(child);
       }
     };
