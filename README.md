@@ -46,9 +46,9 @@ form definition has an `onChange` option.
 
 Testing
 -------
-...
+```
 npm install -g protractor
 protractor test/protractor/conf.js
-...
+```
 
 change baseurl in test/protractor/conf.js to match ur local environment.
