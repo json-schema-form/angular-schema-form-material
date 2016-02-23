@@ -165,6 +165,7 @@
 <script src="../bower_components/angular-aria/angular-aria.js"></script>
 <script src="../bower_components/angular-animate/angular-animate.js"></script>
 <script src="../bower_components/angular-material/angular-material.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.js"></script>
 <script type="text/javascript" src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 <!-- <script type="text/javascript" src="../bower_components/angular-ui-sortable/sortable.js"></script>
 -->
@@ -175,7 +176,7 @@
 
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&dn=expat.txt Expat
-var app = angular.module('test', ['schemaForm', 'ngMaterial', 'ui.ace'])
+var app = angular.module('test', ['schemaForm', 'ngMaterial', 'ui.ace','ngMessages'])
 
 app.config(function($mdThemingProvider, $mdDateLocaleProvider) {
   $mdThemingProvider.setDefaultTheme('default');
