@@ -42,3 +42,13 @@ Future
 Using the new builder opens up for a lot of optimization. Primarily we can get rid of a lot of small
 watches by using build helpers. For instance, slapping on a `sf-changed` directive *only* if the
 form definition has an `onChange` option.
+
+
+Testing
+-------
+...
+npm install -g protractor
+protractor test/protractor/conf.js
+...
+
+change baseurl in test/protractor/conf.js to match ur local environment.
