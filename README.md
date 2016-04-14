@@ -1,9 +1,9 @@
 Angular Material Decorator
 ==========================
 
-[![Join the chat at https://gitter.im/Textalk/angular-schema-form-material](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Textalk/angular-schema-form-material?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/json-schema-form/angular-schema-form-material](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/json-schema-form/angular-schema-form-material?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-For https://github.com/Textalk/angular-schema-form
+For https://github.com/json-schema-form/angular-schema-form
 
 Work In Progress
 ----------------
@@ -52,3 +52,5 @@ protractor test/protractor/conf.js
 ```
 
 change baseurl in test/protractor/conf.js to match ur local environment.
+
+Copyright (c) 2016 Marcel John Bennett, David Jensen
