@@ -5,7 +5,7 @@
     "Marcel Bennett <iamanthropic@gmail.com>"
   ],
   "description": "Angular Material decorator for Angular Schema Form",
-  "main": "material-decorator.min.js",
+  "main": "material-decorator.js",
   "keywords": [
     "angular-schema-form-decorator",
     "angular material",
@@ -23,8 +23,8 @@
   ],
   "dependencies": {
     "angular-schema-form": ">=0.8.13",
-    "angular": "1.5.6",
-    "angular-material": "master",
+    "angular": "1.5.5",
+    "angular-material": "1.0.7",
     "angular-animate": "1.4",
     "angular-sanitize": "1.4"
   },
@@ -33,6 +33,7 @@
     "moment": "~2.10.6"
   },
   "resolutions": {
-    "angular-material": "^1.0.7"
+    "angular-material": "^1.0.7",
+    "angular": "^1.5.5"
   }
 }
