@@ -7,9 +7,9 @@ For https://github.com/json-schema-form/angular-schema-form
 
 Work In Progress
 ----------------
-As Angular Material has not reached 1.0.0 yet, this decorator is progressing very cautiously until that project hits it's stable milestone.
+Angular Material has reached 1.0.0 however I do not feel it is remotely stable yet, this decorator is progressing very cautiously until that project hits a more stable milestone. That said, I have made an early alpha available and will continue to release alpha releases as I add new features, these **are not production quality** as the name alpha implies.
 
-Meaning that it is **very** much a **work in progress**.
+All this means is that it is **very** much a **work in progress**.
 
 Testing
 ------------
@@ -42,7 +42,6 @@ Future
 Using the new builder opens up for a lot of optimization. Primarily we can get rid of a lot of small
 watches by using build helpers. For instance, slapping on a `sf-changed` directive *only* if the
 form definition has an `onChange` option.
-
 
 Testing
 -------
