@@ -1,6 +1,6 @@
 {
   "name": "angular-schema-form-material",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.1",
   "description": "Angular Material decorator for Angular Schema Form",
   "main": "material-decorator.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "keywords": [
     "angular-schema-form-decorator"
   ],
-  "author": "David Jensen <david.lgj@gmail.com>",
+  "author": "Marcel Bennett <iamanthropic@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "gulp": "^3.9.0",
