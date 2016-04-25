@@ -1,18 +1,17 @@
 <div class="form-group schema-form-radios-inline {{form.htmlClass}}"
-     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
+     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}" sf-layout sf-messages>
   <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
-  <div>
-      <label class="radio-inline" ng-repeat="item in form.titleMap" >
-      <input type="radio"
-             class="{{form.fieldHtmlClass}}"
-             sf-changed="form"
-             ng-disabled="form.readonly"
-             ng-model="$$value$$"
-             schema-validate="form"
-             ng-value="item.value"
-             name="{{form.key.join('.')}}">
+  <md-radio-group layout="row"
+                  sf-field-model="replaceAll"
+                  ng-model="$$value$$"
+                  class="{{form.fieldHtmlClass}}"
+                  ng-class="{ active: item.value === $$value$$ }"
+                  sf-changed="form"
+                  schema-validate="form"
+                  ng-disabled="form.readonly"
+                  name="{{form.key.join('.')}}">
+    <md-radio-button ng-repeat="item in form.titleMap" ng-value="item.value">
       <span ng-bind-html="item.name"></span>
-    </label>
-  </div>
-  <div class="help-block" sf-message="form.description"></div>
+    </md-radio-button>
+  </md-radio-group>
 </div>

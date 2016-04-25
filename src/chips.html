@@ -1,0 +1,17 @@
+<div class="form-group schema-form-chips {{form.htmlClass}}"
+     ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}">
+  <md-chips sf-field-model readonly="form.readonly" flex
+            placeholder="{{::form.title}}">
+    <md-chip-template>
+      <!-- should include an optional template from form.template -->
+      <strong ng-if="!form.template">{{$chip}}</strong>
+    </md-chip-template>
+  </md-chips>
+  <div ng-messages="ngModel.$error">
+    <!--
+       This is a bit of a hack. sf-message does the work, but ng-messages and ng-message
+       is needed for the styling
+    -->
+    <div sf-message ng-message></div>
+  </div>
+</div>

@@ -1,16 +1,19 @@
-<div class="form-group {{form.htmlClass}} schema-form-select"
-     ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}">
-  <label class="control-label" ng-show="showTitle()">
-    {{form.title}}
-  </label>
-  <select ng-model="$$value$$"
-          ng-model-options="form.ngModelOptions"
-          ng-disabled="form.readonly"
-          sf-changed="form"
-          class="form-control {{form.fieldHtmlClass}}"
-          schema-validate="form"
-          ng-options="item.value as item.name group by item.group for item in form.titleMap"
-          name="{{form.key.slice(-1)[0]}}">
-  </select>
-  <div class="help-block" sf-message="form.description"></div>
-</div>
+<md-input-container
+    class="form-group {{::form.htmlClass}} schema-form-select"
+    ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}"
+    sf-messages sf-layout>
+  <label ng-show="::showTitle()">{{::form.title}}</label>
+  <md-select sf-field-model schema-validate="form">
+    <md-optgroup ng-repeat-start="(key, opt) in form.getOptions(form, evalExpr) | orderBy:'group' as optGroups"
+                 ng-if="opt.group && opt.group != optGroups[key-1].group"
+                 label="{{::opt.group}}"
+                 aria-label="{{::opt.group}}">
+      <md-option ng-repeat="(key, filtered) in form.getOptions(form, evalExpr) | filter: {group: opt.group} | orderBy:'name' as opts"
+                 ng-value="::filtered.value"
+                 aria-label="{{::filtered.name}}">{{::filtered.name}}</md-option>
+    </md-optgroup>
+    <md-option   ng-if="!opt.group"
+                 ng-value="::opt.value"
+                 ng-repeat-end>{{::opt.name}}</md-option>
+  </md-select>
+</md-input-container>

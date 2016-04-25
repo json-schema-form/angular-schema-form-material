@@ -173,15 +173,6 @@
                 {
                   "key": "shoesizeRight"
                 },
-                {
-                  "key": "invitation",
-                  "tinymceOptions": {
-                    "toolbar": [
-                      "undo redo| styleselect | bold italic | link image",
-                      "alignleft aligncenter alignright"
-                    ]
-                  }
-                },
                 "things",
                 "dislike"
               ]
@@ -196,18 +187,13 @@
     },
     "soul",
     {
-      "type": "conditional",
       "condition": "modelData.soul",
-      "items": [
-        {
-          "key": "soulserial",
-          "placeholder": "ex. 666"
-        }
-      ]
+      "key": "soulserial",
+      "placeholder": "ex. 666"
     },
     {
       "key": "date",
-      "minDate": "2014-06-20"
+      "minDate": "2015-06-20"
     },
     {
       "key": "radio",
@@ -251,12 +237,12 @@
       "items": [
         {
           "type": "submit",
-          "style": "btn-info",
+          "style": "md-primary",
           "title": "Do It!"
         },
         {
           "type": "button",
-          "style": "btn-danger",
+          "style": "md-warn",
           "title": "Noooooooooooo",
           "onClick": "sayNo()"
         }

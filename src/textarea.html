@@ -1,15 +1,10 @@
-<md-input-container class="{{form.htmlClass}} schema-form-textarea">
-  <label ng-show="showTitle()" for="{{form.key.slice(-1)[0]}}">{{form.title}}</label>
-
-  <textarea ng-class="form.fieldHtmlClass"
-            id="{{form.key.slice(-1)[0]}}"
+<md-input-container class="{{::form.htmlClass}} schema-form-textarea" sf-messages sf-layout>
+  <label ng-show="showTitle()" for="{{::form.key|sfCamelKey}}">{{::form.title}}</label>
+  <textarea ng-class="::form.fieldHtmlClass"
+            id="{{::form.key|sfCamelKey}}"
             sf-changed="form"
-            placeholder="{{form.placeholder}}"
-            ng-disabled="form.readonly"
-            ng-model="$$value$$"
-            ng-model-options="form.ngModelOptions"
+            ng-disabled="::form.readonly"
+            sf-field-model
             schema-validate="form"
-            name="{{form.key.slice(-1)[0]}}"></textarea>
-
+            name="{{::form.key|sfCamelKey}}"></textarea>
 </md-input-container>
-<span class="help-block" sf-message="form.description"></span>

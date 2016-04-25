@@ -1,0 +1,14 @@
+<md-input-container class="schema-form-switch {{::form.htmlClass}}">
+  <md-switch sf-field-model
+             sf-changed="form"
+             sf-type-parser="form.schema"
+             sf-messages
+             schema-validate="form"
+             id="{{::form.key|sfCamelKey}}"
+             aria-label="{{form.title}}"
+             ng-show="::form.key"
+             ng-class="form.fieldHtmlClass"
+             ng-disabled="::form.readonly">
+    <span  ng-show="showTitle()" for="{{::form.key|sfCamelKey}}">{{::form.title}}</span>
+  </md-switch>
+</md-input-container>

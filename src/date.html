@@ -1,0 +1,13 @@
+<div class="schema-form-date {{::form.htmlClass}}">
+  <label ng-show="showTitle()" for="{{::form.key|sfCamelKey}}">{{::form.title}}</label>
+  <md-datepicker sf-field-model
+                 sf-changed="form"
+                 schema-validate="form"
+                 sf-type-parser="form.schema"
+                 id="{{::form.key|sfCamelKey}}"
+                 ng-show="::form.key"
+                 ng-class="::form.fieldHtmlClass"
+                 ng-disabled="::form.readonly"
+                 md-placeholder="Enter date" sf-messages>
+  </md-datepicker>
+</div>

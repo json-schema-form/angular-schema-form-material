@@ -1,17 +1,9 @@
-<section class="schema-form-submit {{form.htmlClass}}">
-
+<section class="schema-form-submit {{form.htmlClass}}" sf-messages>
   <md-button class="md-raised {{ form.style || 'md-primary' }} {{form.fieldHtmlClass}}"
-             ng-disabled="form.readonly">
-    {{form.title}}
+             type="{{::form.type}}"
+             ng-disabled="form.readonly"
+             aria-label="{{::form.title}}">
+    <md-tooltip ng-if="::form.tip">{{::form.tip}}</md-tooltip>
+    {{::form.title}}
   </md-button>
-
-<!--
-ng-if="form.type === 'submit'"
-  <button class="btn {{ form.style || 'btn-default' }}"
-          type="button"
-          ng-click="buttonClick($event,form)"
-          ng-disabled="form.readonly"
-          ng-if="form.type !== 'submit'">{{form.title}}</button>
--->
-
 </section>

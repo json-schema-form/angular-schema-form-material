@@ -1,15 +1,13 @@
-<div class="checkbox schema-form-checkbox {{form.htmlClass}}"
-     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
-  <label>
-    <input type="checkbox"
-           sf-changed="form"
-           ng-disabled="form.readonly"
-           ng-model="$$value$$"
-           ng-model-options="form.ngModelOptions"
-           schema-validate="form"
-           class="{{form.fieldHtmlClass}}"
-           name="{{form.key.slice(-1)[0]}}">
-    <span ng-bind-html="form.title"></span>
-  </label>
-  <div class="help-block" sf-message="form.description"></div>
+<div class="checkbox schema-form-checkbox {{::form.htmlClass}}"
+     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}"
+     sf-messages>
+  <md-checkbox sf-field-model
+               sf-changed="form"
+               ng-disabled="form.readonly"
+               schema-validate="form"
+               class="{{::form.fieldHtmlClass}}"
+               name="{{::form.key|sfCamelKey}}"
+               aria-label="{{::form.title}}">
+    <span>{{::form.title}}</span>
+  </md-checkbox>
 </div>

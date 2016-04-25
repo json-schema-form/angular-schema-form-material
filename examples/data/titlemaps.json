@@ -16,7 +16,24 @@
         "type": "string",
         "enum": ["a","b","c"]
       },
-      "noenum": { "type": "string", "title": "No enum, but forms says it's a select" },
+      "noenum": { "type": "string", "title": "No enum, but forms says it's a select", "default": "a3" },
+      "selectOptionData": {
+        "type": "string",
+        "title": "Dynamic Options",
+        "default": "The Terminator"
+      },
+      "radios": {
+        "title": "Basic radio button example to pick remote dataset for below select 'Remote Options'",
+        "type": "string",
+        "enum": ["books","movies"]
+      },
+      "selectOptionRemote": {
+        "type": "string",
+        "title": "Remote Options",
+        "links":[
+          { "rel": "options", "href": "./data/remote-titlemap-{radios}.json" }
+        ]
+      },
       "array": {
         "title": "Array with enum defaults to 'checkboxes'",
         "type": "array",
@@ -34,37 +51,73 @@
           "enum": ["a","b","c"]
         }
       },
-      "radios": {
-        "title": "Basic radio button example",
-        "type": "string",
-        "enum": ["a","b","c"]
-      },
       "radiobuttons": {
-        "title": "Radio buttons used to switch a boolean",
+        "title": "Radio buttons used to switch a boolean or multiple values",
         "type": "boolean",
         "default": false
       }
     }
   },
   "form": [
-    "select",
     {
-      "key": "select2",
-      "type": "select",
-      "titleMap": {
-        "a": "A",
-        "b": "B",
-        "c": "C"
-      }
+      "type": "section",
+      "grid": { "flex": "", "layout": "row" },
+      "items": [
+        {
+          "key": "select",
+          "type": "select",
+          "grid": { "flex": "" }
+        },
+        {
+          "key": "select2",
+          "type": "select",
+          "grid": { "flex": "" },
+          "titleMap": {
+            "a": "A",
+            "b": "B",
+            "c": "C"
+          }
+        }
+      ]
     },
     {
-      "key": "noenum",
-      "type": "select",
-      "titleMap": [
-        { "value":"a", "name": "A" },
-        { "value":"b", "name":"B" },
-        { "value":"c", "name":"C" }
+      "type": "section",
+      "grid": { "flex": "", "layout": "row" },
+      "items": [
+        {
+          "key": "noenum",
+          "type": "select",
+          "grid": { "flex": "" },
+          "titleMap": [
+            { "value":"a1", "name": "A1", "group": "A" },
+            { "value":"a2", "name":"A2", "group": "A" },
+            { "value":"a3", "name":"A3", "group": "A" },
+            { "value":"b1", "name": "B1", "group": "B" },
+            { "value":"b2", "name":"B2", "group": "B" },
+            { "value":"b3", "name":"B3", "group": "B" }
+          ]
+        },
+        {
+          "key": "selectOptionData",
+          "type": "select",
+          "grid": { "flex": "" },
+          "optionData": "arnieFlix"
+        }
       ]
+    },
+    {
+      "key": "radios",
+      "type": "radios",
+      "grid": { "layout": "row" },
+      "titleMap": [
+        { "value":"books", "name": "Books" },
+        { "value":"movies", "name":"Movies" }
+      ]
+    },
+    {
+      "key": "selectOptionRemote",
+      "type": "select",
+      "grid": { "flex": 100, "layout": "column" }
     },
     "array",
     {
@@ -77,19 +130,11 @@
       ]
     },
     {
-      "key": "radios",
-      "type": "radios",
-      "titleMap": [
-        { "value":"c", "name": "C" },
-        { "value":"b", "name":"B" },
-        { "value":"a", "name":"A" }
-      ]
-    },
-    {
       "key":"radiobuttons",
       "type": "radiobuttons",
       "titleMap": [
         {"value": false, "name": "No way"},
+        {"value": null, "name": "Maybe"},
         {"value": true,  "name": "OK"}
       ]
     }
