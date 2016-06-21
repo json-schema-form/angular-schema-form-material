@@ -1,13 +1,13 @@
 <div class="checkbox schema-form-checkbox {{::form.htmlClass}}"
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}"
      sf-messages>
-  <md-checkbox sf-field-model
-               sf-changed="form"
-               ng-disabled="form.readonly"
-               schema-validate="form"
-               class="{{::form.fieldHtmlClass}}"
-               name="{{::form.key|sfCamelKey}}"
-               aria-label="{{::form.title}}">
-    <span>{{::form.title}}</span>
-  </md-checkbox>
+    <md-checkbox sf-field-model
+                 sf-changed="form"
+                 ng-disabled="form.readonly"
+                 schema-validate="form"
+                 class="{{::form.fieldHtmlClass}}"
+                 name="{{::form.key|sfCamelKey}}"
+                 aria-label="{{::form.title}}">
+        <span>{{::form.title}}</span>
+    </md-checkbox>
 </div>
