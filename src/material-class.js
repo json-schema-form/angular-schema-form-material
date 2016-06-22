@@ -1,4 +1,4 @@
-angular.module('schemaForm').directive('sfMaterialLabel', function($compile, $timeout) {
+angular.module('schemaForm').directive('sfMaterialClass', function($compile, $timeout) {
     return {
         restrict : 'A',
         scope    : false,
@@ -15,8 +15,8 @@ angular.module('schemaForm').directive('sfMaterialLabel', function($compile, $ti
             // Element class is not set in DOM if executed immediately.
             // I don't understand exactly why but it's probably related to other directive job.
             $timeout(function() {
-                if (typeof modelValue !== 'undefined') {
-                    element.addClass('md-input-has-value');
+                if (modelValue !== null && typeof modelValue !== 'undefined' && modelValue !== false) {
+                    element.addClass(attrs.sfMaterialClass);
                 }
             }, 0);
         }
