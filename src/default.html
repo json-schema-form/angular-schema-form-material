@@ -1,6 +1,8 @@
 <md-input-container class="schema-form-{{::form.type}} {{::form.htmlClass}}"
-                    ng-class="{'md-input-has-value': model['{{form.key.join('\'][\'')}}'], 'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}"
-                    sf-messages sf-layout>
+                    ng-init=""
+                    ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}"
+                    sf-messages sf-layout
+                    sf-material-label>
     <label ng-show="showTitle()" for="{{::form.key|sfCamelKey}}">{{::form.title}}</label>
     <input sf-field-model
            ng-show="::form.key"
