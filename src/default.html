@@ -1,18 +1,24 @@
 <md-input-container class="schema-form-{{::form.type}} {{::form.htmlClass}}"
-                    ng-class="{'md-input-has-value': model['{{form.key.join('\'][\'')}}'], 'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}"
-                    sf-messages sf-layout>
-  <label  ng-show="showTitle()" for="{{::form.key|sfCamelKey}}">{{::form.title}}</label>
-  <input sf-field-model
-         ng-show="::form.key"
-         type="{{::form.type}}"
-         step="any"
-         sf-changed="form"
-         placeholder="{{form.placeholder}}"
-         id="{{::form.key|sfCamelKey}}"
-         ng-class="::form.fieldHtmlClass"
-         sf-type-parser="form.schema"
-         ng-disabled="::form.readonly"
-         schema-validate="form"
-         name="{{::form.key|sfCamelKey}}"
-         aria-describedby="{{::form.key|sfCamelKey}}Status" />
+                    ng-init=""
+                    ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}"
+                    sf-messages sf-layout
+                    sf-material-class="md-input-has-value">
+    <label ng-show="showTitle()" for="{{::form.key|sfCamelKey}}">{{::form.title}}</label>
+    <input sf-field-model
+           ng-show="::form.key"
+           type="{{::form.type}}"
+           step="any"
+           sf-changed="form"
+           placeholder="{{form.placeholder}}"
+           id="{{::form.key|sfCamelKey}}"
+           ng-class="::form.fieldHtmlClass"
+           sf-type-parser="form.schema"
+           ng-disabled="::form.readonly"
+           schema-validate="form"
+           name="{{::form.key|sfCamelKey}}"
+           aria-describedby="{{::form.key|sfCamelKey}}Status"/>
+
+    <div ng-messages="{dummy: true}" class="ng-active">
+        <div ng-message="dummy" class="md-input-message-animation" sf-message="form.description"></div>
+    </div>
 </md-input-container>
