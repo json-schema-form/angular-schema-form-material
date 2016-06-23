@@ -10,7 +10,7 @@
     md-selected-item="$$value$$"
     md-search-text="searchText"
     md-selected-item-change="'todo';"
-    md-items="item in evalExpr('this[\''+form.optionFilter+'\'](\''+searchText+'\')')"
+    md-items="item in evalExpr('this[\\''+form.optionFilter+'\\'](\\''+searchText+'\\')')"
     md-item-text="item.name"
     md-floating-label="{{::form.title}}"
     md-menu-class="autocomplete-custom-template">
