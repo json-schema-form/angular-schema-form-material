@@ -1,4 +1,4 @@
-<div class="form-group {{form.htmlClass}} schema-form-select"
+<div class="form-group {{::form.htmlClass ? form.htmlClass : 'flex-100'}} schema-form-select "
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}"
      sf-messages sf-layout>
   <md-autocomplete flex
