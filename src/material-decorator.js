@@ -73,7 +73,8 @@
     };
 
     function sfMessagesNodeHandler() {
-      var html = '<div ng-if="ngModel.$invalid" ng-messages="ngModel.$error"><div sf-message></div></div>';
+        var html = '<div ng-if="ngModel.$invalid" ng-messages="{dummy: true}" class="ng-active">' +
+          '<div ng-message="dummy" class="md-input-message-animation" sf-message="form.description"></div></div>';
       var div = document.createElement('div');
       div.innerHTML = html;
       return div.firstChild;
