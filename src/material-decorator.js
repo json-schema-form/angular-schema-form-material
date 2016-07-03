@@ -168,7 +168,7 @@
         var minDate = args.form.minimum || false;
         var maxDate = args.form.maximum || false;
         if (minDate) {
-          mdDatepickerFrag.setAttribute('md-max-date', minDate);
+          mdDatepickerFrag.setAttribute('md-min-date', minDate);
         }
         if (maxDate) {
           mdDatepickerFrag.setAttribute('md-max-date', maxDate);
