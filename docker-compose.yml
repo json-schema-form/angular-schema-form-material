@@ -1,0 +1,4 @@
+asfm:
+    build: .
+    volumes:
+        - ./tmp/:/home/devuser/tmp/

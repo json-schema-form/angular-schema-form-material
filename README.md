@@ -1,55 +1,46 @@
-Angular Material Decorator
-==========================
+# Angular Material Decorator
 
-[![Join the chat at https://gitter.im/json-schema-form/angular-schema-form-material](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/json-schema-form/angular-schema-form-material?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+The up-to-date version of this README is available at the original repo: [json-schema-form/angular-schema-form-material](https://github.com/json-schema-form/angular-schema-form-material).
 
-For https://github.com/json-schema-form/angular-schema-form
 
-Work In Progress
-----------------
-Angular Material has reached 1.0.0 however I do not feel it is remotely stable yet, this decorator is progressing very cautiously until that project hits a more stable milestone. That said, I have made an early alpha available and will continue to release alpha releases as I add new features, these **are not production quality** as the name alpha implies.
+## Fork deployment process
 
-All this means is that it is **very** much a **work in progress**.
+* _develop_ is the default branch. Any pull request submitted to the original repo shall be made from this branch.
+* _master_ is a used as a deployment branch and is specific to Optiflows release workflow.
 
-Testing
-------------
-To test clone repo and:
-```
-npm install
-bower install
-gulp minify
-```
 
-Start favorite http server (http-server or puer for instance) and open
-`examples/material-example.html`
+## How to build (docker-based)
 
-There is also a `gulp watch` task that minifys on change.
+* Since all build and release assets are only available in the _master_ branch, you need to copy the following files in your development branch manually:
 
-Known Issues
-------------
-  * Almost nothing works if the schema uses bootstrap decorator features, it does not have array or complex keys yet and many other features are still missing or have no equivalent.
-  * Needs development branch of angular schema form.
-  * Only basic support for inputs, textarea, radios, radiobuttons, checkboxes, datepicker and tabs are implemented.
-  * Angular material theme only works when `$mdThemingProvider.alwaysWatchTheme(true);` is used.
-  * Until Angular Material hits 1.0.0 there is still chances that features may break again.
-
-Contributing
-------------
-Contributions are welcome! Please see [Contributing.md](CONTRIBUTING.md) for more info.
-
-Future
-------
-Using the new builder opens up for a lot of optimization. Primarily we can get rid of a lot of small
-watches by using build helpers. For instance, slapping on a `sf-changed` directive *only* if the
-form definition has an `onChange` option.
-
-Testing
--------
-```
-npm install -g protractor
-protractor test/protractor/conf.js
+**Dockerfile**:
+```Dockerfile
+FROM surycat/js-toolset:0.2.0
+USER devuser
+WORKDIR ${WORKSPACE}
+ADD . ${WORKSPACE}
+RUN npm install && bower install
+CMD /bin/bash
 ```
 
-change baseurl in test/protractor/conf.js to match ur local environment.
+**docker-compose.yml**:
+```yml
+asfm:
+    build: .
+    volumes:
+        - ./tmp/:/home/devuser/tmp/
+```
 
-Copyright (c) 2016 Marcel John Bennett, David Jensen
+* Build the image with:
+```bash
+docker-compose build
+```
+* Run the container with:
+```bash
+docker-compose run --rm afsm
+```
+* Inside the container, build the library with:
+```bash
+gulp
+```
+* Finally, move `material-decorator.js` in  `./tmp/` to get the final asset out of the container.
