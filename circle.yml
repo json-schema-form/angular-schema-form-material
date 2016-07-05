@@ -1,0 +1,11 @@
+dependencies:
+    post:
+        - gulp
+
+deployment:
+    release:
+        tag: /[0-9]+(\.[0-9]+){2}/
+        commands:
+            - jq -c '.version="'$CIRCLE_TAG'"' package.json > package.tmp && mv package.tmp package.json
+            - npm pack
+            - curl -F package=@$(ls *.tgz) https://${GEMFURY_TOKEN}@push.fury.io/optiflows/

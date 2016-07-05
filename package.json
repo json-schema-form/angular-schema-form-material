@@ -1,11 +1,14 @@
 {
   "name": "angular-schema-form-material",
-  "version": "1.0.0-alpha.1",
   "description": "Angular Material decorator for Angular Schema Form",
   "main": "material-decorator.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo 'No test'"
   },
+  "files": [
+    "README.md",
+    "bower.json"
+  ],
   "keywords": [
     "angular-schema-form-decorator"
   ],
