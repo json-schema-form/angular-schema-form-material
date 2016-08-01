@@ -1,7 +1,7 @@
 <md-input-container class="schema-form-{{::form.type}} {{::form.htmlClass ? form.htmlClass : 'flex-100'}}"
                     ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}"
-                    sf-messages sf-layout>
-  <label  ng-show="showTitle()" for="{{::form.key|sfCamelKey}}" ng-class="{'md-required': !!form.required}">{{::form.title}}</label>
+                    sf-messages sf-layout sf-material-class="md-input-has-value">
+  <label  ng-show="showTitle()" for="{{::form.key|sfCamelKey}}">{{::form.title}}</label>
   <input sf-field-model
          ng-show="::form.key"
          type="{{::form.type}}"

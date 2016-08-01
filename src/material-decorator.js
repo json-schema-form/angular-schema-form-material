@@ -119,7 +119,8 @@
     };
 
     function sfMessagesNodeHandler() {
-      var html = '<div ng-if="ngModel.$invalid" ng-messages="ngModel.$error"><div sf-message ng-message></div></div>';
+        var html = '<div ng-if="ngModel.$invalid" ng-messages="{dummy: true}" class="ng-active">' +
+          '<div ng-message="dummy" class="md-input-message-animation" sf-message="form.description"></div></div>';
       var div = document.createElement('div');
       div.innerHTML = html;
       return div.firstChild;
@@ -128,7 +129,7 @@
     function sfMessagesBuilder(args) {
       var messagesDiv = args.fieldFrag.querySelector('[sf-messages]');
       if (messagesDiv && sfMessagesNode) {
-        var child = sfMessagesNode.cloneNode();
+        var child = sfMessagesNode.cloneNode(true);
         messagesDiv.appendChild(child);
       }
     };
@@ -213,7 +214,7 @@
         var minDate = args.form.minimum || false;
         var maxDate = args.form.maximum || false;
         if (minDate) {
-          mdDatepickerFrag.setAttribute('md-max-date', minDate);
+          mdDatepickerFrag.setAttribute('md-min-date', minDate);
         }
         if (maxDate) {
           mdDatepickerFrag.setAttribute('md-max-date', maxDate);
