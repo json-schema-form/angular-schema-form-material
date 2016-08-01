@@ -55,7 +55,6 @@
 
     var core = [ sfField, ngModel, ngModelOptions, condition, sfLayout ];
     var defaults = core.concat(sfMessages);
-    var inputs = [sfField, ngModel, ngModelOptions, condition, sfLayout, sfMessages, mdInputBuilder ];
     var arrays = core.concat(array);
 
     schemaFormProvider.defaults.string.unshift(dateDefault);
@@ -75,7 +74,7 @@
       checkbox: { template: base + 'checkbox.html', builder: defaults },
       checkboxes: { template: base + 'checkboxes.html', builder: arrays },
       date: { template: base + 'date.html', builder: defaults.concat(mdDatepicker) },
-      'default': { template: base + 'default.html', builder: inputs },
+      'default': { template: base + 'default.html', builder: defaults },
       fieldset: { template: base + 'fieldset.html', builder: [ sfField, simpleTransclusion, condition ] },
       help: { template: base + 'help.html', builder: defaults },
       number: { template: base + 'default.html', builder: defaults },
@@ -91,22 +90,6 @@
       textarea: { template: base + 'textarea.html', builder: defaults.concat(textarea) },
       switch: { template: base + 'switch.html', builder: defaults.concat(mdSwitch) }
     });
-
-    function mdInputBuilder( args ) {
-      function reduceHelper(obj,i) {return obj[i]}
-
-      var modelValue;
-      try {
-        modelValue = args.form.key.reduce(reduceHelper, args.model);
-      } catch(e) {
-        modelValue = undefined;
-      }
-
-      if ( modelValue ) {
-        var container = args.fieldFrag.querySelector('md-input-container');
-        container.className = container.className + " md-input-has-value";
-      }
-    };
 
     function sfLayout(args) {
       var layoutDiv = args.fieldFrag.querySelector('[sf-layout]');
