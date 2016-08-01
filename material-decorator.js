@@ -1,7 +1,7 @@
 angular.module("schemaForm").run(["$templateCache", function($templateCache) {$templateCache.put("decorators/material/actions-trcl.html","<div class=\"btn-group schema-form-actions {{form.htmlClass}}\" ng-transclude=\"\"></div>");
 $templateCache.put("decorators/material/actions.html","<section layout=\"row\" class=\"btn-group schema-form-actions {{form.htmlClass}}\"></section>");
 $templateCache.put("decorators/material/array.html","<div class=\"schema-form-array {{form.htmlClass}}\" sf-field-model=\"sf-new-array\" sf-new-array=\"\"><label class=\"control-label\" ng-show=\"showTitle()\">{{ form.title }}</label><md-list class=\"list-group\" sf-field-model=\"\" ui-sortable=\"form.sortOptions\"><md-list-item layout=\"row\" class=\"list-group-item\" sf-field-model=\"ng-repeat\" ng-repeat=\"item in modelArray track by $index\" schema-form-array-items=\"\"><md-button flex=\"none\" flex-order=\"2\" type=\"button\" ng-hide=\"form.readonly || form.remove === null\" ng-click=\"deleteFromArray($index)\" ng-disabled=\"form.schema.minItems >= modelArray.length\" class=\"md-icon-button\" aria-label=\"More\" style=\"position: relative; z-index: 20;\"><md-icon>close</md-icon></md-button></md-list-item></md-list><div class=\"clearfix\" style=\"padding: 15px;\" ng-model=\"modelArray\" schema-validate=\"form\"><div class=\"help-block\" ng-show=\"(hasError() && errorMessage(schemaError())) || form.description\" ng-bind-html=\"(hasError() && errorMessage(schemaError())) || form.description\"></div><md-button ng-hide=\"form.readonly || form.add === null\" ng-click=\"appendToArray()\" ng-disabled=\"form.schema.maxItems <= modelArray.length\" type=\"button\" class=\"btn md-raised md-primary {{ form.style.add || \'btn-default\' }} pull-right\"><i class=\"glyphicon glyphicon-plus\"></i> {{ form.add || \'Add\'}}</md-button></div></div>");
-$templateCache.put("decorators/material/autocomplete.html","<div class=\"form-group {{::form.htmlClass ? form.htmlClass : \'flex-100\'}} schema-form-select\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\" sf-messages=\"\" sf-layout=\"\"><md-autocomplete flex=\"\" ng-disabled=\"form.readonly\" ng-model=\"$$value$$\" sf-autocomplete=\"\" sf-field-model=\"replaceAll\" schema-validate=\"form\" md-selected-item=\"$$value$$\" md-search-text=\"searchText\" md-selected-item-change=\"\'todo\';\" md-items=\"item in evalExpr(\'this[\\\\\'\'+form.optionFilter+\'\\\\\'](\\\\\'\'+searchText+\'\\\\\')\')\" md-item-text=\"item.name\" md-floating-label=\"{{::form.title}}\" md-menu-class=\"autocomplete-custom-template\"><md-item-template><span md-highlight-text=\"searchText\">{{item.name}}</span></md-item-template><md-not-found>No matches found</md-not-found></md-autocomplete></div>");
+$templateCache.put("decorators/material/autocomplete.html","<div class=\"form-group {{::form.htmlClass ? form.htmlClass : \'flex-100\'}} schema-form-select\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\" sf-messages=\"\" sf-layout=\"\"><md-autocomplete flex=\"\" ng-disabled=\"form.readonly\" ng-model=\"$$value$$\" sf-autocomplete=\"\" sf-field-model=\"replaceAll\" sf-changed-auto-complete=\"form\" schema-validate=\"form\" md-selected-item=\"$$value$$\" md-search-text=\"searchText\" md-selected-item-change=\"\'todo\';\" md-items=\"item in evalExpr(\'this[\\\\\'\'+form.optionFilter+\'\\\\\'](\\\\\'\'+searchText+\'\\\\\')\')\" md-item-text=\"item.name\" md-floating-label=\"{{::form.title}}\" md-menu-class=\"autocomplete-custom-template\"><md-item-template><span md-highlight-text=\"searchText\">{{item.name}}</span></md-item-template><md-not-found>No matches found</md-not-found></md-autocomplete></div>");
 $templateCache.put("decorators/material/card-content.html","<md-card-content class=\"schema-form-card-content {{form.htmlClass}}\"></md-card-content>");
 $templateCache.put("decorators/material/card.html","<md-card ng-disabled=\"form.readonly\" class=\"standard {{form.htmlClass}}\" flex=\"\"><md-card-header ng-if=\"form.title\"><md-card-header-text><span class=\"md-title\">{{ form.title }}</span></md-card-header-text></md-card-header><md-card-content ng-class=\'{\"layout-column\": !form.inline, \"layout-row\": form.inline}\' layout-wrap=\"\" sf-field-transclude=\"\"></md-card-content></md-card>");
 $templateCache.put("decorators/material/checkbox.html","<div class=\"checkbox schema-form-checkbox {{::form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\" sf-messages=\"\"><md-checkbox sf-field-model=\"\" sf-changed=\"form\" ng-disabled=\"form.readonly\" schema-validate=\"form\" class=\"{{::form.fieldHtmlClass}}\" name=\"{{::form.key|sfCamelKey}}\" aria-label=\"{{::form.title}}\"><span>{{::form.title}}</span></md-checkbox></div>");
@@ -24,369 +24,356 @@ $templateCache.put("decorators/material/tabarray.html","<div sf-array=\"form\" n
 $templateCache.put("decorators/material/tabs.html","<div sf-field-model=\"\" class=\"schema-form-tabs {{::form.htmlClass}}\"><md-tabs md-dynamic-height=\"\" md-selected=\"selected\" md-autoselect=\"\" ng-init=\"selected = 0\"></md-tabs></div>");
 $templateCache.put("decorators/material/textarea.html","<md-input-container class=\"{{::form.htmlClass}} schema-form-textarea\" sf-messages=\"\" sf-layout=\"\"><label ng-show=\"showTitle()\" for=\"{{::form.key|sfCamelKey}}\">{{::form.title}}</label> <textarea ng-class=\"::form.fieldHtmlClass\" id=\"{{::form.key|sfCamelKey}}\" sf-changed=\"form\" ng-disabled=\"::form.readonly\" sf-field-model=\"\" schema-validate=\"form\" name=\"{{::form.key|sfCamelKey}}\"></textarea></md-input-container>");}]);
 (function(angular, undefined) {
-	'use strict';
-	angular
-		.module('schemaForm')
-		.config(materialDecoratorConfig)
-		.directive('sfmExternalOptions', sfmExternalOptionsDirective)
-		.filter('sfCamelKey', sfCamelKeyFilter);
-
-	materialDecoratorConfig.$inject = [
-		'schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfBuilderProvider', 'sfPathProvider', '$injector'
-	];
-
-	function materialDecoratorConfig( schemaFormProvider, decoratorsProvider, sfBuilderProvider, sfPathProvider, $injector ) {
-		var base = 'decorators/material/';
-
-		var simpleTransclusion = sfBuilderProvider.builders.simpleTransclusion;
-		var transclusion       = sfBuilderProvider.builders.transclusion;
-		var ngModelOptions     = sfBuilderProvider.builders.ngModelOptions;
-		var ngModel            = sfBuilderProvider.builders.ngModel;
-		var sfField            = sfBuilderProvider.builders.sfField;
-		var condition          = sfBuilderProvider.builders.condition;
-		var array              = sfBuilderProvider.builders.array;
-
-		var sfLayout           = sfLayout;
-		var sfMessagesNode     = sfMessagesNodeHandler();
-		var sfMessages         = sfMessagesBuilder;
-		var sfOptions          = sfOptionsBuilder;
-		var mdAutocomplete     = mdAutocompleteBuilder;
-		var mdSwitch           = mdSwitchBuilder;
-		var mdDatepicker       = mdDatepickerBuilder;
-		var mdTabs             = mdTabsBuilder;
-		var textarea           = textareaBuilder;
-
-		var core = [ sfField, ngModel, ngModelOptions, condition, sfLayout ];
-		var defaults = core.concat(sfMessages);
-		var inputs = [sfField, ngModel, ngModelOptions, condition, sfLayout, sfMessages, mdInputBuilder ];
-		var arrays = core.concat(array);
-
-		schemaFormProvider.defaults.string.unshift(dateDefault);
+  'use strict';
+  angular
+  .module('schemaForm')
+  .config(materialDecoratorConfig)
+  .directive('sfmExternalOptions', sfmExternalOptionsDirective)
+  .filter('sfCamelKey', sfCamelKeyFilter)
+  .directive('sfChangedAutoComplete', function() {
+    // Duplicate of sf-changed, but instead of adding a watcher, adds a function on the scope to fire the onchange.
+    return {
+      require: 'ngModel',
+      restrict: 'AC',
+      link: function(scope, element, attrs, ctrl) {
+        var form = scope.$eval(attrs.sfChangedAutoComplete);
+        //"form" is really guaranteed to be here since the decorator directive
+        //waits for it. But best be sure.
+        if (form && form.onChange) {
+          scope.onChangeFn = function() {
+            if (angular.isFunction(form.onChange)) {
+              form.onChange(ctrl.$modelValue, form);
+            } else {
+              scope.evalExpr(form.onChange, {'modelValue': ctrl.$modelValue, form: form});
+            }
+          };
+        }
+      }
+    };
+  });
 
 
-		//schemaFormProvider.defaults.object.unshift(cardDefault);
+  materialDecoratorConfig.$inject = [
+    'schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfBuilderProvider', 'sfPathProvider', '$injector'
+  ];
+
+  function materialDecoratorConfig( schemaFormProvider, decoratorsProvider, sfBuilderProvider, sfPathProvider, $injector ) {
+    var base = 'decorators/material/';
+
+    var simpleTransclusion = sfBuilderProvider.builders.simpleTransclusion;
+    var transclusion       = sfBuilderProvider.builders.transclusion;
+    var ngModelOptions     = sfBuilderProvider.builders.ngModelOptions;
+    var ngModel            = sfBuilderProvider.builders.ngModel;
+    var sfField            = sfBuilderProvider.builders.sfField;
+    var condition          = sfBuilderProvider.builders.condition;
+    var array              = sfBuilderProvider.builders.array;
+
+    var sfLayout           = sfLayout;
+    var sfMessagesNode     = sfMessagesNodeHandler();
+    var sfMessages         = sfMessagesBuilder;
+    var sfOptions          = sfOptionsBuilder;
+    var mdAutocomplete     = mdAutocompleteBuilder;
+    var mdSwitch           = mdSwitchBuilder;
+    var mdDatepicker       = mdDatepickerBuilder;
+    var mdTabs             = mdTabsBuilder;
+    var textarea           = textareaBuilder;
+
+    var core = [ sfField, ngModel, ngModelOptions, condition, sfLayout ];
+    var defaults = core.concat(sfMessages);
+    var inputs = [sfField, ngModel, ngModelOptions, condition, sfLayout, sfMessages, mdInputBuilder ];
+    var arrays = core.concat(array);
+
+    schemaFormProvider.defaults.string.unshift(dateDefault);
+
+
+    //schemaFormProvider.defaults.object.unshift(cardDefault);
 
 
 
-		decoratorsProvider.defineDecorator('materialDecorator', {
-			actions: { template: base + 'actions.html', builder: [ sfField, simpleTransclusion, condition ] },
-			array: { template: base + 'array.html', builder: arrays },
-			autocomplete: { template: base + 'autocomplete.html', builder: defaults.concat(mdAutocomplete) },
-			boolean: { template: base + 'checkbox.html', builder: defaults },
-			button: { template: base + 'submit.html', builder: defaults },
-			card: 			{ template: base + 'card.html', 		builder: [ sfField, transclusion, condition ] },
-			checkbox: { template: base + 'checkbox.html', builder: defaults },
-			checkboxes: { template: base + 'checkboxes.html', builder: arrays },
-			date: { template: base + 'date.html', builder: defaults.concat(mdDatepicker) },
-			'default': { template: base + 'default.html', builder: inputs },
-			fieldset: 		{ template: base + 'fieldset.html', builder: [ sfField, simpleTransclusion, condition ] },
-			help: { template: base + 'help.html', builder: defaults },
-			number: { template: base + 'default.html', builder: defaults },
-			password: { template: base + 'default.html', builder: defaults },
-			radios: { template: base + 'radios.html', builder: defaults },
-			'radios-inline': { template: base + 'radios-inline.html', builder: defaults },
-			radiobuttons: { template: base + 'radio-buttons.html', builder: defaults },
-			section: { template: base + 'section.html', builder: [ sfField, simpleTransclusion, condition, sfLayout ] },
-			select: { template: base + 'select.html', builder: defaults.concat(sfOptions) },
-			submit: { template: base + 'submit.html', builder: defaults },
-			tabs: { template: base + 'tabs.html', builder: [ sfField, mdTabs, condition ] },
-			tabarray: { template: base + 'tabarray.html', builder: arrays },
-			textarea: { template: base + 'textarea.html', builder: defaults.concat(textarea) },
-			switch: { template: base + 'switch.html', builder: defaults.concat(mdSwitch) }
-		});
+    decoratorsProvider.defineDecorator('materialDecorator', {
+      actions: { template: base + 'actions.html', builder: [ sfField, simpleTransclusion, condition ] },
+      array: { template: base + 'array.html', builder: arrays },
+      autocomplete: { template: base + 'autocomplete.html', builder: defaults.concat(mdAutocomplete) },
+      boolean: { template: base + 'checkbox.html', builder: defaults },
+      button: { template: base + 'submit.html', builder: defaults },
+      card: 			{ template: base + 'card.html', 		builder: [ sfField, transclusion, condition ] },
+      checkbox: { template: base + 'checkbox.html', builder: defaults },
+      checkboxes: { template: base + 'checkboxes.html', builder: arrays },
+      date: { template: base + 'date.html', builder: defaults.concat(mdDatepicker) },
+      'default': { template: base + 'default.html', builder: inputs },
+      fieldset: 		{ template: base + 'fieldset.html', builder: [ sfField, simpleTransclusion, condition ] },
+      help: { template: base + 'help.html', builder: defaults },
+      number: { template: base + 'default.html', builder: defaults },
+      password: { template: base + 'default.html', builder: defaults },
+      radios: { template: base + 'radios.html', builder: defaults },
+      'radios-inline': { template: base + 'radios-inline.html', builder: defaults },
+      radiobuttons: { template: base + 'radio-buttons.html', builder: defaults },
+      section: { template: base + 'section.html', builder: [ sfField, simpleTransclusion, condition, sfLayout ] },
+      select: { template: base + 'select.html', builder: defaults.concat(sfOptions) },
+      submit: { template: base + 'submit.html', builder: defaults },
+      tabs: { template: base + 'tabs.html', builder: [ sfField, mdTabs, condition ] },
+      tabarray: { template: base + 'tabarray.html', builder: arrays },
+      textarea: { template: base + 'textarea.html', builder: defaults.concat(textarea) },
+      switch: { template: base + 'switch.html', builder: defaults.concat(mdSwitch) }
+    });
 
-		function mdInputBuilder( args ) {
-			console.log( args );
-			function reduceHelper(obj,i) {return obj[i]}
+    function mdInputBuilder( args ) {
+      function reduceHelper(obj,i) {return obj[i]}
 
-			var modelValue;
-			try {
-				modelValue = args.form.key.reduce(reduceHelper, args.model);
-			} catch(e) {
-				modelValue = undefined;
-			}
+      var modelValue;
+      try {
+        modelValue = args.form.key.reduce(reduceHelper, args.model);
+      } catch(e) {
+        modelValue = undefined;
+      }
 
-			if ( modelValue ) {
-				var container = args.fieldFrag.querySelector('md-input-container');
-				container.className = container.className + " md-input-has-value";
-			}
-		};
+      if ( modelValue ) {
+        var container = args.fieldFrag.querySelector('md-input-container');
+        container.className = container.className + " md-input-has-value";
+      }
+    };
 
-		function sfLayout(args) {
-			var layoutDiv = args.fieldFrag.querySelector('[sf-layout]');
+    function sfLayout(args) {
+      var layoutDiv = args.fieldFrag.querySelector('[sf-layout]');
 
-			if (args.form.grid) {
-				Object.getOwnPropertyNames(args.form.grid).forEach(function(property, idx, array) {
-					layoutDiv.setAttribute(property, args.form.grid[property]);
-				});
-			};
-		};
+      if (args.form.grid) {
+        Object.getOwnPropertyNames(args.form.grid).forEach(function(property, idx, array) {
+          layoutDiv.setAttribute(property, args.form.grid[property]);
+        });
+      };
+    };
 
-		function sfMessagesNodeHandler() {
-			var html = '<div ng-if="ngModel.$invalid" ng-messages="ngModel.$error"><div sf-message ng-message></div></div>';
-			var div = document.createElement('div');
-			div.innerHTML = html;
-			return div.firstChild;
-		};
+    function sfMessagesNodeHandler() {
+      var html = '<div ng-if="ngModel.$invalid" ng-messages="ngModel.$error"><div sf-message ng-message></div></div>';
+      var div = document.createElement('div');
+      div.innerHTML = html;
+      return div.firstChild;
+    };
 
-		function sfMessagesBuilder(args) {
-			var messagesDiv = args.fieldFrag.querySelector('[sf-messages]');
-			if (messagesDiv && sfMessagesNode) {
-				var child = sfMessagesNode.cloneNode();
-				messagesDiv.appendChild(child);
-			}
-		};
+    function sfMessagesBuilder(args) {
+      var messagesDiv = args.fieldFrag.querySelector('[sf-messages]');
+      if (messagesDiv && sfMessagesNode) {
+        var child = sfMessagesNode.cloneNode();
+        messagesDiv.appendChild(child);
+      }
+    };
 
-		function textareaBuilder(args) {
-			var textareaFrag = args.fieldFrag.querySelector('textarea');
-			var maxLength = args.form.maxlength || false;
-			if (textareaFrag && maxLength) {
-				textareaFrag.setAttribute('md-maxlength', maxLength);
-			};
-		};
+    function textareaBuilder(args) {
+      var textareaFrag = args.fieldFrag.querySelector('textarea');
+      var maxLength = args.form.maxlength || false;
+      if (textareaFrag && maxLength) {
+        textareaFrag.setAttribute('md-maxlength', maxLength);
+      };
+    };
 
-		function mdAutocompleteBuilder(args) {
-			var mdAutocompleteFrag = args.fieldFrag.querySelector('md-autocomplete');
-			var minLength = args.form.minLength || 1;
-			var maxLength = args.form.maxLength || false;
-			var title = args.form.title || args.form.placeholder || args.form.key.slice(-1)[0];
+    function mdAutocompleteBuilder(args) {
+      var mdAutocompleteFrag = args.fieldFrag.querySelector('md-autocomplete');
 
-			if (mdAutocompleteFrag) {
-				if (args.form.onChange) {
-					mdAutocompleteFrag.setAttribute('md-selected-item-change', 'args.form.onChange()');
-					mdAutocompleteFrag.setAttribute('md-search-text-change', 'args.form.onChange(searchText)');
-				};
+      var minLength = args.form.minLength !== undefined ? args.form.minLength : 1; // Allow the user to pass "0" for min-length to use md-autocomplete as a dropdown with filter.
+      var maxLength = args.form.maxLength || false;
+      var title = args.form.title || args.form.placeholder || args.form.key.slice(-1)[0];
+      if (mdAutocompleteFrag) {
+        if (args.form.onChange) {
+          mdAutocompleteFrag.setAttribute('md-selected-item-change', 'onChangeFn()');
+          mdAutocompleteFrag.setAttribute('md-search-text-change', 'onChangeFn(searchText)');
+        };
 
-				// mdAutocompleteFrag.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
-				mdAutocompleteFrag.setAttribute('md-min-length', minLength);
-				if (maxLength) {
-					mdAutocompleteFrag.setAttribute('md-max-length', maxLength);
-				};
+        mdAutocompleteFrag.setAttribute('md-min-length', minLength);
+        if (maxLength) {
+          mdAutocompleteFrag.setAttribute('md-max-length', maxLength);
+        };
 
-				if (title) {
-					mdAutocompleteFrag.setAttribute('md-floating-label', title);
-				};
-			}
-		};
+        if (title) {
+          mdAutocompleteFrag.setAttribute('md-floating-label', title);
+        };
+      }
+    };
 
-		function mdSwitchBuilder(args) {
-			var mdSwitchFrag = args.fieldFrag.querySelector('md-switch');
-			if (args.form.schema.titleMap) {
-				mdSwitchFrag.setAttribute('ng-true-value', args.form.schema.titleMap.true);
-				mdSwitchFrag.setAttribute('ng-false-value', args.form.schema.titleMap.false);
-			}
-		};
+    function mdSwitchBuilder(args) {
+      var mdSwitchFrag = args.fieldFrag.querySelector('md-switch');
+      if (args.form.schema.titleMap) {
+        mdSwitchFrag.setAttribute('ng-true-value', args.form.schema.titleMap.true);
+        mdSwitchFrag.setAttribute('ng-false-value', args.form.schema.titleMap.false);
+      }
+    };
 
-		function sfOptionsBuilder(args) {
-			var mdSelectFrag = args.fieldFrag.querySelector('md-select');
-			var enumTitleMap = [];
-			var i;
-			var mdSelectFrag;
+    function sfOptionsBuilder(args) {
+      var mdSelectFrag = args.fieldFrag.querySelector('md-select');
+      var enumTitleMap = [];
+      var i;
+      var mdSelectFrag;
 
-			args.form.selectOptions = [];
-			args.form.getOptions = getOptionsHandler;
+      args.form.selectOptions = [];
+      args.form.getOptions = getOptionsHandler;
 
-			if (args.form.schema.links && (typeof args.form.schema.links) === 'object') {
-				var link;
-				var related = /({)([^}]*)(})/gm;
-				var source = /{{([^}]*)}}/gm;
-				var matched;
+      if (args.form.schema.links && (typeof args.form.schema.links) === 'object') {
+        var link;
+        var related = /({)([^}]*)(})/gm;
+        var source = /{{([^}]*)}}/gm;
+        var matched;
 
-				for (i = 0; i < args.form.schema.links.length; i++) {
-					link = args.form.schema.links[i];
-					if (link.rel === 'options') {
-						// TODO enable filter to allow processing results
-						// args.form.optionSource = link.href.replace(related, '$1$1 model.$2 | _externalOptionUri $3$3');
-						args.form.optionSource = link.href.replace(related, '$1$1 model.$2 $3$3');
-					};
-				};
+        for (i = 0; i < args.form.schema.links.length; i++) {
+          link = args.form.schema.links[i];
+          if (link.rel === 'options') {
+            // TODO enable filter to allow processing results
+            // args.form.optionSource = link.href.replace(related, '$1$1 model.$2 | _externalOptionUri $3$3');
+            args.form.optionSource = link.href.replace(related, '$1$1 model.$2 $3$3');
+          };
+        };
 
-				mdSelectFrag.setAttribute('sfm-external-options', args.form.optionSource);
-			}
-			else {
-				args.form.selectOptions = sfOptionsProcessor(args.form);
-			};
-		};
+        mdSelectFrag.setAttribute('sfm-external-options', args.form.optionSource);
+      }
+      else {
+        args.form.selectOptions = sfOptionsProcessor(args.form);
+      };
+    };
 
-		function mdDatepickerBuilder(args) {
-			var mdDatepickerFrag = args.fieldFrag.querySelector('md-datepicker');
-			if (mdDatepickerFrag) {
-				if (args.form.onChange) {
-					mdDatepickerFrag.setAttribute('ng-change', 'args.form.onChange(searchText)');
-				}
-				// mdDatepickerFrag.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
-				var minDate = args.form.minimum || false;
-				var maxDate = args.form.maximum || false;
-				if (minDate) {
-					mdDatepickerFrag.setAttribute('md-max-date', minDate);
-				}
-				if (maxDate) {
-					mdDatepickerFrag.setAttribute('md-max-date', maxDate);
-				}
-			}
-		};
+    function mdDatepickerBuilder(args) {
+      var mdDatepickerFrag = args.fieldFrag.querySelector('md-datepicker');
+      if (mdDatepickerFrag) {
+        if (args.form.onChange) {
+          mdDatepickerFrag.setAttribute('ng-change', 'args.form.onChange(searchText)');
+        }
+        // mdDatepickerFrag.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
+        var minDate = args.form.minimum || false;
+        var maxDate = args.form.maximum || false;
+        if (minDate) {
+          mdDatepickerFrag.setAttribute('md-max-date', minDate);
+        }
+        if (maxDate) {
+          mdDatepickerFrag.setAttribute('md-max-date', maxDate);
+        }
+      }
+    };
 
-		function mdTabsBuilder(args) {
-			if (args.form.tabs && args.form.tabs.length > 0) {
-				var mdTabsFrag = args.fieldFrag.querySelector('md-tabs');
+    function mdTabsBuilder(args) {
+      if (args.form.tabs && args.form.tabs.length > 0) {
+        var mdTabsFrag = args.fieldFrag.querySelector('md-tabs');
 
-				args.form.tabs.forEach(function(tab, index) {
-					var mdTab = document.createElement('md-tab');
-					mdTab.setAttribute('label', '{{' + args.path + '.tabs[' + index + '].title}}');
-					var mdTabBody = document.createElement('md-tab-body');
-					var childFrag = args.build(tab.items, args.path + '.tabs[' + index + '].items', args.state);
-					mdTabBody.appendChild(childFrag);
-					mdTab.appendChild(mdTabBody);
-					mdTabsFrag.appendChild(mdTab);
-				});
-			}
-		};
+        args.form.tabs.forEach(function(tab, index) {
+          var mdTab = document.createElement('md-tab');
+          mdTab.setAttribute('label', '{{' + args.path + '.tabs[' + index + '].title}}');
+          var mdTabBody = document.createElement('md-tab-body');
+          var childFrag = args.build(tab.items, args.path + '.tabs[' + index + '].items', args.state);
+          mdTabBody.appendChild(childFrag);
+          mdTab.appendChild(mdTabBody);
+          mdTabsFrag.appendChild(mdTab);
+        });
+      }
+    };
 
-		/**
-		* Material Datepicker
-		*/
-		function dateDefault(name, schema, options) {
-			if (schema.type === 'string' && (schema.format === 'date' || schema.format === 'date-time')) {
-				var f = schemaFormProvider.stdFormObj(name, schema, options);
-				f.key  = options.path;
-				f.type = 'date';
-				options.lookup[sfPathProvider.stringify(options.path)] = f;
-				return f;
-			}
-		};
+    /**
+    * Material Datepicker
+    */
+    function dateDefault(name, schema, options) {
+      if (schema.type === 'string' && (schema.format === 'date' || schema.format === 'date-time')) {
+        var f = schemaFormProvider.stdFormObj(name, schema, options);
+        f.key  = options.path;
+        f.type = 'date';
+        options.lookup[sfPathProvider.stringify(options.path)] = f;
+        return f;
+      }
+    };
 
-		/*function cardDefault(name, schema, options) {
-			console.log( 'CARD', name, schema, options );
-			if (schema.type === 'object' && schema.format === 'card') {
-				var f   = schemaFormProvider.stdFormObj(name, schema, options);
-				f.type  = 'card';
-				f.key   = options.path;
-				f.items = [];
-				options.lookup[sfPathProvider.stringify(options.path)] = f;
+  };
 
-				//recurse down into properties
-				angular.forEach(schema.properties, function(v, k) {
-					var path = options.path.slice();
-					path.push(k);
-					if (options.ignore[sfPathProvider.stringify(path)] !== true) {
-						var required = schema.required && schema.required.indexOf(k) !== -1;
+  function getOptionsHandler(form, evalExpr) {
+    if (form.optionData) {
+      return evalExpr(form.optionData);
+    };
 
-						var def = schemaFormProvider.defaultFormDefinition(k, v, {
-							path: path,
-							required: required || false,
-							lookup: options.lookup,
-							ignore: options.ignore,
-							global: options.global
-						});
-						if (def) {
-							f.items.push(def);
-						}
-					}
-				});
-				console.log( f );
-				return f;
-			}
+    if (form.selectOptions) {
+      return form.selectOptions;
+    };
 
-		}*/
-	};
+    return [];
+  };
 
-	function getOptionsHandler(form, evalExpr) {
-		if (form.optionData) {
-			return evalExpr(form.optionData);
-		};
+  function sfOptionsProcessor(data) {
+    var enumTitleMap = [];
 
-		if (form.selectOptions) {
-			return form.selectOptions;
-		};
+    if (data.titleMap) {
+      return data.titleMap;
+    }
+    else if (data.enum && data.enum.length) {
+      for (i = 0; i < data.enum.length; i++) {
+        if (data.enum[i] && data.enum[i].length) {
+          enumTitleMap.push({ name: data.enum[i], value: data.enum[i] });
+        };
+      };
+    };
 
-		return [];
-	};
+    return enumTitleMap;
+  };
 
-	function sfOptionsProcessor(data) {
-		var enumTitleMap = [];
+  sfmExternalOptionsDirective.$inject = [ '$http' ];
 
-		if (data.titleMap) {
-			return data.titleMap;
-		}
-		else if (data.enum && data.enum.length) {
-			for (i = 0; i < data.enum.length; i++) {
-				if (data.enum[i] && data.enum[i].length) {
-					enumTitleMap.push({ name: data.enum[i], value: data.enum[i] });
-				};
-			};
-		};
+  function sfmExternalOptionsDirective($http) {
+    var directive = {
+      link: link,
+      restrict: 'A'
+    };
 
-		return enumTitleMap;
-	};
+    return directive;
 
-	sfmExternalOptionsDirective.$inject = [ '$http' ];
+    function link(scope, element, attrs) {
+      attrs.$observe('sfmExternalOptions', function(dataURI) {
+        $http.get(dataURI)
+        .then(function(response) {
+          scope.form.selectOptions = sfOptionsProcessor(response.data);
+        });
+      });
+    };
+  };
 
-	function sfmExternalOptionsDirective($http) {
-		var directive = {
-			link: link,
-			restrict: 'A'
-		};
-
-		return directive;
-
-		function link(scope, element, attrs) {
-			attrs.$observe('sfmExternalOptions', function(dataURI) {
-				$http.get(dataURI)
-				.then(function(response) {
-					scope.form.selectOptions = sfOptionsProcessor(response.data);
-				});
-			});
-		};
-	};
-
-	/**
-	* sfCamelKey Filter
-	*/
-	function sfCamelKeyFilter() {
-		return function(formKey) {
-			if (!formKey) { return ''; };
-			var part, i, key;
-			key = formKey.slice();
-			for (i = 0; i < key.length; i++) {
-				part = key[i].toLowerCase().split('');
-				if (i && part.length) { part[0] = part[0].toUpperCase(); };
-				key[i] = part.join('');
-			};
-			return key.join('');
-		};
-	};
+  /**
+  * sfCamelKey Filter
+  */
+  function sfCamelKeyFilter() {
+    return function(formKey) {
+      if (!formKey) { return ''; };
+      var part, i, key;
+      key = formKey.slice();
+      for (i = 0; i < key.length; i++) {
+        part = key[i].toLowerCase().split('');
+        if (i && part.length) { part[0] = part[0].toUpperCase(); };
+        key[i] = part.join('');
+      };
+      return key.join('');
+    };
+  };
 
 })(angular, undefined);
 /*
 TODO add default filter for autocomplete which allows form.optionFilter or 'autocompleteFilter' to override
 Something along the following lines...
 if ($injector.has('autocompleteFilter')) {
-result = $filter('autocomplete')(input);
+	result = $filter('autocomplete')(input);
 }
 else
 if ($injector.has(args.form.optionFilter + 'Filter')) {
-result = $filter(args.form.optionFilter)(input);
+	result = $filter(args.form.optionFilter)(input);
 }
 else {
-if (args.form.optionFilter) {
-mdAutocomplete.setAttribute('md-items',
-'item in evalExpr("this[\""+form.optionFilter+"\"](\""+searchText+"\")")');
-}
+	if (args.form.optionFilter) {
+		mdAutocomplete.setAttribute('md-items',
+		'item in evalExpr("this[\""+form.optionFilter+"\"](\""+searchText+"\")")');
+	}
 }
 
 .filter('autocompleteMovieTest', function() {
-function autocompleteMovieTestFilter(array, input){
-var current = input;
-// You could also call multiple filters here using:
-// current = $filter('filterName')(input)
-if(typeof current === 'string') {
-current = current.replace(' ','-').toLowerCase();
-}
-current = (!current) ? '_undefined' : current;
-return current;
-}
+	function autocompleteMovieTestFilter(array, input){
+		var current = input;
+		// You could also call multiple filters here using:
+		// current = $filter('filterName')(input)
+		if(typeof current === 'string') {
+			current = current.replace(' ','-').toLowerCase();
+		}
+		current = (!current) ? '_undefined' : current;
+		return current;
+	}
 
-return externalOptionUriFilter;
+	return externalOptionUriFilter;
 })
 */
 
