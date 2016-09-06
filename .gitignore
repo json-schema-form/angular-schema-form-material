@@ -100,6 +100,3 @@ crashlytics-build.properties
 
 bower_components
 node_modules
-
-material-decorator.js
-material-decorator.min.js

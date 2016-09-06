@@ -65,6 +65,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(4);
 	__webpack_require__(5);
 	__webpack_require__(6);
+	__webpack_require__(7);
 
 /***/ },
 /* 1 */
@@ -3700,11 +3701,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  $templateCache.put("decorators/material/autocomplete.html", "<div class=\"form-group {{form.htmlClass}} schema-form-select\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\" sf-messages=\"\" sf-layout=\"\"><md-autocomplete flex=\"\" ng-disabled=\"form.readonly\" ng-model=\"$$value$$\" sf-autocomplete=\"\" sf-field-model=\"replaceAll\" schema-validate=\"form\" md-selected-item=\"$$value$$\" md-search-text=\"searchText\" md-selected-item-change=\"\'todo\';\" md-items=\"item in evalExpr(\'this[\\\'\'+form.optionFilter+\'\\\'](\\\'\'+searchText+\'\\\')\')\" md-item-text=\"item.name\" md-floating-label=\"{{::form.title}}\" md-menu-class=\"autocomplete-custom-template\"><md-item-template><span md-highlight-text=\"searchText\">{{item.name}}</span></md-item-template><md-not-found>No matches found</md-not-found></md-autocomplete></div>");
 	  $templateCache.put("decorators/material/card-content.html", "<md-card-content class=\"schema-form-card-content {{form.htmlClass}}\"></md-card-content>");
 	  $templateCache.put("decorators/material/card.html", "<md-card class=\"schema-form-card {{form.htmlClass}}\"></md-card>");
-	  $templateCache.put("decorators/material/checkbox.html", "<div class=\"checkbox schema-form-checkbox {{::form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\" sf-messages=\"\"><md-checkbox sf-field-model=\"\" sf-changed=\"form\" ng-disabled=\"form.readonly\" schema-validate=\"form\" class=\"{{::form.fieldHtmlClass}}\" name=\"{{::form.key|sfCamelKey}}\" aria-label=\"{{::form.title}}\"><span>{{::form.title}}</span></md-checkbox></div>");
+	  $templateCache.put("decorators/material/checkbox.html", "<div class=\"checkbox schema-form-checkbox {{::form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\" sf-messages=\"\"><md-checkbox sf-field-model=\"\" sf-changed=\"form\" ng-disabled=\"form.readonly\" schema-validate=\"form\" sf-material-class=\"md-checked\" class=\"{{::form.fieldHtmlClass}}\" name=\"{{::form.key|sfCamelKey}}\" aria-label=\"{{::form.title}}\"><span>{{::form.title}}</span></md-checkbox></div>");
 	  $templateCache.put("decorators/material/checkboxes.html", "<div sf-array=\"form\" sf-field-model=\"\" class=\"form-group schema-form-checkboxes {{::form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\" sf-messages=\"\"><label class=\"control-label\" ng-show=\"showTitle()\">{{::form.title}}</label><div class=\"checkbox\" ng-repeat=\"val in titleMapValues track by $index\"><md-checkbox ng-model=\"titleMapValues[$index]\" sf-changed=\"form\" ng-disabled=\"::form.readonly\" name=\"{{::form.key|sfCamelKey}}\" ng-true-value=\"true\" ng-false-value=\"false\" aria-label=\"{{::form.title}}\">{{::form.titleMap[$index].name}}</md-checkbox></div></div>");
 	  $templateCache.put("decorators/material/chips.html", "<div class=\"form-group schema-form-chips {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\"><md-chips sf-field-model=\"\" readonly=\"form.readonly\" flex=\"\" placeholder=\"{{::form.title}}\"><md-chip-template><strong ng-if=\"!form.template\">{{$chip}}</strong></md-chip-template></md-chips><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></div>");
 	  $templateCache.put("decorators/material/date.html", "<div class=\"schema-form-date {{::form.htmlClass}}\"><label ng-show=\"showTitle()\" for=\"{{::form.key|sfCamelKey}}\">{{::form.title}}</label><md-datepicker sf-field-model=\"\" sf-changed=\"form\" schema-validate=\"form\" sf-type-parser=\"form.schema\" id=\"{{::form.key|sfCamelKey}}\" ng-show=\"::form.key\" ng-class=\"::form.fieldHtmlClass\" ng-disabled=\"::form.readonly\" md-placeholder=\"Enter date\" sf-messages=\"\"></md-datepicker></div>");
-	  $templateCache.put("decorators/material/default.html", "<md-input-container class=\"schema-form-{{::form.type}} {{::form.htmlClass}}\" ng-class=\"{\'md-input-has-value\': model[\'{{form.key.join(\'\\\'][\\\'\')}}\'], \'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\" sf-messages=\"\" sf-layout=\"\"><label ng-show=\"showTitle()\" for=\"{{::form.key|sfCamelKey}}\">{{::form.title}}</label> <input sf-field-model=\"\" ng-show=\"::form.key\" type=\"{{::form.type}}\" step=\"any\" sf-changed=\"form\" placeholder=\"{{form.placeholder}}\" id=\"{{::form.key|sfCamelKey}}\" ng-class=\"::form.fieldHtmlClass\" sf-type-parser=\"form.schema\" ng-disabled=\"::form.readonly\" schema-validate=\"form\" name=\"{{::form.key|sfCamelKey}}\" aria-describedby=\"{{::form.key|sfCamelKey}}Status\"></md-input-container>");
+	  $templateCache.put("decorators/material/default.html", "<md-input-container class=\"schema-form-{{::form.type}} {{::form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\" sf-messages=\"\" sf-layout=\"\" sf-material-class=\"md-input-has-value\"><label ng-show=\"showTitle()\" for=\"{{::form.key|sfCamelKey}}\">{{::form.title}}</label> <input sf-field-model=\"\" ng-show=\"::form.key\" type=\"{{::form.type}}\" step=\"any\" sf-changed=\"form\" placeholder=\"{{form.placeholder}}\" id=\"{{::form.key|sfCamelKey}}\" ng-class=\"::form.fieldHtmlClass\" sf-type-parser=\"form.schema\" ng-disabled=\"::form.readonly\" schema-validate=\"form\" name=\"{{::form.key|sfCamelKey}}\" aria-describedby=\"{{::form.key|sfCamelKey}}Status\"></md-input-container>");
 	  $templateCache.put("decorators/material/fieldset-trcl.html", "<fieldset ng-disabled=\"form.readonly\" class=\"standard {{form.htmlClass}}\" flex=\"\"><legend ng-show=\"form.title\">{{ form.title }}</legend><div ng-transclude=\"\"></div></fieldset>");
 	  $templateCache.put("decorators/material/fieldset.html", "<fieldset ng-disabled=\"form.readonly\" class=\"standard {{form.htmlClass}}\" flex=\"\"><legend ng-show=\"form.title\">{{ form.title }}</legend></fieldset>");
 	  $templateCache.put("decorators/material/help.html", "<div class=\"helpvalue schema-form-helpvalue {{form.htmlClass}}\" ng-bind-html=\"form.helpvalue\"></div>");
@@ -3848,7 +3849,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    function sfMessagesNodeHandler() {
-	      var html = '<div ng-if="ngModel.$invalid" ng-messages="ngModel.$error"><div sf-message ng-message></div></div>';
+	      var html = '<div ng-if="ngModel.$invalid" ng-messages="{dummy: true}" class="ng-active">' + '<div ng-message="dummy" class="md-input-message-animation" sf-message="form.description"></div></div>';
 	      var div = document.createElement('div');
 	      div.innerHTML = html;
 	      return div.firstChild;
@@ -3857,7 +3858,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function sfMessagesBuilder(args) {
 	      var messagesDiv = args.fieldFrag.querySelector('[sf-messages]');
 	      if (messagesDiv && sfMessagesNode) {
-	        var child = sfMessagesNode.cloneNode();
+	        var child = sfMessagesNode.cloneNode(true);
 	        messagesDiv.appendChild(child);
 	      }
 	    };
@@ -3942,7 +3943,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var minDate = args.form.minimum || false;
 	        var maxDate = args.form.maximum || false;
 	        if (minDate) {
-	          mdDatepickerFrag.setAttribute('md-max-date', minDate);
+	          mdDatepickerFrag.setAttribute('md-min-date', minDate);
 	        }
 	        if (maxDate) {
 	          mdDatepickerFrag.setAttribute('md-max-date', maxDate);
@@ -4080,6 +4081,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return externalOptionUriFilter;
 	  })
 	*/
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	angular.module('schemaForm').directive('sfMaterialClass', function ($compile, $timeout) {
+	    return {
+	        restrict: 'A',
+	        scope: false,
+	        link: function (scope, element, attrs, ngModel) {
+	            function reduceHelper(obj, i) {
+	                return obj[i];
+	            }
+
+	            var modelValue;
+	            try {
+	                modelValue = scope.form.key.reduce(reduceHelper, scope.model);
+	            } catch (e) {
+	                modelValue = undefined;
+	            }
+
+	            // Element class is not set in DOM if executed immediately.
+	            // I don't understand exactly why but it's probably related to other directive job.
+	            $timeout(function () {
+	                if (modelValue !== null && typeof modelValue !== 'undefined' && modelValue !== false) {
+	                    element.addClass(attrs.sfMaterialClass);
+	                }
+	            }, 0);
+	        }
+	    };
+	});
 
 /***/ }
 /******/ ])
