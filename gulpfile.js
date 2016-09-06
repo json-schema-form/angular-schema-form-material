@@ -31,6 +31,29 @@ gulp.task('build', function() {
   .pipe(gulp.dest('./'));
 
 });
+gulp.task('templates', function() {
+  var stream = streamqueue({ objectMode: true });
+  stream.queue(
+    gulp.src('./src/**/*.html')
+    .pipe(minifyHtml({
+      empty: true,
+      spare: true,
+      quotes: true
+    }))
+    .pipe(templateCache({
+      module: 'schemaForm',
+      root: 'decorators/material/'
+    }))
+    );
+
+  stream.done()
+  .pipe(concat('angular-schema-form-material-templates.js'))
+  .pipe(gulp.dest('./src'))
+  .pipe(uglify())
+  .pipe(rename('angular-schema-form-material-templates.min.js'))
+  .pipe(gulp.dest('./src'));
+
+});
 
 gulp.task('jscs', function() {
   gulp.src('./src/**/*.js')
@@ -41,4 +64,4 @@ gulp.task('watch', function() {
   gulp.watch('./src/**/*', [ 'default' ]);
 });
 
-gulp.task('default', [ 'build' ]);
+gulp.task('default', [ 'templates' ]);

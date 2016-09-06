@@ -44,6 +44,7 @@ $templateCache.put("decorators/material/textarea.html","<md-input-container clas
     var sfField            = sfBuilderProvider.builders.sfField;
     var condition          = sfBuilderProvider.builders.condition;
     var array              = sfBuilderProvider.builders.array;
+    var numeric            = sfBuilderProvider.builders.numeric;
 
     var sfLayout           = sfLayout;
     var sfMessagesNode     = sfMessagesNodeHandler();
@@ -73,7 +74,7 @@ $templateCache.put("decorators/material/textarea.html","<md-input-container clas
       'default': { template: base + 'default.html', builder: defaults },
       fieldset: { template: base + 'fieldset.html', builder: [ sfField, simpleTransclusion, condition ] },
       help: { template: base + 'help.html', builder: defaults },
-      number: { template: base + 'default.html', builder: defaults },
+      number: { template: base + 'default.html', builder: defaults.concat(numeric) },
       password: { template: base + 'default.html', builder: defaults },
       radios: { template: base + 'radios.html', builder: defaults },
       'radios-inline': { template: base + 'radios-inline.html', builder: defaults },
@@ -141,7 +142,7 @@ $templateCache.put("decorators/material/textarea.html","<md-input-container clas
         if (title) {
           mdAutocompleteFrag.setAttribute('md-floating-label', title);
         };
-      }
+      };
     };
 
     function mdSwitchBuilder(args) {
@@ -149,7 +150,7 @@ $templateCache.put("decorators/material/textarea.html","<md-input-container clas
       if (args.form.schema.titleMap) {
         mdSwitchFrag.setAttribute('ng-true-value', args.form.schema.titleMap.true);
         mdSwitchFrag.setAttribute('ng-false-value', args.form.schema.titleMap.false);
-      }
+      };
     };
 
     function sfOptionsBuilder(args) {
@@ -330,6 +331,10 @@ $templateCache.put("decorators/material/textarea.html","<md-input-container clas
     return externalOptionUriFilter;
   })
 */
+
+require('../material-decorator-templates.js');
+require('./type-parser.js');
+require('./material-decorator.js');
 
 /**
  * It might be a bug, but currently input[type=number] does not add
