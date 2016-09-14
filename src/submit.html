@@ -1,25 +1,25 @@
 <section class="schema-form-submit {{form.htmlClass}}" sf-messages layout="row">
-  <md-progress-circular 
+  <md-progress-circular
     class="md-accent md-hue-1"
-    md-mode="indeterminate" 
-    md-diameter="36" 
-    aria-label="label"
-    style="margin: 6px 0;"
-    ng-if="model.processing" 
+    md-mode="indeterminate"
+    md-diameter="32"
+    aria-label="Saving"
+    style="margin: 0 8px 0 0;"
+    ng-if="model.processing"
   ></md-progress-circular>
-    
-    <md-button 
-    class="md-raised {{ form.style || 'md-primary' }} {{form.fieldHtmlClass}}" 
-    type="{{::form.type}}" 
-    ng-disabled="form.readonly" 
-    aria-label="{{::form.title}}" 
-    layout="row" 
+
+    <md-button
+    class="md-raised {{ form.style || 'md-primary' }} {{form.fieldHtmlClass}}"
+    type="{{::form.type}}"
+    ng-disabled="form.readonly"
+    aria-label="{{::form.title}}"
+    layout="row"
     layout-align="space-around center"
   >
-    
+
     <md-tooltip ng-if="::form.tip">{{::form.tip}}</md-tooltip>
-   
-    
+
+
     {{::form.title}}
   </md-button>
 </section>

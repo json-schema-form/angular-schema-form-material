@@ -53,15 +53,22 @@
     var mdTabs             = mdTabsBuilder;
     var textarea           = textareaBuilder;
 
-    var core = [ sfField, ngModel, ngModelOptions, condition, sfLayout ];
+
+    var sfFieldMaterial = function(args) {
+        sfField(args);
+        var field = args.fieldFrag.querySelector('input, textarea, md-select');
+
+        if ( args.form.required && field ) {
+            field.setAttribute('ng-required', 'form.required');
+        }
+    }
+
+    var core = [ sfFieldMaterial, ngModel, ngModelOptions, condition, sfLayout ];
     var defaults = core.concat(sfMessages);
     var arrays = core.concat(array);
 
     schemaFormProvider.defaults.string.unshift(dateDefault);
-
-
-    //schemaFormProvider.defaults.object.unshift(cardDefault);
-
+    schemaFormProvider.defaults.object.unshift(dateObjectDefault);
 
 
     decoratorsProvider.defineDecorator('materialDecorator', {
@@ -75,7 +82,7 @@
       checkboxes: { template: base + 'checkboxes.html', builder: arrays },
       date: { template: base + 'date.html', builder: defaults.concat(mdDatepicker) },
       'default': { template: base + 'default.html', builder: defaults },
-      fieldset: { template: base + 'fieldset.html', builder: [ sfField, simpleTransclusion, condition ] },
+      fieldset: { template: base + 'fieldset.html', builder: [ sfField, transclusion, condition ] },
       help: { template: base + 'help.html', builder: defaults },
       number: { template: base + 'default.html', builder: defaults },
       password: { template: base + 'default.html', builder: defaults },
@@ -91,6 +98,27 @@
       switch: { template: base + 'switch.html', builder: defaults.concat(mdSwitch) }
     });
 
+
+    // ISO Format - 2016-08-02T17:03:18.608Z - new Date().toISOString()
+    var dateFormat = /^[0-9]{4,}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+|)(?:[+-][0-9]{2}:?(?:[0-9]{2}|)|Z)$/;
+    // Standard Format - Tue Aug 02 2016 12:03:59 GMT-0500 (CDT) - new Date().toString()
+    var mdDateFormat = /^(:?[A-Z][a-z]{2}\s){2}\d{1,2}\s\d{4}\s(:?\d{2}\:?){3}\s[A-Z]{3}\-\d{4}\s\([A-Z]{3}\)$/;
+
+    var formats = {
+        date: function (value) {
+            if ( value && typeof value !== 'string' && value.toISOString ) {
+                value = value.toISOString() || '';
+            }
+
+            if (dateFormat.test(value) || mdDateFormat.test(value) ) {
+                return null;
+            }
+
+            return 'A valid date expected';
+        }
+    };
+    tv4.addFormat( 'date', formats.date );
+
     function sfLayout(args) {
       var layoutDiv = args.fieldFrag.querySelector('[sf-layout]');
 
@@ -102,7 +130,7 @@
     };
 
     function sfMessagesNodeHandler() {
-        var html = '<div ng-if="ngModel.$invalid" ng-messages="{dummy: true}" class="ng-active">' +
+        var html = '<div ng-show="ngModel.$invalid" ng-messages="{dummy: true}" class="ng-active">' +
           '<div ng-message="dummy" class="md-input-message-animation" sf-message="form.description"></div></div>';
       var div = document.createElement('div');
       div.innerHTML = html;
@@ -128,6 +156,7 @@
     function mdAutocompleteBuilder(args) {
       var mdAutocompleteFrag = args.fieldFrag.querySelector('md-autocomplete');
 
+
       var minLength = args.form.minLength !== undefined ? args.form.minLength : 1; // Allow the user to pass "0" for min-length to use md-autocomplete as a dropdown with filter.
       var maxLength = args.form.maxLength || false;
       var title = args.form.title || args.form.placeholder || args.form.key.slice(-1)[0];
@@ -145,6 +174,10 @@
         if (title) {
           mdAutocompleteFrag.setAttribute('md-floating-label', title);
         };
+
+        if ( args.form.schema.requireMatch ) {
+            mdAutocompleteFrag.setAttribute('md-require-match', true);
+        }
       }
     };
 
@@ -188,6 +221,7 @@
     };
 
     function mdDatepickerBuilder(args) {
+        console.log( "Date Picker", args );
       var mdDatepickerFrag = args.fieldFrag.querySelector('md-datepicker');
       if (mdDatepickerFrag) {
         if (args.form.onChange) {
@@ -201,6 +235,10 @@
         }
         if (maxDate) {
           mdDatepickerFrag.setAttribute('md-max-date', maxDate);
+        }
+
+        if ( args.form.mdHideIcons ) {
+            mdDatepickerFrag.setAttribute('md-hide-icons', args.form.mdHideIcons );
         }
       }
     };
@@ -226,6 +264,15 @@
     */
     function dateDefault(name, schema, options) {
       if (schema.type === 'string' && (schema.format === 'date' || schema.format === 'date-time')) {
+        var f = schemaFormProvider.stdFormObj(name, schema, options);
+        f.key  = options.path;
+        f.type = 'date';
+        options.lookup[sfPathProvider.stringify(options.path)] = f;
+        return f;
+      }
+    };
+    function dateObjectDefault(name, schema, options) {
+      if (schema.type === 'object' && (schema.format === 'date' || schema.format === 'date-time')) {
         var f = schemaFormProvider.stdFormObj(name, schema, options);
         f.key  = options.path;
         f.type = 'date';

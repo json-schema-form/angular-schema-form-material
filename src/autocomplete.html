@@ -1,7 +1,7 @@
-<div class="form-group {{::form.htmlClass ? form.htmlClass : 'flex-100'}} schema-form-select "
-     ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}"
-     sf-messages sf-layout>
+<div class="form-group {{::form.htmlClass ? form.htmlClass : 'flex-100'}} schema-form-select " sf-layout>
   <md-autocomplete flex
+    sf-messages
+    ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}"
     ng-disabled="form.readonly"
     ng-model="$$value$$"
     sf-autocomplete
@@ -14,7 +14,8 @@
     md-items="item in evalExpr('this[\\''+form.optionFilter+'\\'](\\''+searchText+'\\')')"
     md-item-text="item.name"
     md-floating-label="{{::form.title}}"
-    md-menu-class="autocomplete-custom-template">
+    md-menu-class="autocomplete-custom-template"
+    >
     <md-item-template>
       <span md-highlight-text="searchText">{{item.name}}</span>
     </md-item-template>

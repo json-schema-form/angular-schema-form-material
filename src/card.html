@@ -1,6 +1,6 @@
 <md-card ng-disabled="form.readonly" class="standard {{form.htmlClass}}" flex="">
 	<!--{{form| json}}-->
-	<md-card-header ng-if="form.title">
+	<md-card-header ng-if="form.title && !form.notitle">
 		<md-card-header-text>
 			<span class="md-title">{{ form.title }}</span>
 		</md-card-header-text>

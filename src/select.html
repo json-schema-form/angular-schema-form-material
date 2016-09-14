@@ -1,5 +1,5 @@
 <md-input-container
-    class="form-group {{::form.htmlClass}} schema-form-select"
+    class="form-group {{::form.htmlClass ? form.htmlClass : 'flex-100'}} schema-form-select"
     ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}"
     sf-messages sf-layout>
   <label ng-show="::showTitle()">{{::form.title}}</label>
@@ -16,4 +16,5 @@
                  ng-value="::opt.value"
                  ng-repeat-end>{{::opt.name}}</md-option>
   </md-select>
+  <div class="md-errors-spacer"></div>
 </md-input-container>
