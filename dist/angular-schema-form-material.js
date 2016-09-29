@@ -2950,12 +2950,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		  value: true
 		});
 
-		exports.default = function ($injector, $timeout, sfErrorMessage) {
+		exports.default = function ($injector, sfErrorMessage) {
 
 		  //Inject sanitizer if it exists
 		  var $sanitize = $injector.has('$sanitize') ? $injector.get('$sanitize') : function (html) {
 		    return html;
 		  };
+		  var $timeout = $injector.get('$timeout');
 
 		  return {
 		    scope: false,
