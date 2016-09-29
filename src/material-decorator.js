@@ -42,6 +42,7 @@
     var sfField            = sfBuilderProvider.builders.sfField;
     var condition          = sfBuilderProvider.builders.condition;
     var array              = sfBuilderProvider.builders.array;
+    var numeric            = sfBuilderProvider.builders.numeric;
 
     var sfLayout           = sfLayout;
     var sfMessagesNode     = sfMessagesNodeHandler();
@@ -84,7 +85,7 @@
       'default': { template: base + 'default.html', builder: defaults },
       fieldset: { template: base + 'fieldset.html', builder: [ sfField, transclusion, condition ] },
       help: { template: base + 'help.html', builder: defaults },
-      number: { template: base + 'default.html', builder: defaults },
+      number: { template: base + 'default.html', builder: defaults.concat(numeric) },
       password: { template: base + 'default.html', builder: defaults },
       radios: { template: base + 'radios.html', builder: defaults },
       'radios-inline': { template: base + 'radios-inline.html', builder: defaults },
@@ -186,7 +187,7 @@
       if (args.form.schema.titleMap) {
         mdSwitchFrag.setAttribute('ng-true-value', args.form.schema.titleMap.true);
         mdSwitchFrag.setAttribute('ng-false-value', args.form.schema.titleMap.false);
-      }
+      };
     };
 
     function sfOptionsBuilder(args) {
