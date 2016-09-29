@@ -7,20 +7,21 @@ var gulp = require('gulp'),
   uglify = require('gulp-uglify'),
   jscs = require('gulp-jscs');
 
-gulp.task('build', function() {
+gulp.task('build', ['templates','js']);
+gulp.task('js', function() {
   var stream = streamqueue({ objectMode: true });
-  stream.queue(
-    gulp.src('./src/**/*.html')
-    .pipe(minifyHtml({
-      empty: true,
-      spare: true,
-      quotes: true
-    }))
-    .pipe(templateCache({
-      module: 'schemaForm',
-      root: 'decorators/material/'
-    }))
-    );
+  // stream.queue(
+  //   gulp.src('./src/**/*.html')
+  //   .pipe(minifyHtml({
+  //     empty: true,
+  //     spare: true,
+  //     quotes: true
+  //   }))
+  //   .pipe(templateCache({
+  //     module: 'schemaForm',
+  //     root: 'decorators/material/'
+  //   }))
+  //   );
   stream.queue(gulp.src('./src/**/*.js'));
 
   stream.done()
