@@ -5,6 +5,7 @@ Angular Material Decorator
 
 For https://github.com/json-schema-form/angular-schema-form
 
+
 Work In Progress
 ----------------
 Angular Material has reached 1.0.0 however I do not feel it is remotely stable yet, this decorator is progressing very cautiously until that project hits a more stable milestone. That said, I have made an early alpha available and will continue to release alpha releases as I add new features, these **are not production quality** as the name alpha implies.
