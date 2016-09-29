@@ -1,17 +1,19 @@
 <div class="form-group schema-form-radios {{form.htmlClass}}"
-     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
-  <label class="control-label" ng-show="showTitle()" aria-label="{{form.title}}" layout="row">{{form.title}} {{form.titleMap | json}}</label>
+     ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}" sf-messages>
+  <label class="control-label" ng-show="showTitle()" aria-label="{{form.title}}" layout="row" ng-class="{'md-required': form.required}">{{form.title}}</label>
   <div>
     <md-radio-group sf-field-model
                     sf-changed="form"
                     ng-disabled="form.readonly"
                     name="{{form.key.join('.')}}"
-                    sf-layout sf-messages>
+                    schema-validate="form"
+                    sf-layout>
       <md-radio-button ng-repeat="item in form.titleMap"
                        ng-value="item.value"
                        class="{{form.fieldHtmlClass}}"
                        sf-field-model="ng-class"
-                       ng-class="{ active: item.value === $$value$$ }">
+                       ng-class="{ active: item.value === $$value$$ }"
+                       aria-label="item.name">
         <span ng-bind-html="item.name"></span>
       </md-radio-button>
     </md-radio-group>
