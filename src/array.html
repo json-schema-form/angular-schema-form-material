@@ -8,9 +8,9 @@
              ng-repeat="item in modelArray track by $index"
              schema-form-array-items
              class="{{form.fieldHtmlClass}}">
-      <md-button flex="none" flex-order="2"
+      <md-button flex="none" flex-order="2" flex="5"
                  type="button"
-                 ng-hide="form.readonly || form.remove === null"
+                 ng-if=" !( form.readonly || form.remove === null )"
                  ng-click="deleteFromArray($index)"
                  ng-disabled="form.schema.minItems >= modelArray.length"
                  class="md-icon-button" aria-label="More"
@@ -19,16 +19,17 @@
       </md-button>
     </md-list-item>
   </md-list>
-  <div class="clearfix" style="padding: 15px;" ng-model="modelArray" schema-validate="form">
+  <div class="clearfix" ng-model="modelArray" schema-validate="form" layout="row" layout-align="end center">
     <div class="help-block"
          ng-show="(hasError() && errorMessage(schemaError())) || form.description"
          ng-bind-html="(hasError() && errorMessage(schemaError())) || form.description"></div>
 
-    <md-button ng-hide="form.readonly || form.add === null"
+    <md-button ng-if=" !( form.readonly || form.add === null )"
             ng-click="appendToArray()"
             ng-disabled="form.schema.maxItems <= modelArray.length"
             type="button"
-            class="btn md-raised md-primary {{ form.style.add || 'btn-default' }} pull-right">
+            style="align-self: flex-end;"
+            class="md-raised md-mini md-primary {{ form.style.add || 'btn-default' }} pull-right">
       <i class="glyphicon glyphicon-plus"></i>
       {{ form.add || 'Add'}}
     </md-button>

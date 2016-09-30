@@ -21,7 +21,7 @@
     "angular": ">= 1.2",
     "angular-messages": "^1.5.0",
     "angular-sanitize": ">= 1.2",
-    "angular-schema-form": "git://github.com/json-schema-form/angular-schema-form.git#feature/webpack-babel",
+    "angular-schema-form": "git://github.com/betterMDS/angular-schema-form.git#feature/webpack-babel",
     "tv4": "~1.0.15"
   },
   "devDependencies": {

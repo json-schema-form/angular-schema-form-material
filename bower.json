@@ -22,7 +22,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular-schema-form": ">=0.8.13"
+    "angular-schema-form": "git://github.com/betterMDS/angular-schema-form.git#feature/webpack-babel"
   },
   "devDependencies": {
     "angular": "1.5.5",
@@ -32,5 +32,9 @@
     "angular-messages": "1.5.5",
     "angular-ui-ace": "~0.2.3",
     "moment": "~2.10.6"
+  },
+  "resolutions": {
+    "angular": "1.5.8",
+    "angular-schema-form": "feature/webpack-babel"
   }
 }
