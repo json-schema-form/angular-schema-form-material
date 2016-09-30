@@ -14,7 +14,7 @@
     md-items="item in evalExpr('this[\\''+form.optionFilter+'\\'](\\''+searchText+'\\')')"
     md-item-text="item.name"
     md-floating-label="{{::form.title}}"
-    md-menu-class="autocomplete-custom-template"
+
     >
     <md-item-template>
       <span md-highlight-text="searchText">{{item.name}}</span>
