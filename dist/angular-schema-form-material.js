@@ -4197,7 +4197,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 7 */
 /***/ function(module, exports) {
 
-	angular.module('schemaForm').directive('sfMaterialClass', function ($compile, $timeout) {
+	angular.module('schemaForm').directive('sfMaterialClass', ["$compile", "$timeout", function ($compile, $timeout) {
 	    return {
 	        restrict: 'A',
 	        scope: false,
@@ -4222,7 +4222,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }, 100);
 	        }
 	    };
-	});
+	}]);
 
 /***/ }
 /******/ ])
