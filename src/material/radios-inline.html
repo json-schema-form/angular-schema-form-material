@@ -1,10 +1,10 @@
-<div class="form-group schema-form-radios-inline {{form.htmlClass}}"
+<div class="form-group schema-form-radios-inline {{::form.htmlClass}}"
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}" sf-layout sf-messages>
   <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
   <md-radio-group layout="row"
                   sf-field-model="replaceAll"
                   ng-model="$$value$$"
-                  class="{{form.fieldHtmlClass}}"
+                  class="{{::form.fieldHtmlClass}}"
                   ng-class="{ active: item.value === $$value$$ }"
                   sf-changed="form"
                   schema-validate="form"

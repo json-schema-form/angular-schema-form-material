@@ -1,4 +1,4 @@
-<div class="form-group schema-form-radiobuttons {{form.htmlClass}}"
+<div class="form-group schema-form-radiobuttons {{::form.htmlClass}}"
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}" sf-layout sf-messages>
   <div>
     <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
@@ -10,7 +10,7 @@
                  sf-field-model="replaceAll"
                  ng-model="$$value$$"
                  sf-changed="form"
-                 class="radio {{form.fieldHtmlClass}}"
+                 class="radio {{::form.fieldHtmlClass}}"
                  ng-class="{'md-primary': ($$value$$ == item.value)}"
                  ng-disabled="form.readonly"
                  ng-model-options="form.ngModelOptions"
