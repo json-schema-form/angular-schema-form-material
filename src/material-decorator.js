@@ -247,6 +247,7 @@
 
     function link(scope, element, attrs) {
       attrs.$observe('sfmExternalOptions', function(dataURI) {
+        if (!dataURI) {return;}
         $http.get(dataURI)
           .then(function(response) {
             scope.form.selectOptions = sfOptionsProcessor(response.data);
