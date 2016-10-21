@@ -250,7 +250,13 @@
         if (!dataURI) {return;}
         $http.get(dataURI)
           .then(function(response) {
-            scope.form.selectOptions = sfOptionsProcessor(response.data);
+            if (response.data.length) {
+              if (angular.isString(response.data[0])) {
+                scope.form.selectOptions = sfOptionsProcessor({enum:response.data});
+              } else {
+                scope.form.selectOptions = sfOptionsProcessor({titleMap:response.data});
+              }
+            }
           });
       });
     };
