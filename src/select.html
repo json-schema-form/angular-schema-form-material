@@ -3,7 +3,15 @@
     ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}"
     sf-messages sf-layout>
   <label ng-show="::showTitle()">{{::form.title}}</label>
-  <md-select sf-field-model schema-validate="form" multiple="{{::form.multiple}}" sfm-external-options="{{::form.externalOptions}}">
+  <md-select ng-if="::form.schema.type=='array'" sf-field-model schema-validate="form" multiple sfm-external-options="{{::form.externalOptions}}">
+    <md-select-header style="padding-left: 10.667px; height: 3em; cursor: pointer; position: relative; display: flex; align-items: center; width: auto;">
+      <input class="stopPropagation" ng-model="form.searchTerm" type="search" placeholder="Search" style="border: none; outline: none; height: 100%; width: 100%; padding: 0;" ng-keydown="$event.stopPropagation();">
+    </md-select-header>
+    <md-optgroup label="options">
+      <md-option ng-value="::opt.value" ng-repeat="opt in form.getOptions(form, evalExpr)|filter:form.searchTerm">{{::opt.value}}</md-option>
+    </md-optgroup>
+  </md-select>
+  <md-select ng-if="::form.schema.type!='array'" sf-field-model schema-validate="form" sfm-external-options="{{::form.externalOptions}}">
     <md-select-header style="padding-left: 10.667px; height: 3em; cursor: pointer; position: relative; display: flex; align-items: center; width: auto;">
       <input class="stopPropagation" ng-model="form.searchTerm" type="search" placeholder="Search" style="border: none; outline: none; height: 100%; width: 100%; padding: 0;" ng-keydown="$event.stopPropagation();">
     </md-select-header>
