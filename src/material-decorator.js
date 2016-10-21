@@ -225,7 +225,7 @@
       return data.titleMap;
     }
     else if (data.enum && data.enum.length) {
-      for (i = 0; i < data.enum.length; i++) {
+      for (var i = 0; i < data.enum.length; i++) {
         if (data.enum[i] && data.enum[i].length) {
           enumTitleMap.push({ name: data.enum[i], value: data.enum[i] });
         };
