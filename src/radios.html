@@ -9,6 +9,7 @@
                     sf-layout sf-messages>
       <md-radio-button ng-repeat="item in form.titleMap"
                        ng-value="item.value"
+                       aria-label="{{item.name}}"
                        class="{{form.fieldHtmlClass}}"
                        sf-field-model="ng-class"
                        ng-class="{ active: item.value === $$value$$ }">

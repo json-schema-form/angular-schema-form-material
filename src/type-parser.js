@@ -31,7 +31,6 @@ angular.module('schemaForm').directive('sfTypeParser', function() {
               // get float -> integer parsing behind the scenes.
               value = parseInt(viewValue, 10);
             }
-            console.log('parser', numberRE.test(viewValue), viewValue, value)
             if (value === undefined || isNaN(value)) {
               //Let the validation fail. @FIXME: it fails with "required" for some reason.
               return viewValue;

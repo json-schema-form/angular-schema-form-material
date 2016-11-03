@@ -183,7 +183,7 @@
         args.form.tabs.forEach(function(tab, index) {
           var mdTab = document.createElement('md-tab');
           mdTab.setAttribute('label', '{{' + args.path + '.tabs[' + index + '].title}}');
-          var mdTabBody = document.createElement('md-tab-body');
+          var mdTabBody = document.createElement('md-content');
           var childFrag = args.build(tab.items, args.path + '.tabs[' + index + '].items', args.state);
           mdTabBody.appendChild(childFrag);
           mdTab.appendChild(mdTabBody);
