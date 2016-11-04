@@ -204,7 +204,6 @@ $templateCache.put("decorators/material/textarea.html","<md-input-container clas
     function mdTabsBuilder(args) {
       if (args.form.tabs && args.form.tabs.length > 0) {
         var mdTabsFrag = args.fieldFrag.querySelector('md-tabs');
-        var tabsArray = [];
 
         args.form.tabs.forEach(function(tab, index) {
           var mdTab = document.createElement('md-tab');
@@ -213,11 +212,8 @@ $templateCache.put("decorators/material/textarea.html","<md-input-container clas
           var childFrag = args.build(tab.items, args.path + '.tabs[' + index + '].items', args.state);
           mdTabBody.appendChild(childFrag);
           mdTab.appendChild(mdTabBody);
-          tabsArray.push(mdTab);
+          mdTabsFrag.appendChild(mdTab);
         });
-        for (var i = 0; i < tabsArray.length; i++) {
-          mdTabsFrag.appendChild(tabsArray[i]);
-        }
       }
     };
 
