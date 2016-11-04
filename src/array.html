@@ -8,7 +8,7 @@
              ng-repeat="item in modelArray track by $index"
              schema-form-array-items
              class="{{form.fieldHtmlClass}}">
-      <md-button flex="none" flex-order="2"
+      <md-button flex-order="2"
                  type="button"
                  ng-hide="form.readonly || form.remove === null"
                  ng-click="deleteFromArray($index)"
@@ -19,7 +19,7 @@
       </md-button>
     </md-list-item>
   </md-list>
-  <div class="clearfix" style="padding: 15px;" ng-model="modelArray" schema-validate="form">
+  <div class="clearfix" style="padding: 0 15px;" ng-model="modelArray" schema-validate="form">
     <div class="help-block"
          ng-show="(hasError() && errorMessage(schemaError())) || form.description"
          ng-bind-html="(hasError() && errorMessage(schemaError())) || form.description"></div>

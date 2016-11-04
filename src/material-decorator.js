@@ -183,7 +183,7 @@
         args.form.tabs.forEach(function(tab, index) {
           var mdTab = document.createElement('md-tab');
           mdTab.setAttribute('label', '{{' + args.path + '.tabs[' + index + '].title}}');
-          var mdTabBody = document.createElement('md-tab-body');
+          var mdTabBody = document.createElement('md-content');
           var childFrag = args.build(tab.items, args.path + '.tabs[' + index + '].items', args.state);
           mdTabBody.appendChild(childFrag);
           mdTab.appendChild(mdTabBody);
@@ -225,7 +225,7 @@
       return data.titleMap;
     }
     else if (data.enum && data.enum.length) {
-      for (i = 0; i < data.enum.length; i++) {
+      for (var i = 0; i < data.enum.length; i++) {
         if (data.enum[i] && data.enum[i].length) {
           enumTitleMap.push({ name: data.enum[i], value: data.enum[i] });
         };
@@ -247,9 +247,16 @@
 
     function link(scope, element, attrs) {
       attrs.$observe('sfmExternalOptions', function(dataURI) {
+        if (!dataURI) {return;}
         $http.get(dataURI)
           .then(function(response) {
-            scope.form.selectOptions = sfOptionsProcessor(response.data);
+            if (response.data.length) {
+              if (angular.isString(response.data[0])) {
+                scope.form.selectOptions = sfOptionsProcessor({enum:response.data});
+              } else {
+                scope.form.selectOptions = sfOptionsProcessor({titleMap:response.data});
+              }
+            }
           });
       });
     };
