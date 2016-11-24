@@ -14,7 +14,7 @@
 		var a = typeof exports === 'object' ? factory(require("angular"), require("tv4")) : factory(root["angular"], root["tv4"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_23__, __WEBPACK_EXTERNAL_MODULE_24__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -62,10 +62,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	__webpack_require__(4);
-	__webpack_require__(5);
-	__webpack_require__(6);
-	__webpack_require__(7);
+	__webpack_require__(3);
+	__webpack_require__(2);
 
 /***/ },
 /* 1 */
@@ -80,14 +78,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	(function webpackUniversalModuleDefinition(root, factory) {
 		if(true)
-			module.exports = factory(__webpack_require__(2), __webpack_require__(3));
+			module.exports = factory(__webpack_require__(23), __webpack_require__(24));
 		else if(typeof define === 'function' && define.amd)
 			define(["angular", "tv4"], factory);
 		else {
 			var a = typeof exports === 'object' ? factory(require("angular"), require("tv4")) : factory(root["angular"], root["tv4"]);
 			for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 		}
-	})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_8__) {
+	})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_7__) {
 	return /******/ (function(modules) { // webpackBootstrap
 	/******/ 	// The module cache
 	/******/ 	var installedModules = {};
@@ -161,7 +159,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		var _jsonSchemaFormCore = __webpack_require__(6);
 
-		var _validator = __webpack_require__(7);
+		var _validator = __webpack_require__(8);
 
 		var _validator2 = _interopRequireDefault(_validator);
 
@@ -193,11 +191,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		var _newArray2 = _interopRequireDefault(_newArray);
 
-		var _schemaForm3 = __webpack_require__(16);
+		var _keyController = __webpack_require__(16);
+
+		var _keyController2 = _interopRequireDefault(_keyController);
+
+		var _schemaForm3 = __webpack_require__(17);
 
 		var _schemaForm4 = _interopRequireDefault(_schemaForm3);
 
-		var _schemaValidate = __webpack_require__(17);
+		var _schemaValidate = __webpack_require__(18);
 
 		var _schemaValidate2 = _interopRequireDefault(_schemaValidate);
 
@@ -232,7 +234,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}).factory('sfValidator', _validator2.default)
 
 		// Directives
-		.directive('sfArray', ['sfSelect', 'schemaForm', 'sfValidator', 'sfPath', _array2.default]).directive('sfChanged', _changed2.default).directive('sfField', ['$parse', '$compile', '$http', '$templateCache', '$interpolate', '$q', 'sfErrorMessage', 'sfPath', 'sfSelect', _field2.default]).directive('sfMessage', ['$injector', 'sfErrorMessage', _message2.default]).directive('sfNewArray', ['sfSelect', 'sfPath', 'schemaForm', _newArray2.default]).directive('sfSchema', ['$compile', '$http', '$templateCache', '$q', 'schemaForm', 'schemaFormDecorators', 'sfSelect', 'sfPath', 'sfBuilder', _schemaForm4.default]).directive('schemaValidate', ['sfValidator', '$parse', 'sfSelect', _schemaValidate2.default]);
+		.directive('sfArray', ['sfSelect', 'schemaForm', 'sfValidator', 'sfPath', _array2.default]).directive('sfChanged', _changed2.default).directive('sfField', ['$parse', '$compile', '$http', '$templateCache', '$interpolate', '$q', 'sfErrorMessage', 'sfPath', 'sfSelect', _field2.default]).directive('sfMessage', ['$injector', 'sfErrorMessage', _message2.default]).directive('sfNewArray', ['sfSelect', 'sfPath', 'schemaForm', _newArray2.default]).directive('sfSchema', ['$compile', '$http', '$templateCache', '$q', 'schemaForm', 'schemaFormDecorators', 'sfSelect', 'sfPath', 'sfBuilder', _schemaForm4.default]).directive('schemaValidate', ['sfValidator', '$parse', 'sfSelect', _schemaValidate2.default]).directive('sfKeyController', ['schemaForm', 'sfPath', _keyController2.default]);
 
 	/***/ },
 	/* 2 */
@@ -355,14 +357,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		      }
 		    },
 		    condition: function condition(args) {
+		      var strKey = '';
+		      var strModel = 'undefined';
 		      // Do we have a condition? Then we slap on an ng-if on all children,
 		      // but be nice to existing ng-if.
 		      if (args.form.condition) {
-		        var evalExpr = 'evalExpr(' + args.path + '.condition, { model: model, "arrayIndex": $index})';
 		        if (args.form.key) {
-		          var strKey = sfPathProvider.stringify(args.form.key);
-		          evalExpr = 'evalExpr(' + args.path + '.condition,{ model: model, "arrayIndex": $index, ' + '"modelValue": model' + (strKey[0] === '[' ? '' : '.') + strKey + '})';
-		        };
+		          strKey = sfPathProvider.stringify(args.form.key);
+		          strModel = 'model' + (strKey[0] === '[' ? '' : '.') + strKey;
+		        }
+
+		        var evalExpr = 'evalExpr(' + args.path + '.condition, { model: model, ' + '"arrayIndex": $index, ' + '"arrayIndices": arrayIndices, ' + '"path": path, ' + '"$i": $i, ' + '"$index": $index, ' + '"modelValue": ' + strModel + '})';
 
 		        var children = args.fieldFrag.children || args.fieldFrag.childNodes;
 		        for (var i = 0; i < children.length; i++) {
@@ -374,6 +379,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		    },
 		    array: function array(args) {
 		      var items = args.fieldFrag.querySelector('[schema-form-array-items]');
+
+		      if (args.form.key) {
+		        var arrayDepth = args.form.key.filter(function (e) {
+		          return e === '';
+		        }).length;
+		      }
+
 		      if (items) {
 		        var state = angular.copy(args.state);
 		        state.keyRedaction = 0;
@@ -388,7 +400,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		          state.modelName = 'item';
 		        }
 
-		        // Flag to the builder that where in an array.
+		        // Flag to the builder that we're in an array.
 		        // This is needed for compatabiliy if a "old" add-on is used that
 		        // hasn't been transitioned to the new builder.
 		        state.arrayCompatFlag = true;
@@ -445,6 +457,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    };
 
 		    var _build = function _build(items, decorator, templateFn, slots, path, state, lookup) {
+		      state = state || {};
 		      state = state || {};
 		      lookup = lookup || Object.create(null);
 		      path = path || 'schemaForm.form';
@@ -588,8 +601,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		        replace: false,
 		        transclude: false,
 		        scope: true,
-		        require: '?^sfSchema',
-		        link: function link(scope, element, attrs, sfSchema) {
+		        require: ['^sfSchema', '?^form'],
+		        link: function link(scope, element, attrs, ctrl) {
+		          var sfSchema = ctrl[0];
+		          var formCtrl = ctrl[1];
 
 		          //The ngModelController is used in some templates and
 		          //is needed for error messages,
@@ -602,6 +617,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		          //Keep error prone logic from the template
 		          scope.showTitle = function () {
 		            return scope.form && scope.form.notitle !== true && scope.form.title;
+		          };
+
+		          //Normalise names and ids
+		          scope.fieldId = function (prependFormName, omitArrayIndexes) {
+		            var key = scope.parentKey || [];
+		            if (scope.form.key) {
+		              if (typeof key[key.length - 1] === 'number') {
+		                var combinedKey = key.concat(scope.form.key.slice(-1));
+		                var formName = prependFormName && formCtrl && formCtrl.$name ? formCtrl.$name : undefined;
+		                return sfPath.name(combinedKey, '-', formName, omitArrayIndexes);
+		              } else {
+		                var formName = prependFormName && formCtrl && formCtrl.$name ? formCtrl.$name : undefined;
+		                return sfPath.name(scope.form.key, '-', formName, omitArrayIndexes);
+		              }
+		            } else {
+		              return '';
+		            }
 		          };
 
 		          scope.listToCheckboxValues = function (list) {
@@ -689,7 +721,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		            if (!scope.ngModel) {
 		              return false;
 		            }
-		            return scope.ngModel.$valid && (!scope.ngModel.$pristine || !scope.ngModel.$isEmpty(scope.ngModel.$modelValue));
+		            if (scope.options && scope.options.pristine && scope.options.pristine.success === false) {
+		              return scope.ngModel.$valid && !scope.ngModel.$pristine && !scope.ngModel.$isEmpty(scope.ngModel.$modelValue);
+		            } else {
+		              return scope.ngModel.$valid && (!scope.ngModel.$pristine || !scope.ngModel.$isEmpty(scope.ngModel.$modelValue));
+		            }
 		          };
 
 		          scope.hasError = function () {
@@ -1209,14 +1245,14 @@ return /******/ (function(modules) { // webpackBootstrap
 		 */
 		(function webpackUniversalModuleDefinition(root, factory) {
 			if(true)
-				module.exports = factory();
+				module.exports = factory(__webpack_require__(7));
 			else if(typeof define === 'function' && define.amd)
-				define([], factory);
+				define(["tv4"], factory);
 			else {
-				var a = factory();
+				var a = typeof exports === 'object' ? factory(require("tv4")) : factory(root["tv4"]);
 				for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 			}
-		})(this, function() {
+		})(this, function(__WEBPACK_EXTERNAL_MODULE_10__) {
 		return /******/ (function(modules) { // webpackBootstrap
 		/******/ 	// The module cache
 		/******/ 	var installedModules = {};
@@ -1313,7 +1349,19 @@ return /******/ (function(modules) { // webpackBootstrap
 			  });
 			});
 
-			var _schemaDefaults = __webpack_require__(9);
+			var _validate = __webpack_require__(9);
+
+			Object.keys(_validate).forEach(function (key) {
+			  if (key === "default") return;
+			  Object.defineProperty(exports, key, {
+			    enumerable: true,
+			    get: function get() {
+			      return _validate[key];
+			    }
+			  });
+			});
+
+			var _schemaDefaults = __webpack_require__(11);
 
 			var schemaDefaultsImp = _interopRequireWildcard(_schemaDefaults);
 
@@ -1440,27 +1488,32 @@ return /******/ (function(modules) { // webpackBootstrap
 			Object.defineProperty(exports, "__esModule", {
 			  value: true
 			});
+			exports.name = exports.normalize = exports.stringify = exports.parse = undefined;
 
 			var _objectpath = __webpack_require__(4);
 
-			Object.defineProperty(exports, 'parse', {
-			  enumerable: true,
-			  get: function get() {
-			    return _objectpath.parse;
-			  }
-			});
-			Object.defineProperty(exports, 'stringify', {
-			  enumerable: true,
-			  get: function get() {
-			    return _objectpath.stringify;
-			  }
-			});
-			Object.defineProperty(exports, 'normalize', {
-			  enumerable: true,
-			  get: function get() {
-			    return _objectpath.normalize;
-			  }
-			});
+			var name = function name(key, separator, formName, omitNumbers) {
+			  if (key) {
+			    var fieldKey = key;
+			    var fieldSeparator = separator || '-';
+
+			    if (omitNumbers) {
+			      fieldKey = fieldKey.filter(function (key) {
+			        return typeof key !== 'number';
+			      });
+			    };
+
+			    return (formName ? formName + fieldSeparator : '') + fieldKey.join(fieldSeparator);
+			  };
+
+			  return '';
+			}; // This is of course a bit silly. And should be refactored.
+
+
+			exports.parse = _objectpath.parse;
+			exports.stringify = _objectpath.stringify;
+			exports.normalize = _objectpath.normalize;
+			exports.name = name;
 
 		/***/ },
 		/* 4 */
@@ -1761,6 +1814,81 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		/***/ },
 		/* 9 */
+		/***/ function(module, exports, __webpack_require__) {
+
+			'use strict';
+
+			Object.defineProperty(exports, "__esModule", {
+			  value: true
+			});
+			exports.validate = validate;
+
+			var _tv = __webpack_require__(10);
+
+			var _tv2 = _interopRequireDefault(_tv);
+
+			function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+			/**
+			 * Validate a value against its form definition and schema.
+			 * The value should either be of proper type or a string, some type
+			 * coercion is applied.
+			 *
+			 * @param {Object} form A merged form definition, i.e. one with a schema.
+			 * @param {Any} value the value to validate.
+			 * @return {Object} a tv4js result object.
+			 */
+			function validate(form, value) {
+			  if (!form) {
+			    return { valid: true };
+			  };
+
+			  var schema = form.schema;
+			  if (!schema) {
+			    return { valid: true };
+			  };
+
+			  // Input of type text and textareas will give us a viewValue of ''
+			  // when empty, this is a valid value in a schema and does not count as something
+			  // that breaks validation of 'required'. But for our own sanity an empty field should
+			  // not validate if it's required.
+			  if (value === '') {
+			    value = undefined;
+			  };
+
+			  // Numbers fields will give a null value, which also means empty field
+			  if (form.type === 'number' && value === null) {
+			    value = undefined;
+			  };
+
+			  // Version 4 of JSON Schema has the required property not on the
+			  // property itself but on the wrapping object. Since we like to test
+			  // only this property we wrap it in a fake object.
+			  var wrap = { type: 'object', 'properties': {} };
+			  var propName = form.key[form.key.length - 1];
+			  wrap.properties[propName] = schema;
+
+			  if (form.required) {
+			    wrap.required = [propName];
+			  };
+
+			  var valueWrap = {};
+			  if (!!value) {
+			    valueWrap[propName] = value;
+			  };
+
+			  return _tv2.default.validateResult(valueWrap, wrap);
+			} /*  Common code for validating a value against its form and schema definition */
+			;
+
+		/***/ },
+		/* 10 */
+		/***/ function(module, exports) {
+
+			module.exports = tv4;
+
+		/***/ },
+		/* 11 */
 		/***/ function(module, exports, __webpack_require__) {
 
 			'use strict';
@@ -2085,6 +2213,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/***/ },
 	/* 7 */
+	/***/ function(module, exports) {
+
+		module.exports = tv4;
+
+	/***/ },
+	/* 8 */
 	/***/ function(module, exports, __webpack_require__) {
 
 		'use strict';
@@ -2128,6 +2262,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		      value = undefined;
 		    };
 
+		    // Date fields are painful and return a date object
+		    if (schema.type === 'string' && schema.format === 'date') {
+		      if (value === null) {
+		        value = undefined;
+		      } else {
+		        if (typeof value.toISOString === 'function') {
+		          value = value.toISOString();
+		        }
+		      }
+		    }
+
 		    // Version 4 of JSON Schema has the required property not on the
 		    // property itself but on the wrapping object. Since we like to test
 		    // only this property we wrap it in a fake object.
@@ -2150,7 +2295,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		  return validator;
 		};
 
-		var _tv = __webpack_require__(8);
+		var _tv = __webpack_require__(7);
 
 		var _tv2 = _interopRequireDefault(_tv);
 
@@ -2159,12 +2304,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		var _angular2 = _interopRequireDefault(_angular);
 
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/***/ },
-	/* 8 */
-	/***/ function(module, exports) {
-
-		module.exports = tv4;
 
 	/***/ },
 	/* 9 */
@@ -2639,7 +2778,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		          if (_angular2.default.isFunction(form.onChange)) {
 		            form.onChange(ctrl.$modelValue, form);
 		          } else {
-		            scope.evalExpr(form.onChange, { 'modelValue': ctrl.$modelValue, form: form });
+		            scope.evalExpr(form.onChange, {
+		              "modelValue": ctrl.$modelValue,
+		              "form": form,
+		              "arrayIndex": scope.$index,
+		              "arrayIndices": scope.arrayIndices,
+		              "path": scope.path,
+		              "$i": scope.$i,
+		              "$index": scope.$index
+		            });
 		          }
 		        });
 		      }
@@ -2663,16 +2810,28 @@ return /******/ (function(modules) { // webpackBootstrap
 		  value: true
 		});
 
+		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 		exports.default = function ($parse, $compile, $http, $templateCache, $interpolate, $q, sfErrorMessage, sfPath, sfSelect) {
+
+		  var keyFormat = {
+		    COMPLETE: '*',
+		    PATH: 'string',
+		    INDICES: 'number'
+		  };
 
 		  return {
 		    restrict: 'AE',
 		    replace: false,
 		    transclude: false,
 		    scope: true,
-		    require: '^sfSchema',
+		    require: ['^sfSchema', '?^form', '?^^sfKeyController'],
 		    link: {
-		      pre: function pre(scope, element, attrs, sfSchema) {
+		      pre: function pre(scope, element, attrs, ctrl) {
+		        var sfSchema = ctrl[0];
+		        var formCtrl = ctrl[1];
+		        var keyCtrl = ctrl[2];
+
 		        //The ngModelController is used in some templates and
 		        //is needed for error messages,
 		        scope.$on('schemaFormPropagateNgModelController', function (event, ngModel) {
@@ -2682,12 +2841,72 @@ return /******/ (function(modules) { // webpackBootstrap
 		        });
 
 		        // Fetch our form.
-		        scope.form = sfSchema.lookup['f' + attrs.sfField];
+		        scope.initialForm = sfSchema.lookup['f' + attrs.sfField];
+		        scope.form = _angular2.default.copy(sfSchema.lookup['f' + attrs.sfField]);
 		      },
-		      post: function post(scope, element, attrs, sfSchema) {
+		      post: function post(scope, element, attrs, ctrl) {
+		        var sfSchema = ctrl[0];
+		        var formCtrl = ctrl[1];
+		        var keyCtrl = ctrl[2];
+
+		        scope.getKey = function (requiredFormat) {
+		          var format = requiredFormat || keyFormat.COMPLETE;
+		          var key = scope.parentKey ? scope.parentKey.slice(0, scope.parentKey.length - 1) : [];
+
+		          // Only calculate completeKey if not already saved to form.key
+		          if (scope.completeKey !== scope.form.key) {
+		            if (typeof scope.$index === 'number') {
+		              key = key.concat(scope.$index);
+		            };
+
+		            if (scope.form.key && scope.form.key.length) {
+		              if (typeof key[key.length - 1] === 'number' && scope.form.key.length >= 1) {
+		                scope.completeKey = key.concat(scope.form.key.slice(-1));
+		              } else {
+		                scope.completeKey = scope.form.key.slice();
+		              };
+		            };
+		          };
+
+		          // If there is no key then there's nothing to return
+		          if (!Array.isArray(scope.completeKey)) {
+		            return undefined;
+		          };
+
+		          // return the full key if not omiting any types via reduce
+		          if (format === keyFormat.COMPLETE) {
+		            return scope.completeKey;
+		          } else {
+		            // else to clearly show that data must be ommited
+		            return scope.completeKey.reduce(function (output, input, i) {
+		              if (-1 !== [format].indexOf(typeof input === 'undefined' ? 'undefined' : _typeof(input))) {
+		                return output.concat(input);
+		              }
+		              return output;
+		            }, []);
+		          };
+		        };
+		        // Now that getKey is defined, run it! ...if there's a key.
+		        if (scope.form.key) {
+		          scope.form.key = scope.completeKey = scope.getKey();
+		        };
+
 		        //Keep error prone logic from the template
 		        scope.showTitle = function () {
 		          return scope.form && scope.form.notitle !== true && scope.form.title;
+		        };
+
+		        //Normalise names and ids
+		        scope.fieldId = function (prependFormName, omitArrayIndexes) {
+		          var omit = omitArrayIndexes || false;
+		          var formName = prependFormName && formCtrl && formCtrl.$name ? formCtrl.$name : undefined;
+		          var key = scope.completeKey;
+
+		          if (Array.isArray(key)) {
+		            return sfPath.name(key, '-', formName, omit);
+		          } else {
+		            return '';
+		          };
 		        };
 
 		        scope.listToCheckboxValues = function (list) {
@@ -2808,6 +3027,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		          return sfErrorMessage.interpolate(schemaError && schemaError.code + '' || 'default', scope.ngModel && scope.ngModel.$modelValue || '', scope.ngModel && scope.ngModel.$viewValue || '', scope.form, scope.options && scope.options.validationMessage);
 		        };
 
+		        // append the field-id to the htmlClass
+		        scope.form.htmlClass = scope.form.htmlClass || '';
+		        scope.form.htmlClass += (scope.form.htmlClass ? ' ' : '') + scope.fieldId(false) + ' ' + scope.fieldId(false, true);
+
 		        var form = scope.form;
 
 		        // Where there is a key there is probably a ngModel
@@ -2862,16 +3085,18 @@ return /******/ (function(modules) { // webpackBootstrap
 		          // Default behavior can be supplied as a globalOption, and behavior can be overridden
 		          // in the form definition.
 		          scope.$on('$destroy', function () {
+		            var key = scope.getKey();
+
 		            // If the entire schema form is destroyed we don't touch the model
 		            if (!scope.externalDestructionInProgress) {
 		              var destroyStrategy = form.destroyStrategy || scope.options && scope.options.destroyStrategy || 'remove';
 		              // No key no model, and we might have strategy 'retain'
-		              if (form.key && destroyStrategy !== 'retain') {
+		              if (key && destroyStrategy !== 'retain') {
 
 		                // Get the object that has the property we wan't to clear.
 		                var obj = scope.model;
-		                if (form.key.length > 1) {
-		                  obj = sfSelect(form.key.slice(0, form.key.length - 1), obj);
+		                if (key.length > 1) {
+		                  obj = sfSelect(key.slice(0, key.length - 1), obj);
 		                }
 
 		                // We can get undefined here if the form hasn't been filled out entirely
@@ -2883,17 +3108,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		                var type = form.schema && form.schema.type || '';
 
 		                // Empty means '',{} and [] for appropriate types and undefined for the rest
-		                //console.log('destroy', destroyStrategy, form.key, type, obj);
+		                //console.log('destroy', destroyStrategy, key, type, obj);
 		                if (destroyStrategy === 'empty' && type.indexOf('string') !== -1) {
-		                  obj[form.key.slice(-1)] = '';
+		                  obj[key.slice(-1)] = '';
 		                } else if (destroyStrategy === 'empty' && type.indexOf('object') !== -1) {
-		                  obj[form.key.slice(-1)] = {};
+		                  obj[key.slice(-1)] = {};
 		                } else if (destroyStrategy === 'empty' && type.indexOf('array') !== -1) {
-		                  obj[form.key.slice(-1)] = [];
+		                  obj[key.slice(-1)] = [];
 		                } else if (destroyStrategy === 'null') {
-		                  obj[form.key.slice(-1)] = null;
+		                  obj[key.slice(-1)] = null;
 		                } else {
-		                  delete obj[form.key.slice(-1)];
+		                  delete obj[key.slice(-1)];
 		                }
 		              }
 		            }
@@ -3032,7 +3257,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		exports.default = function (sel, sfPath, schemaForm) {
 		  return {
-		    scope: false,
+		    scope: true,
+		    controller: ['$scope', function SFArrayController($scope) {
+		      this.key = $scope.form && $scope.form.key ? $scope.form.key.splice(0, -2) : [];
+		    }],
 		    link: function link(scope, element, attrs) {
 		      scope.min = 0;
 
@@ -3274,6 +3502,52 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/***/ },
 	/* 16 */
+	/***/ function(module, exports) {
+
+		'use strict';
+
+		Object.defineProperty(exports, "__esModule", {
+		  value: true
+		});
+
+		exports.default = function (schemaForm, sfPath) {
+		  return {
+		    scope: true,
+		    require: ['?^^sfNewArray'],
+		    controller: ['$scope', function SFKeyController($scope) {
+		      this.key = $scope.form && $scope.form.key ? $scope.form.key.splice(0, -2) : [];
+		    }],
+		    link: {
+		      pre: function pre(scope, element, attrs, ctrl) {
+		        var currentKey = sfPath.parse(attrs.sfParentKey);
+		        if (currentKey.length > 1) currentKey = currentKey.splice(-1);
+
+		        scope.parentKey = scope.parentKey || [];
+		        scope.parentKey = scope.parentKey.concat(currentKey, Number(attrs.sfIndex));
+
+		        scope.arrayIndex = Number(attrs.sfIndex);
+		        scope.arrayIndices = scope.arrayIndices || [];
+		        scope.arrayIndices = scope.arrayIndices.concat(scope.arrayIndex);
+		        scope.$i = scope.arrayIndices;
+		        scope.path = function (modelPath) {
+		          var i = -1;
+		          modelPath = modelPath.replace(/\[\]/gi, function (matched) {
+		            i++;
+		            return '[' + scope.$i[i] + ']';
+		          });
+		          return scope.evalExpr(modelPath, scope);
+		        };
+		      }
+		    }
+		  };
+		};
+
+		; /**
+		   * Directive that handles keys and array indexes
+		   */
+
+	/***/ },
+	/* 17 */
 	/***/ function(module, exports, __webpack_require__) {
 
 		'use strict';
@@ -3479,7 +3753,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/***/ },
-	/* 17 */
+	/* 18 */
 	/***/ function(module, exports, __webpack_require__) {
 
 		'use strict';
@@ -3489,7 +3763,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		});
 
 		exports.default = function (sfValidator, $parse, sfSelect) {
-
 		  return {
 		    restrict: 'A',
 		    scope: false,
@@ -3534,7 +3807,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        // Since we might have different tv4 errors we must clear all
 		        // errors that start with tv4-
 		        Object.keys(ngModel.$error).filter(function (k) {
-		          return k.indexOf('tv4-') === 0 || k.indexOf('md-') === 0;
+		          return k.indexOf('tv4-') === 0;
 		        }).forEach(function (k) {
 		          ngModel.$setValidity(k, true);
 		        });
@@ -3682,373 +3955,330 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 2 */
 /***/ function(module, exports) {
 
-	module.exports = angular;
+	angular.module('schemaForm').directive('sfMaterialClass', sfMaterialClassDirective);
+
+	sfMaterialClassDirective.$inject = ['$compile', '$timeout'];
+
+	function sfMaterialClassDirective($compile, $timeout) {
+	    return {
+	        restrict: 'A',
+	        scope: false,
+	        link: function (scope, element, attrs, ngModel) {
+	            function reduceHelper(obj, i) {
+	                return obj[i];
+	            }
+
+	            var modelValue;
+	            try {
+	                modelValue = scope.form.key.reduce(reduceHelper, scope.model);
+	            } catch (e) {
+	                modelValue = undefined;
+	            }
+
+	            // Element class is not set in DOM if executed immediately.
+	            // I don't understand exactly why but it's probably related to other directive job.
+	            $timeout(function () {
+	                if (modelValue !== null && typeof modelValue !== 'undefined' && modelValue !== false) {
+	                    element.addClass(attrs.sfMaterialClass);
+	                }
+	            }, 0);
+	        }
+	    };
+	}
 
 /***/ },
 /* 3 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = tv4;
+	'use strict';
 
-/***/ },
-/* 4 */
-/***/ function(module, exports) {
+	let actionsTemplate = __webpack_require__(4);
+	let arrayTemplate = __webpack_require__(5);
+	let autocompleteTemplate = __webpack_require__(6);
+	let checkboxTemplate = __webpack_require__(7);
+	let checkboxesTemplate = __webpack_require__(8);
+	let dateTemplate = __webpack_require__(9);
+	let defaultTemplate = __webpack_require__(10);
+	let fieldsetTemplate = __webpack_require__(11);
+	let helpTemplate = __webpack_require__(12);
+	let radiobuttonsTemplate = __webpack_require__(13);
+	let radiosTemplate = __webpack_require__(15);
+	let radiosInlineTemplate = __webpack_require__(14);
+	let sectionTemplate = __webpack_require__(16);
+	let selectTemplate = __webpack_require__(17);
+	let submitTemplate = __webpack_require__(18);
+	let tabsTemplate = __webpack_require__(21);
+	let tabarrayTemplate = __webpack_require__(20);
+	let textareaTemplate = __webpack_require__(22);
+	let switchTemplate = __webpack_require__(19);
 
-	angular.module("schemaForm").run(["$templateCache", function ($templateCache) {
-	  $templateCache.put("decorators/material/actions-trcl.html", "<div class=\"btn-group schema-form-actions {{form.htmlClass}}\" ng-transclude=\"\"></div>");
-	  $templateCache.put("decorators/material/actions.html", "<section layout=\"row\" class=\"btn-group schema-form-actions {{form.htmlClass}}\"></section>");
-	  $templateCache.put("decorators/material/array.html", "<div class=\"schema-form-array {{form.htmlClass}}\" sf-field-model=\"sf-new-array\" sf-new-array=\"\"><label class=\"control-label\" ng-show=\"showTitle()\">{{ form.title }}</label><md-list class=\"list-group\" sf-field-model=\"\" ui-sortable=\"form.sortOptions\"><md-list-item layout=\"row\" class=\"list-group-item\" sf-field-model=\"ng-repeat\" ng-repeat=\"item in modelArray track by $index\" schema-form-array-items=\"\"><md-button flex=\"none\" flex-order=\"2\" type=\"button\" ng-hide=\"form.readonly || form.remove === null\" ng-click=\"deleteFromArray($index)\" ng-disabled=\"form.schema.minItems >= modelArray.length\" class=\"md-icon-button\" aria-label=\"More\" style=\"position: relative; z-index: 20;\"><md-icon>close</md-icon></md-button></md-list-item></md-list><div class=\"clearfix\" style=\"padding: 15px;\" ng-model=\"modelArray\" schema-validate=\"form\"><div class=\"help-block\" ng-show=\"(hasError() && errorMessage(schemaError())) || form.description\" ng-bind-html=\"(hasError() && errorMessage(schemaError())) || form.description\"></div><md-button ng-hide=\"form.readonly || form.add === null\" ng-click=\"appendToArray()\" ng-disabled=\"form.schema.maxItems <= modelArray.length\" type=\"button\" class=\"btn md-raised md-primary {{ form.style.add || \'btn-default\' }} pull-right\"><i class=\"glyphicon glyphicon-plus\"></i> {{ form.add || \'Add\'}}</md-button></div></div>");
-	  $templateCache.put("decorators/material/autocomplete.html", "<div class=\"form-group {{form.htmlClass}} schema-form-select\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\" sf-messages=\"\" sf-layout=\"\"><md-autocomplete flex=\"\" ng-disabled=\"form.readonly\" ng-model=\"$$value$$\" sf-autocomplete=\"\" sf-field-model=\"replaceAll\" schema-validate=\"form\" md-selected-item=\"$$value$$\" md-search-text=\"searchText\" md-selected-item-change=\"\'todo\';\" md-items=\"item in evalExpr(\'this[\\\'\'+form.optionFilter+\'\\\'](\\\'\'+searchText+\'\\\')\')\" md-item-text=\"item.name\" md-floating-label=\"{{::form.title}}\" md-menu-class=\"autocomplete-custom-template\"><md-item-template><span md-highlight-text=\"searchText\">{{item.name}}</span></md-item-template><md-not-found>No matches found</md-not-found></md-autocomplete></div>");
-	  $templateCache.put("decorators/material/card-content.html", "<md-card-content class=\"schema-form-card-content {{form.htmlClass}}\"></md-card-content>");
-	  $templateCache.put("decorators/material/card.html", "<md-card class=\"schema-form-card {{form.htmlClass}}\"></md-card>");
-	  $templateCache.put("decorators/material/checkbox.html", "<div class=\"checkbox schema-form-checkbox {{::form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\" sf-messages=\"\"><md-checkbox sf-field-model=\"\" sf-changed=\"form\" ng-disabled=\"form.readonly\" schema-validate=\"form\" sf-material-class=\"md-checked\" class=\"{{::form.fieldHtmlClass}}\" name=\"{{::form.key|sfCamelKey}}\" aria-label=\"{{::form.title}}\"><span>{{::form.title}}</span></md-checkbox></div>");
-	  $templateCache.put("decorators/material/checkboxes.html", "<div sf-array=\"form\" sf-field-model=\"\" class=\"form-group schema-form-checkboxes {{::form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\" sf-messages=\"\"><label class=\"control-label\" ng-show=\"showTitle()\">{{::form.title}}</label><div class=\"checkbox\" ng-repeat=\"val in titleMapValues track by $index\"><md-checkbox ng-model=\"titleMapValues[$index]\" sf-changed=\"form\" ng-disabled=\"::form.readonly\" name=\"{{::form.key|sfCamelKey}}\" ng-true-value=\"true\" ng-false-value=\"false\" aria-label=\"{{::form.title}}\">{{::form.titleMap[$index].name}}</md-checkbox></div></div>");
-	  $templateCache.put("decorators/material/chips.html", "<div class=\"form-group schema-form-chips {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\"><md-chips sf-field-model=\"\" readonly=\"form.readonly\" flex=\"\" placeholder=\"{{::form.title}}\"><md-chip-template><strong ng-if=\"!form.template\">{{$chip}}</strong></md-chip-template></md-chips><div ng-messages=\"ngModel.$error\"><div sf-message=\"\" ng-message=\"\"></div></div></div>");
-	  $templateCache.put("decorators/material/date.html", "<div class=\"schema-form-date {{::form.htmlClass}}\"><label ng-show=\"showTitle()\" for=\"{{::form.key|sfCamelKey}}\">{{::form.title}}</label><md-datepicker sf-field-model=\"\" sf-changed=\"form\" schema-validate=\"form\" sf-type-parser=\"form.schema\" id=\"{{::form.key|sfCamelKey}}\" ng-show=\"::form.key\" ng-class=\"::form.fieldHtmlClass\" ng-disabled=\"::form.readonly\" md-placeholder=\"Enter date\" sf-messages=\"\"></md-datepicker></div>");
-	  $templateCache.put("decorators/material/default.html", "<md-input-container class=\"schema-form-{{::form.type}} {{::form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\" sf-messages=\"\" sf-layout=\"\" sf-material-class=\"md-input-has-value\"><label ng-show=\"showTitle()\" for=\"{{::form.key|sfCamelKey}}\">{{::form.title}}</label> <input sf-field-model=\"\" ng-show=\"::form.key\" type=\"{{::form.type}}\" step=\"any\" sf-changed=\"form\" placeholder=\"{{form.placeholder}}\" id=\"{{::form.key|sfCamelKey}}\" ng-class=\"::form.fieldHtmlClass\" sf-type-parser=\"form.schema\" ng-disabled=\"::form.readonly\" schema-validate=\"form\" name=\"{{::form.key|sfCamelKey}}\" aria-describedby=\"{{::form.key|sfCamelKey}}Status\"></md-input-container>");
-	  $templateCache.put("decorators/material/fieldset-trcl.html", "<fieldset ng-disabled=\"form.readonly\" class=\"standard {{form.htmlClass}}\" flex=\"\"><legend ng-show=\"form.title\">{{ form.title }}</legend><div ng-transclude=\"\"></div></fieldset>");
-	  $templateCache.put("decorators/material/fieldset.html", "<fieldset ng-disabled=\"form.readonly\" class=\"standard {{form.htmlClass}}\" flex=\"\"><legend ng-show=\"form.title\">{{ form.title }}</legend></fieldset>");
-	  $templateCache.put("decorators/material/help.html", "<div class=\"helpvalue schema-form-helpvalue {{form.htmlClass}}\" ng-bind-html=\"form.helpvalue\"></div>");
-	  $templateCache.put("decorators/material/radio-buttons.html", "<div class=\"form-group schema-form-radiobuttons {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\" sf-layout=\"\" sf-messages=\"\"><div><label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label></div><section layout=\"row\" layout-sm=\"column\" layout-align=\"center center\"><md-input-container ng-repeat=\"item in form.titleMap\"><md-button type=\"button\" class=\"group md-raised\" sf-field-model=\"replaceAll\" ng-model=\"$$value$$\" sf-changed=\"form\" ng-class=\"{\'md-primary\': ($$value$$ == item.value)}\" ng-disabled=\"form.readonly\" ng-model-options=\"form.ngModelOptions\" schema-validate=\"form\" ng-value=\"item.value\" ng-click=\"$$value$$ = item.value\" name=\"{{form.key.join(\'.\')}}\"><span ng-bind-html=\"item.name\"></span></md-button></md-input-container></section></div>");
-	  $templateCache.put("decorators/material/radios-inline.html", "<div class=\"form-group schema-form-radios-inline {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\" sf-layout=\"\" sf-messages=\"\"><label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label><md-radio-group layout=\"row\" sf-field-model=\"replaceAll\" ng-model=\"$$value$$\" class=\"{{form.fieldHtmlClass}}\" ng-class=\"{ active: item.value === $$value$$ }\" sf-changed=\"form\" schema-validate=\"form\" ng-disabled=\"form.readonly\" name=\"{{form.key.join(\'.\')}}\"><md-radio-button ng-repeat=\"item in form.titleMap\" ng-value=\"item.value\"><span ng-bind-html=\"item.name\"></span></md-radio-button></md-radio-group></div>");
-	  $templateCache.put("decorators/material/radios.html", "<div class=\"form-group schema-form-radios {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess()}\"><label class=\"control-label\" ng-show=\"showTitle()\" aria-label=\"{{form.title}}\" layout=\"row\">{{form.title}} {{form.titleMap | json}}</label><div><md-radio-group sf-field-model=\"\" sf-changed=\"form\" ng-disabled=\"form.readonly\" name=\"{{form.key.join(\'.\')}}\" sf-layout=\"\" sf-messages=\"\"><md-radio-button ng-repeat=\"item in form.titleMap\" ng-value=\"item.value\" class=\"{{form.fieldHtmlClass}}\" sf-field-model=\"ng-class\" ng-class=\"{ active: item.value === $$value$$ }\"><span ng-bind-html=\"item.name\"></span></md-radio-button></md-radio-group></div></div>");
-	  $templateCache.put("decorators/material/section.html", "<md-content class=\"schema-form-section {{::form.htmlClass}}\" sf-layout=\"\"></md-content>");
-	  $templateCache.put("decorators/material/select.html", "<md-input-container class=\"form-group {{::form.htmlClass}} schema-form-select\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false}\" sf-messages=\"\" sf-layout=\"\"><label ng-show=\"::showTitle()\">{{::form.title}}</label><md-select sf-field-model=\"\" schema-validate=\"form\"><md-optgroup ng-repeat-start=\"(key, opt) in form.getOptions(form, evalExpr) | orderBy:\'group\' as optGroups\" ng-if=\"opt.group && opt.group != optGroups[key-1].group\" label=\"{{::opt.group}}\" aria-label=\"{{::opt.group}}\"><md-option ng-repeat=\"(key, filtered) in form.getOptions(form, evalExpr) | filter: {group: opt.group} | orderBy:\'name\' as opts\" ng-value=\"::filtered.value\" aria-label=\"{{::filtered.name}}\">{{::filtered.name}}</md-option></md-optgroup><md-option ng-if=\"!opt.group\" ng-value=\"::opt.value\" ng-repeat-end=\"\">{{::opt.name}}</md-option></md-select></md-input-container>");
-	  $templateCache.put("decorators/material/slider.html", "<md-input-container class=\"schema-form-slider {{form.htmlClass}}\"><label ng-show=\"showTitle()\" for=\"{{::form.key|sfCamelKey}}\">{{::form.title}}</label><md-slider sf-field-model=\"\" flex=\"\" id=\"{{::form.key|sfCamelKey}}\" min=\"0\" max=\"255\" aria-label=\"blue\"></md-slider></md-input-container>");
-	  $templateCache.put("decorators/material/submit.html", "<section class=\"schema-form-submit {{form.htmlClass}}\" sf-messages=\"\"><md-button class=\"md-raised {{ form.style || \'md-primary\' }} {{form.fieldHtmlClass}}\" type=\"{{::form.type}}\" ng-disabled=\"form.readonly\" aria-label=\"{{::form.title}}\"><md-tooltip ng-if=\"::form.tip\">{{::form.tip}}</md-tooltip>{{::form.title}}</md-button></section>");
-	  $templateCache.put("decorators/material/switch.html", "<md-input-container class=\"schema-form-switch {{::form.htmlClass}}\"><md-switch sf-field-model=\"\" sf-changed=\"form\" sf-type-parser=\"form.schema\" sf-messages=\"\" schema-validate=\"form\" id=\"{{::form.key|sfCamelKey}}\" aria-label=\"{{form.title}}\" ng-show=\"::form.key\" ng-class=\"form.fieldHtmlClass\" ng-disabled=\"::form.readonly\"><span ng-show=\"showTitle()\" for=\"{{::form.key|sfCamelKey}}\">{{::form.title}}</span></md-switch></md-input-container>");
-	  $templateCache.put("decorators/material/tabarray.html", "<div sf-array=\"form\" ng-init=\"selected = { tab: 0 }\" class=\"clearfix schema-form-tabarray schema-form-tabarray-{{form.tabType || \'left\'}} {{form.htmlClass}}\"><div ng-if=\"!form.tabType || form.tabType !== \'right\'\" ng-class=\"{\'col-xs-3\': !form.tabType || form.tabType === \'left\'}\"><ul class=\"nav nav-tabs\" ng-class=\"{ \'tabs-left\': !form.tabType || form.tabType === \'left\'}\"><li ng-repeat=\"item in modelArray track by $index\" ng-click=\"$event.preventDefault() || (selected.tab = $index)\" ng-class=\"{active: selected.tab === $index}\"><a href=\"#\">{{interp(form.title,{\'$index\':$index, value: item}) || $index}}</a></li><li ng-hide=\"form.readonly\" ng-click=\"$event.preventDefault() || (selected.tab = appendToArray().length - 1)\"><a href=\"#\"><i class=\"glyphicon glyphicon-plus\"></i> {{ form.add || \'Add\'}}</a></li></ul></div><div ng-class=\"{\'col-xs-9\': !form.tabType || form.tabType === \'left\' || form.tabType === \'right\'}\"><div class=\"tab-content {{form.fieldHtmlClass}}\"><div class=\"tab-pane clearfix\" ng-repeat=\"item in modelArray track by $index\" ng-show=\"selected.tab === $index\" ng-class=\"{active: selected.tab === $index}\"><sf-decorator ng-init=\"arrayIndex = $index\" form=\"copyWithIndex($index)\"></sf-decorator><button ng-hide=\"form.readonly\" ng-click=\"selected.tab = deleteFromArray($index).length - 1\" type=\"button\" class=\"btn {{ form.style.remove || \'btn-default\' }} pull-right\"><i class=\"glyphicon glyphicon-trash\"></i> {{ form.remove || \'Remove\'}}</button></div></div></div><div ng-if=\"form.tabType === \'right\'\" class=\"col-xs-3\"><ul class=\"nav nav-tabs tabs-right\"><li ng-repeat=\"item in modelArray track by $index\" ng-click=\"$event.preventDefault() || (selected.tab = $index)\" ng-class=\"{active: selected.tab === $index}\"><a href=\"#\">{{interp(form.title,{\'$index\':$index, value: item}) || $index}}</a></li><li ng-hide=\"form.readonly\" ng-click=\"$event.preventDefault() || appendToArray()\"><a href=\"#\"><i class=\"glyphicon glyphicon-plus\"></i> {{ form.add || \'Add\'}}</a></li></ul></div></div>");
-	  $templateCache.put("decorators/material/tabs.html", "<div sf-field-model=\"\" class=\"schema-form-tabs {{::form.htmlClass}}\"><md-tabs md-dynamic-height=\"\" md-selected=\"selected\" md-autoselect=\"\" ng-init=\"selected = 0\"></md-tabs></div>");
-	  $templateCache.put("decorators/material/textarea.html", "<md-input-container class=\"{{::form.htmlClass}} schema-form-textarea\" sf-messages=\"\" sf-layout=\"\"><label ng-show=\"showTitle()\" for=\"{{::form.key|sfCamelKey}}\">{{::form.title}}</label> <textarea ng-class=\"::form.fieldHtmlClass\" id=\"{{::form.key|sfCamelKey}}\" sf-changed=\"form\" ng-disabled=\"::form.readonly\" sf-field-model=\"\" schema-validate=\"form\" name=\"{{::form.key|sfCamelKey}}\"></textarea></md-input-container>");
-	}]);
+	angular.module('schemaForm').config(materialDecoratorConfig).directive('sfmExternalOptions', sfmExternalOptionsDirective).filter('sfCamelKey', sfCamelKeyFilter);
 
-/***/ },
-/* 5 */
-/***/ function(module, exports) {
+	materialDecoratorConfig.$inject = ['schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfBuilderProvider', 'sfPathProvider', '$injector'];
 
-	/**
-	 * It might be a bug, but currently input[type=number] does not add
-	 * a parser, so the model gets populated with a string. It does however stop non numbers so it
-	 * must have some preproccessing. Anyway, this adds parser before schema-validate hooks into it.
-	 * FIXME: this is still not a complete solution. Inputting a string in an input[type=number] results
-	 * in parsers never firing and ngModel value removed. So no validation from schema-validate either.
-	 */
-	angular.module('schemaForm').directive('sfTypeParser', function () {
-	  return {
-	    restrict: 'A',
-	    scope: false,
-	    require: 'ngModel',
-	    link: function (scope, element, attrs, ngModel) {
-	      var once = scope.$watch(attrs.sfTypeParser, function (schema) {
-	        if (!schema) {
-	          return;
-	        }
+	function materialDecoratorConfig(schemaFormProvider, decoratorsProvider, sfBuilderProvider, sfPathProvider, $injector) {
+	  var base = 'decorators/material/';
 
-	        var isNumber = schema.type.indexOf('number') !== -1;
-	        var isInteger = schema.type.indexOf('integer') !== -1;
-	        var numberRE = /^[0-9]*$/;
-	        // Use index of since type can be either an array with two values or a string.
-	        if (isNumber || isInteger) {
-	          // The timing here seems to work. i.e. we get in before schema-validate
-	          ngModel.$parsers.push(function (viewValue) {
-	            var value;
-	            if (isNumber) {
-	              value = parseFloat(viewValue);
-	            } else if (numberRE.test(viewValue)) {
-	              // We test the value to check that it's a valid integer, otherwise we can easily
-	              // get float -> integer parsing behind the scenes.
-	              value = parseInt(viewValue, 10);
-	            }
-	            console.log('parser', numberRE.test(viewValue), viewValue, value);
-	            if (value === undefined || isNaN(value)) {
-	              //Let the validation fail. @FIXME: it fails with "required" for some reason.
-	              return viewValue;
-	            }
-	            return value;
-	          });
-	        }
+	  var simpleTransclusion = sfBuilderProvider.builders.simpleTransclusion;
+	  var ngModelOptions = sfBuilderProvider.builders.ngModelOptions;
+	  var ngModel = sfBuilderProvider.builders.ngModel;
+	  var sfField = sfBuilderProvider.builders.sfField;
+	  var condition = sfBuilderProvider.builders.condition;
+	  var array = sfBuilderProvider.builders.array;
+	  var numeric = sfBuilderProvider.builders.numeric;
 
-	        once();
+	  var sfLayout = sfLayout;
+	  //var sfMessagesNode     = sfMessagesNodeHandler();
+	  //var sfMessages         = sfMessagesBuilder;
+	  var sfOptions = sfOptionsBuilder;
+	  var mdAutocomplete = mdAutocompleteBuilder;
+	  var mdSwitch = mdSwitchBuilder;
+	  var mdDatepicker = mdDatepickerBuilder;
+	  var mdTabs = mdTabsBuilder;
+	  var textarea = textareaBuilder;
+
+	  var core = [sfField, ngModel, ngModelOptions, condition, sfLayout];
+	  var defaults = core; //core.concat(sfMessages);
+	  var arrays = core.concat(array);
+
+	  schemaFormProvider.defaults.string.unshift(dateDefault);
+
+	  decoratorsProvider.defineDecorator('materialDecorator', {
+	    actions: { template: actionsTemplate, builder: [sfField, simpleTransclusion, condition] },
+	    array: { template: arrayTemplate, builder: arrays },
+	    autocomplete: { template: autocompleteTemplate, builder: defaults.concat(mdAutocomplete) },
+	    boolean: { template: checkboxTemplate, builder: defaults },
+	    button: { template: submitTemplate, builder: defaults },
+	    checkbox: { template: checkboxTemplate, builder: defaults },
+	    checkboxes: { template: checkboxesTemplate, builder: arrays },
+	    date: { template: dateTemplate, builder: defaults.concat(mdDatepicker) },
+	    default: { template: defaultTemplate, builder: core },
+	    fieldset: { template: fieldsetTemplate, builder: [sfField, simpleTransclusion, condition] },
+	    help: { template: helpTemplate, builder: defaults },
+	    number: { template: defaultTemplate, builder: defaults.concat(numeric) },
+	    password: { template: defaultTemplate, builder: defaults },
+	    radios: { template: radiosTemplate, builder: defaults },
+	    'radios-inline': { template: radiosInlineTemplate, builder: defaults },
+	    radiobuttons: { template: radiobuttonsTemplate, builder: defaults },
+	    section: { template: sectionTemplate, builder: [sfField, simpleTransclusion, condition, sfLayout] },
+	    select: { template: selectTemplate, builder: defaults.concat(sfOptions) },
+	    submit: { template: submitTemplate, builder: core },
+	    tabs: { template: tabsTemplate, builder: [sfField, mdTabs, condition] },
+	    tabarray: { template: tabarrayTemplate, builder: arrays },
+	    textarea: { template: textareaTemplate, builder: defaults.concat(textarea) },
+	    switch: { template: switchTemplate, builder: defaults.concat(mdSwitch) }
+	  });
+
+	  function sfLayout(args) {
+	    var layoutDiv = args.fieldFrag.querySelector('[sf-layout]');
+
+	    if (args.form.grid) {
+	      Object.getOwnPropertyNames(args.form.grid).forEach(function (property, idx, array) {
+	        layoutDiv.setAttribute(property, args.form.grid[property]);
+	      });
+	    };
+	  };
+
+	  /*function sfMessagesNodeHandler() {
+	      var html = '<div ng-if="hasError()" ng-messages="{dummy: true}" class="ng-active">' +
+	        '<div ng-message="dummy" class="md-input-message-animation" sf-message="form.description"></div></div>';
+	    var div = document.createElement('div');
+	    div.innerHTML = html;
+	    return div.firstChild;
+	  };
+	   function sfMessagesBuilder(args) {
+	    var messagesDiv = args.fieldFrag.querySelector('[sf-messages]');
+	    if (messagesDiv && sfMessagesNode) {
+	      var child = sfMessagesNode.cloneNode(true);
+	      messagesDiv.appendChild(child);
+	    }
+	  };*/
+
+	  function textareaBuilder(args) {
+	    var textareaFrag = args.fieldFrag.querySelector('textarea');
+	    var maxLength = args.form.maxlength || false;
+	    if (textareaFrag && maxLength) {
+	      textareaFrag.setAttribute('md-maxlength', maxLength);
+	    };
+	  };
+
+	  function mdAutocompleteBuilder(args) {
+	    var mdAutocompleteFrag = args.fieldFrag.querySelector('md-autocomplete');
+	    var minLength = args.form.minLength || 1;
+	    var maxLength = args.form.maxLength || false;
+	    var title = args.form.title || args.form.placeholder || args.form.key.slice(-1)[0];
+
+	    if (mdAutocompleteFrag) {
+	      if (args.form.onChange) {
+	        mdAutocompleteFrag.setAttribute('md-selected-item-change', 'args.form.onChange()');
+	        mdAutocompleteFrag.setAttribute('md-search-text-change', 'args.form.onChange(searchText)');
+	      };
+
+	      // mdAutocompleteFrag.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
+	      mdAutocompleteFrag.setAttribute('md-min-length', minLength);
+	      if (maxLength) {
+	        mdAutocompleteFrag.setAttribute('md-max-length', maxLength);
+	      };
+
+	      if (title) {
+	        mdAutocompleteFrag.setAttribute('md-floating-label', title);
+	      };
+	    };
+	  };
+
+	  function mdSwitchBuilder(args) {
+	    var mdSwitchFrag = args.fieldFrag.querySelector('md-switch');
+	    if (args.form.schema.titleMap) {
+	      mdSwitchFrag.setAttribute('ng-true-value', args.form.schema.titleMap.true);
+	      mdSwitchFrag.setAttribute('ng-false-value', args.form.schema.titleMap.false);
+	    };
+	  };
+
+	  function sfOptionsBuilder(args) {
+	    var mdSelectFrag = args.fieldFrag.querySelector('md-select');
+	    var enumTitleMap = [];
+	    var i;
+	    var mdSelectFrag;
+
+	    args.form.selectOptions = [];
+	    args.form.getOptions = getOptionsHandler;
+
+	    if (args.form.schema.links && typeof args.form.schema.links === 'object') {
+	      var link;
+	      var related = /({)([^}]*)(})/gm;
+	      var source = /{{([^}]*)}}/gm;
+	      var matched;
+
+	      for (i = 0; i < args.form.schema.links.length; i++) {
+	        link = args.form.schema.links[i];
+	        if (link.rel === 'options') {
+	          // TODO enable filter to allow processing results
+	          // args.form.optionSource = link.href.replace(related, '$1$1 model.$2 | _externalOptionUri $3$3');
+	          args.form.optionSource = link.href.replace(related, '$1$1 model.$2 $3$3');
+	        };
+	      };
+
+	      mdSelectFrag.setAttribute('sfm-external-options', args.form.optionSource);
+	    } else {
+	      args.form.selectOptions = sfOptionsProcessor(args.form);
+	    };
+	  };
+
+	  function mdDatepickerBuilder(args) {
+	    var mdDatepickerFrag = args.fieldFrag.querySelector('md-datepicker');
+	    if (mdDatepickerFrag) {
+	      if (args.form.onChange) {
+	        mdDatepickerFrag.setAttribute('ng-change', 'args.form.onChange(searchText)');
+	      }
+	      // mdDatepickerFrag.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
+	      var minDate = args.form.minimum || false;
+	      var maxDate = args.form.maximum || false;
+	      if (minDate) {
+	        mdDatepickerFrag.setAttribute('md-min-date', minDate);
+	      }
+	      if (maxDate) {
+	        mdDatepickerFrag.setAttribute('md-max-date', maxDate);
+	      }
+	    }
+	  };
+
+	  function mdTabsBuilder(args) {
+	    if (args.form.tabs && args.form.tabs.length > 0) {
+	      var mdTabsFrag = args.fieldFrag.querySelector('md-tabs');
+
+	      args.form.tabs.forEach(function (tab, index) {
+	        var mdTab = document.createElement('md-tab');
+	        mdTab.setAttribute('label', '{{' + args.path + '.tabs[' + index + '].title}}');
+	        var mdTabBody = document.createElement('md-tab-body');
+	        var childFrag = args.build(tab.items, args.path + '.tabs[' + index + '].items', args.state);
+	        mdTabBody.appendChild(childFrag);
+	        mdTab.appendChild(mdTabBody);
+	        mdTabsFrag.appendChild(mdTab);
 	      });
 	    }
 	  };
-	});
-
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	(function (angular, undefined) {
-	  'use strict';
-
-	  angular.module('schemaForm').config(materialDecoratorConfig).directive('sfmExternalOptions', sfmExternalOptionsDirective).filter('sfCamelKey', sfCamelKeyFilter);
-
-	  materialDecoratorConfig.$inject = ['schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfBuilderProvider', 'sfPathProvider', '$injector'];
-
-	  function materialDecoratorConfig(schemaFormProvider, decoratorsProvider, sfBuilderProvider, sfPathProvider, $injector) {
-	    var base = 'decorators/material/';
-
-	    var simpleTransclusion = sfBuilderProvider.builders.simpleTransclusion;
-	    var ngModelOptions = sfBuilderProvider.builders.ngModelOptions;
-	    var ngModel = sfBuilderProvider.builders.ngModel;
-	    var sfField = sfBuilderProvider.builders.sfField;
-	    var condition = sfBuilderProvider.builders.condition;
-	    var array = sfBuilderProvider.builders.array;
-	    var numeric = sfBuilderProvider.builders.numeric;
-
-	    var sfLayout = sfLayout;
-	    var sfMessagesNode = sfMessagesNodeHandler();
-	    var sfMessages = sfMessagesBuilder;
-	    var sfOptions = sfOptionsBuilder;
-	    var mdAutocomplete = mdAutocompleteBuilder;
-	    var mdSwitch = mdSwitchBuilder;
-	    var mdDatepicker = mdDatepickerBuilder;
-	    var mdTabs = mdTabsBuilder;
-	    var textarea = textareaBuilder;
-
-	    var core = [sfField, ngModel, ngModelOptions, condition, sfLayout];
-	    var defaults = core.concat(sfMessages);
-	    var arrays = core.concat(array);
-
-	    schemaFormProvider.defaults.string.unshift(dateDefault);
-
-	    decoratorsProvider.defineDecorator('materialDecorator', {
-	      actions: { template: base + 'actions.html', builder: [sfField, simpleTransclusion, condition] },
-	      array: { template: base + 'array.html', builder: arrays },
-	      autocomplete: { template: base + 'autocomplete.html', builder: defaults.concat(mdAutocomplete) },
-	      boolean: { template: base + 'checkbox.html', builder: defaults },
-	      button: { template: base + 'submit.html', builder: defaults },
-	      checkbox: { template: base + 'checkbox.html', builder: defaults },
-	      checkboxes: { template: base + 'checkboxes.html', builder: arrays },
-	      date: { template: base + 'date.html', builder: defaults.concat(mdDatepicker) },
-	      'default': { template: base + 'default.html', builder: defaults },
-	      fieldset: { template: base + 'fieldset.html', builder: [sfField, simpleTransclusion, condition] },
-	      help: { template: base + 'help.html', builder: defaults },
-	      number: { template: base + 'default.html', builder: defaults.concat(numeric) },
-	      password: { template: base + 'default.html', builder: defaults },
-	      radios: { template: base + 'radios.html', builder: defaults },
-	      'radios-inline': { template: base + 'radios-inline.html', builder: defaults },
-	      radiobuttons: { template: base + 'radio-buttons.html', builder: defaults },
-	      section: { template: base + 'section.html', builder: [sfField, simpleTransclusion, condition, sfLayout] },
-	      select: { template: base + 'select.html', builder: defaults.concat(sfOptions) },
-	      submit: { template: base + 'submit.html', builder: defaults },
-	      tabs: { template: base + 'tabs.html', builder: [sfField, mdTabs, condition] },
-	      tabarray: { template: base + 'tabarray.html', builder: arrays },
-	      textarea: { template: base + 'textarea.html', builder: defaults.concat(textarea) },
-	      switch: { template: base + 'switch.html', builder: defaults.concat(mdSwitch) }
-	    });
-
-	    function sfLayout(args) {
-	      var layoutDiv = args.fieldFrag.querySelector('[sf-layout]');
-
-	      if (args.form.grid) {
-	        Object.getOwnPropertyNames(args.form.grid).forEach(function (property, idx, array) {
-	          layoutDiv.setAttribute(property, args.form.grid[property]);
-	        });
-	      };
-	    };
-
-	    function sfMessagesNodeHandler() {
-	      var html = '<div ng-if="ngModel.$invalid" ng-messages="{dummy: true}" class="ng-active">' + '<div ng-message="dummy" class="md-input-message-animation" sf-message="form.description"></div></div>';
-	      var div = document.createElement('div');
-	      div.innerHTML = html;
-	      return div.firstChild;
-	    };
-
-	    function sfMessagesBuilder(args) {
-	      var messagesDiv = args.fieldFrag.querySelector('[sf-messages]');
-	      if (messagesDiv && sfMessagesNode) {
-	        var child = sfMessagesNode.cloneNode(true);
-	        messagesDiv.appendChild(child);
-	      }
-	    };
-
-	    function textareaBuilder(args) {
-	      var textareaFrag = args.fieldFrag.querySelector('textarea');
-	      var maxLength = args.form.maxlength || false;
-	      if (textareaFrag && maxLength) {
-	        textareaFrag.setAttribute('md-maxlength', maxLength);
-	      };
-	    };
-
-	    function mdAutocompleteBuilder(args) {
-	      var mdAutocompleteFrag = args.fieldFrag.querySelector('md-autocomplete');
-	      var minLength = args.form.minLength || 1;
-	      var maxLength = args.form.maxLength || false;
-	      var title = args.form.title || args.form.placeholder || args.form.key.slice(-1)[0];
-
-	      if (mdAutocompleteFrag) {
-	        if (args.form.onChange) {
-	          mdAutocompleteFrag.setAttribute('md-selected-item-change', 'args.form.onChange()');
-	          mdAutocompleteFrag.setAttribute('md-search-text-change', 'args.form.onChange(searchText)');
-	        };
-
-	        // mdAutocompleteFrag.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
-	        mdAutocompleteFrag.setAttribute('md-min-length', minLength);
-	        if (maxLength) {
-	          mdAutocompleteFrag.setAttribute('md-max-length', maxLength);
-	        };
-
-	        if (title) {
-	          mdAutocompleteFrag.setAttribute('md-floating-label', title);
-	        };
-	      };
-	    };
-
-	    function mdSwitchBuilder(args) {
-	      var mdSwitchFrag = args.fieldFrag.querySelector('md-switch');
-	      if (args.form.schema.titleMap) {
-	        mdSwitchFrag.setAttribute('ng-true-value', args.form.schema.titleMap.true);
-	        mdSwitchFrag.setAttribute('ng-false-value', args.form.schema.titleMap.false);
-	      };
-	    };
-
-	    function sfOptionsBuilder(args) {
-	      var mdSelectFrag = args.fieldFrag.querySelector('md-select');
-	      var enumTitleMap = [];
-	      var i;
-	      var mdSelectFrag;
-
-	      args.form.selectOptions = [];
-	      args.form.getOptions = getOptionsHandler;
-
-	      if (args.form.schema.links && typeof args.form.schema.links === 'object') {
-	        var link;
-	        var related = /({)([^}]*)(})/gm;
-	        var source = /{{([^}]*)}}/gm;
-	        var matched;
-
-	        for (i = 0; i < args.form.schema.links.length; i++) {
-	          link = args.form.schema.links[i];
-	          if (link.rel === 'options') {
-	            // TODO enable filter to allow processing results
-	            // args.form.optionSource = link.href.replace(related, '$1$1 model.$2 | _externalOptionUri $3$3');
-	            args.form.optionSource = link.href.replace(related, '$1$1 model.$2 $3$3');
-	          };
-	        };
-
-	        mdSelectFrag.setAttribute('sfm-external-options', args.form.optionSource);
-	      } else {
-	        args.form.selectOptions = sfOptionsProcessor(args.form);
-	      };
-	    };
-
-	    function mdDatepickerBuilder(args) {
-	      var mdDatepickerFrag = args.fieldFrag.querySelector('md-datepicker');
-	      if (mdDatepickerFrag) {
-	        if (args.form.onChange) {
-	          mdDatepickerFrag.setAttribute('ng-change', 'args.form.onChange(searchText)');
-	        }
-	        // mdDatepickerFrag.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
-	        var minDate = args.form.minimum || false;
-	        var maxDate = args.form.maximum || false;
-	        if (minDate) {
-	          mdDatepickerFrag.setAttribute('md-min-date', minDate);
-	        }
-	        if (maxDate) {
-	          mdDatepickerFrag.setAttribute('md-max-date', maxDate);
-	        }
-	      }
-	    };
-
-	    function mdTabsBuilder(args) {
-	      if (args.form.tabs && args.form.tabs.length > 0) {
-	        var mdTabsFrag = args.fieldFrag.querySelector('md-tabs');
-
-	        args.form.tabs.forEach(function (tab, index) {
-	          var mdTab = document.createElement('md-tab');
-	          mdTab.setAttribute('label', '{{' + args.path + '.tabs[' + index + '].title}}');
-	          var mdTabBody = document.createElement('md-tab-body');
-	          var childFrag = args.build(tab.items, args.path + '.tabs[' + index + '].items', args.state);
-	          mdTabBody.appendChild(childFrag);
-	          mdTab.appendChild(mdTabBody);
-	          mdTabsFrag.appendChild(mdTab);
-	        });
-	      }
-	    };
-
-	    /**
-	     * Material Datepicker
-	     */
-	    function dateDefault(name, schema, options) {
-	      if (schema.type === 'string' && (schema.format === 'date' || schema.format === 'date-time')) {
-	        var f = schemaFormProvider.stdFormObj(name, schema, options);
-	        f.key = options.path;
-	        f.type = 'date';
-	        options.lookup[sfPathProvider.stringify(options.path)] = f;
-	        return f;
-	      }
-	    };
-	  };
-
-	  function getOptionsHandler(form, evalExpr) {
-	    if (form.optionData) {
-	      return evalExpr(form.optionData);
-	    };
-
-	    if (form.selectOptions) {
-	      return form.selectOptions;
-	    };
-
-	    return [];
-	  };
-
-	  function sfOptionsProcessor(data) {
-	    var enumTitleMap = [];
-
-	    if (data.titleMap) {
-	      return data.titleMap;
-	    } else if (data.enum && data.enum.length) {
-	      for (i = 0; i < data.enum.length; i++) {
-	        if (data.enum[i] && data.enum[i].length) {
-	          enumTitleMap.push({ name: data.enum[i], value: data.enum[i] });
-	        };
-	      };
-	    };
-
-	    return enumTitleMap;
-	  };
-
-	  sfmExternalOptionsDirective.$inject = ['$http'];
-
-	  function sfmExternalOptionsDirective($http) {
-	    var directive = {
-	      link: link,
-	      restrict: 'A'
-	    };
-
-	    return directive;
-
-	    function link(scope, element, attrs) {
-	      attrs.$observe('sfmExternalOptions', function (dataURI) {
-	        $http.get(dataURI).then(function (response) {
-	          scope.form.selectOptions = sfOptionsProcessor(response.data);
-	        });
-	      });
-	    };
-	  };
 
 	  /**
-	   * sfCamelKey Filter
+	   * Material Datepicker
 	   */
-	  function sfCamelKeyFilter() {
-	    return function (formKey) {
-	      if (!formKey) {
-	        return '';
+	  function dateDefault(name, schema, options) {
+	    if (schema.type === 'string' && (schema.format === 'date' || schema.format === 'date-time')) {
+	      var f = schemaFormProvider.stdFormObj(name, schema, options);
+	      f.key = options.path;
+	      f.type = 'date';
+	      options.lookup[sfPathProvider.stringify(options.path)] = f;
+	      return f;
+	    }
+	  };
+	};
+
+	function getOptionsHandler(form, evalExpr) {
+	  if (form.optionData) {
+	    return evalExpr(form.optionData);
+	  };
+
+	  if (form.selectOptions) {
+	    return form.selectOptions;
+	  };
+
+	  return [];
+	};
+
+	function sfOptionsProcessor(data) {
+	  var enumTitleMap = [];
+
+	  if (data.titleMap) {
+	    return data.titleMap;
+	  } else if (data.enum && data.enum.length) {
+	    for (i = 0; i < data.enum.length; i++) {
+	      if (data.enum[i] && data.enum[i].length) {
+	        enumTitleMap.push({ name: data.enum[i], value: data.enum[i] });
 	      };
-	      var part, i, key;
-	      key = formKey.slice();
-	      for (i = 0; i < key.length; i++) {
-	        part = key[i].toLowerCase().split('');
-	        if (i && part.length) {
-	          part[0] = part[0].toUpperCase();
-	        };
-	        key[i] = part.join('');
-	      };
-	      return key.join('');
 	    };
 	  };
-	})(angular, undefined);
+
+	  return enumTitleMap;
+	};
+
+	sfmExternalOptionsDirective.$inject = ['$http'];
+
+	function sfmExternalOptionsDirective($http) {
+	  var directive = {
+	    link: link,
+	    restrict: 'A'
+	  };
+
+	  return directive;
+
+	  function link(scope, element, attrs) {
+	    attrs.$observe('sfmExternalOptions', function (dataURI) {
+	      $http.get(dataURI).then(function (response) {
+	        scope.form.selectOptions = sfOptionsProcessor(response.data);
+	      });
+	    });
+	  };
+	};
+
+	/**
+	 * sfCamelKey Filter
+	 */
+	function sfCamelKeyFilter() {
+	  return function (formKey) {
+	    if (!formKey) {
+	      return '';
+	    };
+	    var part, i, key;
+	    key = formKey.slice();
+	    for (i = 0; i < key.length; i++) {
+	      part = key[i].toLowerCase().split('');
+	      if (i && part.length) {
+	        part[0] = part[0].toUpperCase();
+	      };
+	      key[i] = part.join('');
+	    };
+	    return key.join('');
+	  };
+	};
 	/*
 	  TODO add default filter for autocomplete which allows form.optionFilter or 'autocompleteFilter' to override
 	  Something along the following lines...
@@ -4083,35 +4313,187 @@ return /******/ (function(modules) { // webpackBootstrap
 	*/
 
 /***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	var path = 'material/actions.html';
+	var html = "<section layout=\"row\" class=\"btn-group schema-form-actions {{::form.htmlClass}}\"></section>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	var path = 'material/array.html';
+	var html = "<div  class=\"schema-form-array {{::form.htmlClass}}\"\n      sf-field-model=\"sf-new-array\"\n      sf-new-array>\n  <label class=\"control-label\" ng-show=\"showTitle()\">{{ form.title }}</label>\n  <md-list class=\"list-group\" sf-field-model ui-sortable=\"form.sortOptions\">\n    <md-list-item layout=\"row\" class=\"list-group-item\"\n             sf-field-model=\"ng-repeat\"\n             ng-repeat=\"item in modelArray track by $index\"\n             schema-form-array-items\n             class=\"{{::form.fieldHtmlClass}}\">\n      <md-button flex=\"none\" flex-order=\"2\"\n                 type=\"button\"\n                 ng-hide=\"form.readonly || form.remove === null\"\n                 ng-click=\"deleteFromArray($index)\"\n                 ng-disabled=\"form.schema.minItems >= modelArray.length\"\n                 class=\"md-icon-button\" aria-label=\"More\"\n                 style=\"position: relative; z-index: 20;\">\n        <md-icon>close</md-icon>\n      </md-button>\n    </md-list-item>\n  </md-list>\n  <div class=\"clearfix\" style=\"padding: 15px;\" ng-model=\"modelArray\" schema-validate=\"form\">\n    <div class=\"help-block\"\n         ng-show=\"(hasError() && errorMessage(schemaError())) || form.description\"\n         ng-bind-html=\"(hasError() && errorMessage(schemaError())) || form.description\"></div>\n\n    <md-button ng-hide=\"form.readonly || form.add === null\"\n            ng-click=\"appendToArray()\"\n            ng-disabled=\"form.schema.maxItems <= modelArray.length\"\n            type=\"button\"\n            class=\"btn md-raised md-primary {{ form.style.add || 'btn-default' }} pull-right\">\n      <i class=\"glyphicon glyphicon-plus\"></i>\n      {{ form.add || 'Add'}}\n    </md-button>\n  </div>\n</div>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	var path = 'material/autocomplete.html';
+	var html = "<div class=\"form-group {{::form.htmlClass}} schema-form-select\"\n     ng-class=\"{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}\"\n     sf-messages sf-layout>\n  <md-autocomplete flex\n    ng-disabled=\"form.readonly\"\n    ng-model=\"$$value$$\"\n    sf-autocomplete\n    sf-field-model=\"replaceAll\"\n    schema-validate=\"form\"\n    md-selected-item=\"$$value$$\"\n    md-search-text=\"searchText\"\n    md-selected-item-change=\"'todo';\"\n    md-items=\"item in evalExpr('this[\\''+form.optionFilter+'\\'](\\''+searchText+'\\')')\"\n    md-item-text=\"item.name\"\n    md-floating-label=\"{{::form.title}}\"\n    md-menu-class=\"autocomplete-custom-template\">\n    <md-item-template>\n      <span md-highlight-text=\"searchText\">{{item.name}}</span>\n    </md-item-template>\n    <md-not-found>\n      No matches found\n    </md-not-found>\n  </md-autocomplete>\n</div>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
 /* 7 */
 /***/ function(module, exports) {
 
-	angular.module('schemaForm').directive('sfMaterialClass', function ($compile, $timeout) {
-	    return {
-	        restrict: 'A',
-	        scope: false,
-	        link: function (scope, element, attrs, ngModel) {
-	            function reduceHelper(obj, i) {
-	                return obj[i];
-	            }
+	var path = 'material/checkbox.html';
+	var html = "<div class=\"checkbox schema-form-checkbox {{::form.htmlClass}}\"\n     ng-class=\"{'has-error': hasError(), 'has-success': hasSuccess()}\"\n     sf-messages>\n  <md-checkbox sf-field-model\n               sf-changed=\"form\"\n               ng-disabled=\"form.readonly\"\n               schema-validate=\"form\"\n               sf-material-class=\"md-checked\"\n               class=\"{{::form.fieldHtmlClass}}\"\n               name=\"{{::form.key|sfCamelKey}}\"\n               aria-label=\"{{::form.title}}\">\n    <span>{{::form.title}}</span>\n  </md-checkbox>\n</div>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
 
-	            var modelValue;
-	            try {
-	                modelValue = scope.form.key.reduce(reduceHelper, scope.model);
-	            } catch (e) {
-	                modelValue = undefined;
-	            }
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
 
-	            // Element class is not set in DOM if executed immediately.
-	            // I don't understand exactly why but it's probably related to other directive job.
-	            $timeout(function () {
-	                if (modelValue !== null && typeof modelValue !== 'undefined' && modelValue !== false) {
-	                    element.addClass(attrs.sfMaterialClass);
-	                }
-	            }, 0);
-	        }
-	    };
-	});
+	var path = 'material/checkboxes.html';
+	var html = "<div sf-array=\"form\" sf-field-model\n     class=\"form-group schema-form-checkboxes {{::form.htmlClass}}\"\n     ng-class=\"{'has-error': hasError(), 'has-success': hasSuccess()}\"\n     sf-messages>\n  <label class=\"control-label\" ng-show=\"showTitle()\">{{::form.title}}</label>\n  <div class=\"checkbox\" ng-repeat=\"val in titleMapValues track by $index\" >\n    <md-checkbox ng-model=\"titleMapValues[$index]\"\n                 sf-changed=\"form\"\n                 ng-disabled=\"::form.readonly\"\n                 name=\"{{::form.key|sfCamelKey}}\"\n                 ng-true-value=\"true\"\n                 ng-false-value=\"false\"\n                 aria-label=\"{{::form.title}}\">\n      {{::form.titleMap[$index].name}}\n    </md-checkbox>\n  </div>\n</div>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	var path = 'material/date.html';
+	var html = "<div class=\"schema-form-date {{::form.htmlClass}}\">\n  <label ng-show=\"showTitle()\" for=\"{{::form.key|sfCamelKey}}\">{{::form.title}}</label>\n  <md-datepicker sf-field-model\n                 sf-changed=\"form\"\n                 schema-validate=\"form\"\n                 sf-type-parser=\"form.schema\"\n                 id=\"{{::form.key|sfCamelKey}}\"\n                 ng-show=\"::form.key\"\n                 ng-class=\"::form.fieldHtmlClass\"\n                 ng-disabled=\"::form.readonly\"\n                 md-placeholder=\"Enter date\" sf-messages>\n  </md-datepicker>\n</div>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	var path = 'material/default.html';
+	var html = "<md-input-container class=\"schema-form-{{::form.type}} {{::form.htmlClass}}\"\n                    ng-class=\"{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}\"\n                    sf-messages sf-layout sf-material-class=\"md-input-has-value\">\n  <label ng-show=\"showTitle()\" for=\"{{::form.key|sfCamelKey}}\">{{::form.title}}</label>\n  <input sf-field-model\n         ng-show=\"::form.key\"\n         type=\"{{::form.type}}\"\n         step=\"any\"\n         sf-changed=\"form\"\n         placeholder=\"{{::form.placeholder}}\"\n         id=\"{{::form.key|sfCamelKey}}\"\n         ng-class=\"::form.fieldHtmlClass\"\n         sf-type-parser=\"form.schema\"\n         ng-disabled=\"::form.readonly\"\n         schema-validate=\"form\"\n         name=\"{{::form.key|sfCamelKey}}\"\n         aria-describedby=\"{{::form.key|sfCamelKey}}Status\" />\n\n  <div class=\"help-block\" sf-message=\"form.description\"></div>\n</md-input-container>";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	var path = 'material/fieldset.html';
+	var html = "<fieldset ng-disabled=\"form.readonly\" class=\"standard {{::form.htmlClass}}\" flex>\n  <legend ng-show=\"form.title\">{{ form.title }}</legend>\n</fieldset>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	var path = 'material/help.html';
+	var html = "<div class=\"helpvalue schema-form-helpvalue {{::form.htmlClass}}\" ng-bind-html=\"form.helpvalue\"></div>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	var path = 'material/radio-buttons.html';
+	var html = "<div class=\"form-group schema-form-radiobuttons {{::form.htmlClass}}\"\n     ng-class=\"{'has-error': hasError(), 'has-success': hasSuccess()}\" sf-layout sf-messages>\n  <div>\n    <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n  </div>\n  <section layout=\"row\" layout-sm=\"column\" layout-align=\"center center\">\n    <md-input-container ng-repeat=\"item in form.titleMap\">\n      <md-button type=\"button\"\n                 class=\"group md-raised\"\n                 sf-field-model=\"replaceAll\"\n                 ng-model=\"$$value$$\"\n                 sf-changed=\"form\"\n                 class=\"radio {{::form.fieldHtmlClass}}\"\n                 ng-class=\"{'md-primary': ($$value$$ == item.value)}\"\n                 ng-disabled=\"form.readonly\"\n                 ng-model-options=\"form.ngModelOptions\"\n                 schema-validate=\"form\"\n                 ng-value=\"item.value\"\n                 ng-click=\"$$value$$ = item.value\"\n                 name=\"{{form.key.join('.')}}\">\n        <span ng-bind-html=\"item.name\"></span>\n      </md-button>\n    </md-input-container>\n  </section>\n</div>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	var path = 'material/radios-inline.html';
+	var html = "<div class=\"form-group schema-form-radios-inline {{::form.htmlClass}}\"\n     ng-class=\"{'has-error': hasError(), 'has-success': hasSuccess()}\" sf-layout sf-messages>\n  <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n  <md-radio-group layout=\"row\"\n                  sf-field-model=\"replaceAll\"\n                  ng-model=\"$$value$$\"\n                  class=\"{{::form.fieldHtmlClass}}\"\n                  ng-class=\"{ active: item.value === $$value$$ }\"\n                  sf-changed=\"form\"\n                  schema-validate=\"form\"\n                  ng-disabled=\"form.readonly\"\n                  name=\"{{form.key.join('.')}}\">\n    <md-radio-button ng-repeat=\"item in form.titleMap\" ng-value=\"item.value\">\n      <span ng-bind-html=\"item.name\"></span>\n    </md-radio-button>\n  </md-radio-group>\n</div>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
+	var path = 'material/radios.html';
+	var html = "<div class=\"form-group schema-form-radios {{::form.htmlClass}}\"\n     ng-class=\"{'has-error': hasError(), 'has-success': hasSuccess()}\">\n  <label class=\"control-label\" ng-show=\"showTitle()\" aria-label=\"{{form.title}}\" layout=\"row\">{{form.title}} {{form.titleMap | json}}</label>\n  <div>\n    <md-radio-group sf-field-model\n                    sf-changed=\"form\"\n                    ng-disabled=\"form.readonly\"\n                    name=\"{{form.key.join('.')}}\"\n                    sf-layout sf-messages>\n      <md-radio-button ng-repeat=\"item in form.titleMap\"\n                       ng-value=\"item.value\"\n                       class=\"{{::form.fieldHtmlClass}}\"\n                       sf-field-model=\"ng-class\"\n                       ng-class=\"{ active: item.value === $$value$$ }\">\n        <span ng-bind-html=\"item.name\"></span>\n      </md-radio-button>\n    </md-radio-group>\n  </div>\n</div>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	var path = 'material/section.html';
+	var html = "<md-content class=\"schema-form-section {{::form.htmlClass}}\" sf-layout>\n</md-content>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	var path = 'material/select.html';
+	var html = "<md-input-container\n    class=\"form-group {{::form.htmlClass}} schema-form-select\"\n    ng-class=\"{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}\"\n    sf-messages sf-layout>\n  <label ng-show=\"::showTitle()\">{{::form.title}}</label>\n  <md-select sf-field-model schema-validate=\"form\">\n    <md-optgroup ng-repeat-start=\"(key, opt) in form.getOptions(form, evalExpr) | orderBy:'group' as optGroups\"\n                 ng-if=\"opt.group && opt.group != optGroups[key-1].group\"\n                 label=\"{{::opt.group}}\"\n                 aria-label=\"{{::opt.group}}\">\n      <md-option ng-repeat=\"(key, filtered) in form.getOptions(form, evalExpr) | filter: {group: opt.group} | orderBy:'name' as opts\"\n                 ng-value=\"::filtered.value\"\n                 aria-label=\"{{::filtered.name}}\">{{::filtered.name}}</md-option>\n    </md-optgroup>\n    <md-option   ng-if=\"!opt.group\"\n                 ng-value=\"::opt.value\"\n                 ng-repeat-end>{{::opt.name}}</md-option>\n  </md-select>\n\n  <div class=\"help-block\" sf-message=\"form.description\"></div>\n</md-input-container>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	var path = 'material/submit.html';
+	var html = "<section class=\"schema-form-submit {{::form.htmlClass}}\" sf-messages>\n  <md-button class=\"md-raised {{ form.style || 'md-primary' }} {{::form.fieldHtmlClass}}\"\n             type=\"{{::form.type}}\"\n             ng-disabled=\"form.readonly\"\n             aria-label=\"{{::form.title}}\">\n    <md-tooltip ng-if=\"::form.tip\">{{::form.tip}}</md-tooltip>\n    {{::form.title}}\n  </md-button>\n</section>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	var path = 'material/switch.html';
+	var html = "<md-input-container class=\"schema-form-switch {{::form.htmlClass}}\">\n  <md-switch sf-field-model\n             sf-changed=\"form\"\n             sf-type-parser=\"form.schema\"\n             sf-messages\n             schema-validate=\"form\"\n             id=\"{{::form.key|sfCamelKey}}\"\n             aria-label=\"{{form.title}}\"\n             ng-show=\"::form.key\"\n             ng-class=\"form.fieldHtmlClass\"\n             ng-disabled=\"::form.readonly\">\n    <span  ng-show=\"showTitle()\" for=\"{{::form.key|sfCamelKey}}\">{{::form.title}}</span>\n  </md-switch>\n</md-input-container>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
+	var path = 'material/tabarray.html';
+	var html = "\n<div sf-array=\"form\" ng-init=\"selected = { tab: 0 }\"\n     class=\"clearfix schema-form-tabarray schema-form-tabarray-{{form.tabType || 'left'}} {{::form.htmlClass}}\">\n  <div ng-if=\"!form.tabType || form.tabType !== 'right'\"\n       ng-class=\"{'col-xs-3': !form.tabType || form.tabType === 'left'}\">\n    <ul class=\"nav nav-tabs\"\n        ng-class=\"{ 'tabs-left': !form.tabType || form.tabType === 'left'}\">\n      <li ng-repeat=\"item in modelArray track by $index\"\n          ng-click=\"$event.preventDefault() || (selected.tab = $index)\"\n          ng-class=\"{active: selected.tab === $index}\">\n          <a href=\"#\">{{interp(form.title,{'$index':$index, value: item}) || $index}}</a>\n      </li>\n      <li ng-hide=\"form.readonly\" ng-click=\"$event.preventDefault() || (selected.tab = appendToArray().length - 1)\">\n        <a href=\"#\">\n          <i class=\"glyphicon glyphicon-plus\"></i>\n          {{ form.add || 'Add'}}\n          </a>\n      </li>\n    </ul>\n  </div>\n\n  <div ng-class=\"{'col-xs-9': !form.tabType || form.tabType === 'left' || form.tabType === 'right'}\">\n    <div class=\"tab-content {{::form.fieldHtmlClass}}\">\n      <div class=\"tab-pane clearfix\"\n           ng-repeat=\"item in modelArray track by $index\"\n           ng-show=\"selected.tab === $index\"\n           ng-class=\"{active: selected.tab === $index}\">\n           <sf-decorator ng-init=\"arrayIndex = $index\" form=\"copyWithIndex($index)\"></sf-decorator>\n\n\n           <button ng-hide=\"form.readonly\"\n                   ng-click=\"selected.tab = deleteFromArray($index).length - 1\"\n                   type=\"button\"\n                   class=\"btn {{ form.style.remove || 'btn-default' }} pull-right\">\n             <i class=\"glyphicon glyphicon-trash\"></i>\n             {{ form.remove || 'Remove'}}\n           </button>\n      </div>\n    </div>\n  </div>\n\n  <div ng-if=\"form.tabType === 'right'\" class=\"col-xs-3\">\n    <ul class=\"nav nav-tabs tabs-right\">\n      <li ng-repeat=\"item in modelArray track by $index\"\n          ng-click=\"$event.preventDefault() || (selected.tab = $index)\"\n          ng-class=\"{active: selected.tab === $index}\">\n          <a href=\"#\">{{interp(form.title,{'$index':$index, value: item}) || $index}}</a>\n      </li>\n      <li ng-hide=\"form.readonly\" ng-click=\"$event.preventDefault() || appendToArray()\">\n        <a href=\"#\">\n          <i class=\"glyphicon glyphicon-plus\"></i>\n          {{ form.add || 'Add'}}\n          </a>\n      </li>\n    </ul>\n  </div>\n\n</div>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 21 */
+/***/ function(module, exports) {
+
+	var path = 'material/tabs.html';
+	var html = "<div sf-field-model class=\"schema-form-tabs {{::form.htmlClass}}\">\n  <md-tabs md-dynamic-height md-selected=\"selected\" md-autoselect ng-init=\"selected = 0\"></md-tabs>\n</div>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	var path = 'material/textarea.html';
+	var html = "<md-input-container class=\"{{::form.htmlClass}} schema-form-textarea\" sf-messages sf-layout>\n  <label ng-show=\"showTitle()\" for=\"{{::form.key|sfCamelKey}}\">{{::form.title}}</label>\n  <textarea ng-class=\"::form.fieldHtmlClass\"\n            id=\"{{::form.key|sfCamelKey}}\"\n            sf-changed=\"form\"\n            ng-disabled=\"::form.readonly\"\n            sf-field-model\n            schema-validate=\"form\"\n            name=\"{{::form.key|sfCamelKey}}\"></textarea>\n\n  <div class=\"help-block\" sf-message=\"form.description\"></div>\n</md-input-container>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 23 */
+/***/ function(module, exports) {
+
+	module.exports = angular;
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	module.exports = tv4;
 
 /***/ }
 /******/ ])

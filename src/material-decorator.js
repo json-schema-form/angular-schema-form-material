@@ -3,16 +3,12 @@
 let actionsTemplate = require('./material/actions.html');
 let arrayTemplate = require('./material/array.html');
 let autocompleteTemplate = require('./material/autocomplete.html');
-let booleanTemplate = require('./material/boolean.html');
-let buttonTemplate = require('./material/button.html');
 let checkboxTemplate = require('./material/checkbox.html');
 let checkboxesTemplate = require('./material/checkboxes.html');
 let dateTemplate = require('./material/date.html');
 let defaultTemplate = require('./material/default.html');
 let fieldsetTemplate = require('./material/fieldset.html');
 let helpTemplate = require('./material/help.html');
-let numberTemplate = require('./material/number.html');
-let passwordTemplate = require('./material/password.html');
 let radiobuttonsTemplate = require('./material/radio-buttons.html');
 let radiosTemplate = require('./material/radios.html');
 let radiosInlineTemplate = require('./material/radios-inline.html');
@@ -47,8 +43,8 @@ function materialDecoratorConfig(
   var numeric            = sfBuilderProvider.builders.numeric;
 
   var sfLayout           = sfLayout;
-  var sfMessagesNode     = sfMessagesNodeHandler();
-  var sfMessages         = sfMessagesBuilder;
+  //var sfMessagesNode     = sfMessagesNodeHandler();
+  //var sfMessages         = sfMessagesBuilder;
   var sfOptions          = sfOptionsBuilder;
   var mdAutocomplete     = mdAutocompleteBuilder;
   var mdSwitch           = mdSwitchBuilder;
@@ -57,35 +53,35 @@ function materialDecoratorConfig(
   var textarea           = textareaBuilder;
 
   var core = [ sfField, ngModel, ngModelOptions, condition, sfLayout ];
-  var defaults = core.concat(sfMessages);
+  var defaults = core; //core.concat(sfMessages);
   var arrays = core.concat(array);
 
   schemaFormProvider.defaults.string.unshift(dateDefault);
 
   decoratorsProvider.defineDecorator('materialDecorator', {
-    actions: { template: actionsTemplate [ sfField, simpleTransclusion, condition ] },
-    array: { template: arrayTemplate arrays },
-    autocomplete: { template: autocompleteTemplate defaults.concat(mdAutocomplete) },
-    boolean: { template: checkboxTemplate defaults },
-    button: { template: submitTemplate defaults },
-    checkbox: { template: checkboxTemplate defaults },
-    checkboxes: { template: checkboxesTemplate arrays },
-    date: { template: dateTemplate defaults.concat(mdDatepicker) },
-    'default': { template: defaultTemplate defaults },
-    fieldset: { template: fieldsetTemplate [ sfField, simpleTransclusion, condition ] },
-    help: { template: helpTemplate defaults },
-    number: { template: defaultTemplate defaults.concat(numeric) },
-    password: { template: defaultTemplate defaults },
-    radios: { template: radiosTemplate defaults },
+    actions: { template: actionsTemplate, builder: [ sfField, simpleTransclusion, condition ] },
+    array: { template: arrayTemplate, builder: arrays },
+    autocomplete: { template: autocompleteTemplate, builder: defaults.concat(mdAutocomplete) },
+    boolean: { template: checkboxTemplate, builder: defaults },
+    button: { template: submitTemplate, builder: defaults },
+    checkbox: { template: checkboxTemplate, builder: defaults },
+    checkboxes: { template: checkboxesTemplate, builder: arrays },
+    date: { template: dateTemplate, builder: defaults.concat(mdDatepicker) },
+    default: { template: defaultTemplate, builder: core },
+    fieldset: { template: fieldsetTemplate, builder: [ sfField, simpleTransclusion, condition ] },
+    help: { template: helpTemplate, builder: defaults },
+    number: { template: defaultTemplate, builder: defaults.concat(numeric) },
+    password: { template: defaultTemplate, builder: defaults },
+    radios: { template: radiosTemplate, builder: defaults },
     'radios-inline': { template: radiosInlineTemplate, builder: defaults },
     radiobuttons: { template: radiobuttonsTemplate, builder: defaults },
-    section: { template: sectionTemplate [ sfField, simpleTransclusion, condition, sfLayout ] },
-    select: { template: selectTemplate defaults.concat(sfOptions) },
-    submit: { template: submitTemplate defaults },
-    tabs: { template: tabsTemplate [ sfField, mdTabs, condition ] },
-    tabarray: { template: tabarrayTemplate arrays },
-    textarea: { template: textareaTemplate defaults.concat(textarea) },
-    'switch': { template: switchTemplate defaults.concat(mdSwitch) }
+    section: { template: sectionTemplate, builder: [ sfField, simpleTransclusion, condition, sfLayout ] },
+    select: { template: selectTemplate, builder: defaults.concat(sfOptions) },
+    submit: { template: submitTemplate, builder: core },
+    tabs: { template: tabsTemplate, builder: [ sfField, mdTabs, condition ] },
+    tabarray: { template: tabarrayTemplate, builder: arrays },
+    textarea: { template: textareaTemplate, builder: defaults.concat(textarea) },
+    switch: { template: switchTemplate, builder: defaults.concat(mdSwitch) }
   });
 
   function sfLayout(args) {
@@ -98,8 +94,8 @@ function materialDecoratorConfig(
     };
   };
 
-  function sfMessagesNodeHandler() {
-      var html = '<div ng-if="ngModel.$invalid" ng-messages="{dummy: true}" class="ng-active">' +
+  /*function sfMessagesNodeHandler() {
+      var html = '<div ng-if="hasError()" ng-messages="{dummy: true}" class="ng-active">' +
         '<div ng-message="dummy" class="md-input-message-animation" sf-message="form.description"></div></div>';
     var div = document.createElement('div');
     div.innerHTML = html;
@@ -112,7 +108,7 @@ function materialDecoratorConfig(
       var child = sfMessagesNode.cloneNode(true);
       messagesDiv.appendChild(child);
     }
-  };
+  };*/
 
   function textareaBuilder(args) {
     var textareaFrag = args.fieldFrag.querySelector('textarea');
