@@ -287,7 +287,7 @@ function sfCamelKeyFilter() {
     var part, i, key;
     key = formKey.slice();
     for (i = 0; i < key.length; i++) {
-      part = key[i].toLowerCase().split('');
+      part = key[i].toString().toLowerCase().split('');
       if (i && part.length) { part[0] = part[0].toUpperCase(); };
       key[i] = part.join('');
     };
