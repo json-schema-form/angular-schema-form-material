@@ -6,6 +6,7 @@
   "scripts": {
     "dist": "npm run build && npm run minify",
     "build": "webpack",
+    "build": "webpack ",
     "watch": "webpack --watch",
     "minify": "uglifyjs dist/angular-schema-form-material.js --comments --output=dist/angular-schema-form-material.min.js",
     "test": "echo \"Error: no test specified\" && exit 1",

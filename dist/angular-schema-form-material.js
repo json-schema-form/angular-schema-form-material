@@ -61,6 +61,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
 	__webpack_require__(1);
 	__webpack_require__(3);
 	__webpack_require__(2);
@@ -3955,6 +3957,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 2 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	angular.module('schemaForm').directive('sfMaterialClass', sfMaterialClassDirective);
 
 	sfMaterialClassDirective.$inject = ['$compile', '$timeout'];
@@ -3963,7 +3967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return {
 	        restrict: 'A',
 	        scope: false,
-	        link: function (scope, element, attrs, ngModel) {
+	        link: function link(scope, element, attrs, ngModel) {
 	            function reduceHelper(obj, i) {
 	                return obj[i];
 	            }
@@ -3992,25 +3996,27 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	let actionsTemplate = __webpack_require__(4);
-	let arrayTemplate = __webpack_require__(5);
-	let autocompleteTemplate = __webpack_require__(6);
-	let checkboxTemplate = __webpack_require__(7);
-	let checkboxesTemplate = __webpack_require__(8);
-	let dateTemplate = __webpack_require__(9);
-	let defaultTemplate = __webpack_require__(10);
-	let fieldsetTemplate = __webpack_require__(11);
-	let helpTemplate = __webpack_require__(12);
-	let radiobuttonsTemplate = __webpack_require__(13);
-	let radiosTemplate = __webpack_require__(15);
-	let radiosInlineTemplate = __webpack_require__(14);
-	let sectionTemplate = __webpack_require__(16);
-	let selectTemplate = __webpack_require__(17);
-	let submitTemplate = __webpack_require__(18);
-	let tabsTemplate = __webpack_require__(21);
-	let tabarrayTemplate = __webpack_require__(20);
-	let textareaTemplate = __webpack_require__(22);
-	let switchTemplate = __webpack_require__(19);
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var actionsTemplate = __webpack_require__(4);
+	var arrayTemplate = __webpack_require__(5);
+	var autocompleteTemplate = __webpack_require__(6);
+	var checkboxTemplate = __webpack_require__(7);
+	var checkboxesTemplate = __webpack_require__(8);
+	var dateTemplate = __webpack_require__(9);
+	var defaultTemplate = __webpack_require__(10);
+	var fieldsetTemplate = __webpack_require__(11);
+	var helpTemplate = __webpack_require__(12);
+	var radiobuttonsTemplate = __webpack_require__(13);
+	var radiosTemplate = __webpack_require__(15);
+	var radiosInlineTemplate = __webpack_require__(14);
+	var sectionTemplate = __webpack_require__(16);
+	var selectTemplate = __webpack_require__(17);
+	var submitTemplate = __webpack_require__(18);
+	var tabsTemplate = __webpack_require__(21);
+	var tabarrayTemplate = __webpack_require__(20);
+	var textareaTemplate = __webpack_require__(22);
+	var switchTemplate = __webpack_require__(19);
 
 	angular.module('schemaForm').config(materialDecoratorConfig).directive('sfmExternalOptions', sfmExternalOptionsDirective).filter('sfCamelKey', sfCamelKeyFilter);
 
@@ -4143,7 +4149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    args.form.selectOptions = [];
 	    args.form.getOptions = getOptionsHandler;
 
-	    if (args.form.schema.links && typeof args.form.schema.links === 'object') {
+	    if (args.form.schema.links && _typeof(args.form.schema.links) === 'object') {
 	      var link;
 	      var related = /({)([^}]*)(})/gm;
 	      var source = /{{([^}]*)}}/gm;
@@ -4461,7 +4467,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	var path = 'material/tabarray.html';
-	var html = "<div ng-init=\"selected = { tab: 0 }\"\n\t ng-model=\"modelArray\" schema-validate=\"form\"\n\t sf-field-model=\"sf-new-array\"\n\t sf-new-array\n\t class=\"clearfix schema-form-tabarray schema-form-tabarray-{{form.tabType || 'left'}} {{form.htmlClass}}\">\n\t\n\t<style>\n\t\t.md-fab.md-micro {\n\t\t\tmargin-top: 0;\n\t\t\t-webkit-transform: scale(0.6);\n\t\t\t-ms-transform: scale(0.6);\n\t\t\ttransform: scale(0.6);\n\t\t}\n\t</style>\n\t\n\t<div ng-if=\"!form.tabType || form.tabType !== 'right'\"\n\t   ng-class=\"{'col-xs-3': !form.tabType || form.tabType === 'left'}\">\n\t\t<md-content class=\"md-padding\">\n\t\t\t<md-tabs md-dynamic-height md-selected=\"selected.tab\" md-autoselect md-border-bottom>\n\t\t\t\t<md-tab ng-repeat=\"item in modelArray track by $index\">\n\t\t\t\t\t<md-tab-label>\n\t\t\t\t\t\t{{interp(form.title,{'$index':$index+1, value: item}) || $index+1}}\n\t\t\t\t\t\t<md-button\n\t\t\t\t\t\t\tng-click=\"selected.tab = deleteFromArray($index).length - 1; selected.tab= 0\"\n\t\t\t\t\t\t\tng-disabled=\"form.schema.minItems >= modelArray.length\"\n\t\t\t\t\t\t\tng-flex=\"none\" flex-order=\"2\" type=\"button\" class=\"md-fab md-mini md-micro md-accent\" aria-label=\"Add\">\n\t\t\t\t\t\t\t<md-icon>close</md-icon>\n\t\t\t\t\t\t</md-button>\n\t\t\t\t\t</md-tab-label>\n\t\t\t\t\t<md-tab-body>\n\t\t\t\t\t\t<div schema-form-array-items></div>\n\t\t\t\t\t</md-tab-body>\n\t\t\t\t</md-tab>\n\t\t\t\t<md-tab md-on-select=\"$event.preventDefault()\" ng-click=\"$event.preventDefault() || (selected.tab = appendToArray().length - 1)\" ng-disabled=\"form.schema.maxItems <= modelArray.length\" ng-hide=\"form.readonly || form.remove === null\">\n\t\t\t\t\t<md-tab-label>\n\t\t\t\t\t\t<md-icon>add</md-icon>\n\t\t\t\t\t<md-tab-label>\n\t\t\t\t</md-tab>\n\t\t\t</md-tabs>\n\t\t</md-content>\n\t</div>\n</div>";
+	var html = "<div ng-init=\"selected = { tab: 0 }\"\n\t ng-model=\"modelArray\" schema-validate=\"form\"\n\t sf-field-model=\"sf-new-array\"\n\t sf-new-array\n\t class=\"clearfix schema-form-tabarray schema-form-tabarray-{{form.tabType || 'left'}} {{form.htmlClass}}\">\n\t\n\t<style>\n\t\t.md-fab.md-micro {\n\t\t\tmargin-top: 0;\n\t\t\t-webkit-transform: scale(0.6);\n\t\t\t-ms-transform: scale(0.6);\n\t\t\ttransform: scale(0.6);\n\t\t}\n\t</style>\n\t\n\t<div ng-if=\"!form.tabType || form.tabType !== 'right'\"\n\t   ng-class=\"{'col-xs-3': !form.tabType || form.tabType === 'left'}\">\n\t\t<md-content class=\"md-padding\">\n\t\t\t<md-tabs md-dynamic-height md-selected=\"selected.tab\" md-autoselect md-border-bottom md-dynamic-height>\n\t\t\t\t<md-tab ng-repeat=\"item in modelArray track by $index\">\n\t\t\t\t\t<md-tab-label>\n\t\t\t\t\t\t{{interp(form.title,{'$index':$index+1, value: item}) || $index+1}}\n\t\t\t\t\t\t<md-button\n\t\t\t\t\t\t\tng-click=\"selected.tab = deleteFromArray($index).length - 1; selected.tab= 0\"\n\t\t\t\t\t\t\tng-disabled=\"form.schema.minItems >= modelArray.length\"\n\t\t\t\t\t\t\tng-flex=\"none\" flex-order=\"2\" type=\"button\" class=\"md-fab md-mini md-micro md-accent\" aria-label=\"Add\">\n\t\t\t\t\t\t\t<md-icon>close</md-icon>\n\t\t\t\t\t\t</md-button>\n\t\t\t\t\t</md-tab-label>\n\t\t\t\t\t<md-tab-body>\n\t\t\t\t\t\t<div schema-form-array-items></div>\n\t\t\t\t\t</md-tab-body>\n\t\t\t\t</md-tab>\n\t\t\t\t<md-tab md-on-select=\"$event.preventDefault()\" ng-click=\"$event.preventDefault() || (selected.tab = appendToArray().length - 1)\" ng-disabled=\"form.schema.maxItems <= modelArray.length\" ng-hide=\"form.readonly || form.remove === null\">\n\t\t\t\t\t<md-tab-label>\n\t\t\t\t\t\t<md-icon>add</md-icon>\n\t\t\t\t\t<md-tab-label>\n\t\t\t\t</md-tab>\n\t\t\t</md-tabs>\n\t\t</md-content>\n\t</div>\n</div>";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
 
