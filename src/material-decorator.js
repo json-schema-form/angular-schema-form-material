@@ -79,7 +79,7 @@ function materialDecoratorConfig(
     select: { template: selectTemplate, builder: defaults.concat(sfOptions) },
     submit: { template: submitTemplate, builder: core },
     tabs: { template: tabsTemplate, builder: [ sfField, mdTabs, condition ] },
-    tabarray: { template: tabarrayTemplate, builder: arrays },
+    tabarray: {template: tabarrayTemplate, builder: arrays},
     textarea: { template: textareaTemplate, builder: defaults.concat(textarea) },
     switch: { template: switchTemplate, builder: defaults.concat(mdSwitch) }
   });

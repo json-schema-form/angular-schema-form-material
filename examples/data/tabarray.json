@@ -3,30 +3,87 @@
     "type": "object",
     "title": "Comment",
     "properties": {
-      "comments": {
+      "questions": {
+        "title": "Questions",
+        "description": "Task's questions",
         "type": "array",
         "items": {
+          "description": "Task's single question",
           "type": "object",
           "properties": {
-            "name":  {
-              "title": "Name",
+            "question": {
+              "title": "Question",
+              "description": "Task's single question",
               "type": "string"
             },
-            "email":  {
-              "title": "Email",
+            "questionImg": {
+              "title": "Question image",
+              "description": "Task's single question image",
               "type": "string",
-              "pattern": "^\\S+@\\S+$",
-              "description": "Email will be used for evil."
+              "upload": {
+                "type": "single"
+              }
             },
-            "comment": {
-              "title": "Comment",
-              "type": "string",
-              "maxLength": 20,
-              "validationMessage": "Don't be greedy!"
+            "answers": {
+              "title": "Answers",
+              "description": "Task's question answers",
+              "type": "array",
+              "items": {
+                "description": "Task's question single answer",
+                "type": "object",
+                "properties": {
+                  "answer": {
+                    "title": "Answer",
+                    "description": "Task's question single answer",
+                    "type": "string"
+                  },
+                  "answerImg": {
+                    "title": "Answer image",
+                    "description": "Task's question single image answer",
+                    "type": "string",
+                    "upload": {
+                      "type": "single"
+                    }
+                  },
+                  "isCorrect": {
+                    "title": "Is correct?",
+                    "description": "Is this answer correct?",
+                    "type": "boolean",
+                    "default": false
+                  }
+                },
+                "oneOf": [
+                  {
+                    "required": [
+                      "answer"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "answerImg"
+                    ]
+                  }
+                ]
+              },
+              "minItems": 1
             }
           },
-          "required": ["name","email","comment"]
-        }
+          "oneOf": [
+            {
+              "required": [
+                "question",
+                "answers"
+              ]
+            },
+            {
+              "required": [
+                "questionImg",
+                "answers"
+              ]
+            }
+          ]
+        },
+        "minItems": 1
       }
     }
   },
@@ -36,20 +93,34 @@
       "helpvalue": "<h4>Tabbed Array Example</h4><p>Tab arrays can have tabs to the left, top or right.</p>"
     },
     {
-      "key": "comments",
+      "key": "questions",
       "type": "tabarray",
-	  "add": "New",
-	  "remove": "Delete",
-	  "style": {
-		"remove": "btn-danger"
-	  },
-      "title": "{{ value.name || 'Tab '+$index }}",
+      "add": "New",
+      "remove": "Delete",
+      "style": {
+        "remove": "btn-danger"
+      },
+      "title": "{{ value.name || 'Question '+$index }}",
       "items": [
-        "comments[].name",
-        "comments[].email",
+        "questions[].question",
+        "questions[].questionImg",
         {
-          "key": "comments[].comment",
-          "type": "textarea"
+          "key": "questions[].answers",
+          "type": "tabarray",
+          "add": "New",
+          "remove": "Delete",
+          "style": {
+            "remove": "btn-danger"
+          },
+          "title": "{{ value.name || 'Answer '+$index }}",
+          "items": [
+            "questions[].answers[].answer",
+            "questions[].answers[].answerImg",
+            {
+              "key": "questions[].answers[].isCorrect",
+              "type": "checkbox"
+            }
+          ]
         }
       ]
     },
