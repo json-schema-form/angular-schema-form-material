@@ -1,24 +1,24 @@
 'use strict';
 
-let actionsTemplate = require('./material/actions.html');
-let arrayTemplate = require('./material/array.html');
-let autocompleteTemplate = require('./material/autocomplete.html');
-let checkboxTemplate = require('./material/checkbox.html');
-let checkboxesTemplate = require('./material/checkboxes.html');
-let dateTemplate = require('./material/date.html');
-let defaultTemplate = require('./material/default.html');
-let fieldsetTemplate = require('./material/fieldset.html');
-let helpTemplate = require('./material/help.html');
-let radiobuttonsTemplate = require('./material/radio-buttons.html');
-let radiosTemplate = require('./material/radios.html');
-let radiosInlineTemplate = require('./material/radios-inline.html');
-let sectionTemplate = require('./material/section.html');
-let selectTemplate = require('./material/select.html');
-let submitTemplate = require('./material/submit.html');
-let tabsTemplate = require('./material/tabs.html');
-let tabarrayTemplate = require('./material/tabarray.html');
-let textareaTemplate = require('./material/textarea.html');
-let switchTemplate = require('./material/switch.html');
+var actionsTemplate = require('./material/actions.html'),
+	arrayTemplate = require('./material/array.html'),
+	autocompleteTemplate = require('./material/autocomplete.html'),
+	checkboxTemplate = require('./material/checkbox.html'),
+	checkboxesTemplate = require('./material/checkboxes.html'),
+	dateTemplate = require('./material/date.html'),
+	defaultTemplate = require('./material/default.html'),
+	fieldsetTemplate = require('./material/fieldset.html'),
+	helpTemplate = require('./material/help.html'),
+	radiobuttonsTemplate = require('./material/radio-buttons.html'),
+	radiosTemplate = require('./material/radios.html'),
+	radiosInlineTemplate = require('./material/radios-inline.html'),
+	sectionTemplate = require('./material/section.html'),
+	selectTemplate = require('./material/select.html'),
+	submitTemplate = require('./material/submit.html'),
+	tabsTemplate = require('./material/tabs.html'),
+	tabarrayTemplate = require('./material/tabarray.html'),
+	textareaTemplate = require('./material/textarea.html'),
+	switchTemplate = require('./material/switch.html');
 
 angular
   .module('schemaForm')

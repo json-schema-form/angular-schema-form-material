@@ -29,6 +29,9 @@
 					</md-tab-label>
 					<md-tab-body>
 						<div schema-form-array-items></div>
+						<div class="field-errors" ng-if="hasError()">
+							<div class="help-block" sf-message="errorMessage(schemaError())) || form.description"></div>
+						</div>
 					</md-tab-body>
 				</md-tab>
 				<md-tab md-on-select="$event.preventDefault()" ng-click="$event.preventDefault() || (selected.tab = appendToArray().length - 1)" ng-disabled="form.schema.maxItems <= modelArray.length" ng-hide="form.readonly || form.remove === null">
