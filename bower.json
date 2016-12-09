@@ -21,9 +21,6 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "angular-schema-form": ">=0.8.13"
-  },
   "devDependencies": {
     "angular": "1.5.5",
     "angular-animate": "1.5.5",
@@ -31,6 +28,10 @@
     "angular-sanitize": "1.5.5",
     "angular-messages": "1.5.5",
     "angular-ui-ace": "~0.2.3",
-    "moment": "~2.10.6"
+    "moment": "~2.10.6",
+    "tv4": "1.2.7"
+  },
+  "resolutions": {
+    "angular": "1.5.5"
   }
 }
