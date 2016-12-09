@@ -17,7 +17,7 @@
 	   ng-class="{'col-xs-3': !form.tabType || form.tabType === 'left'}">
 		<md-content class="md-padding">
 			<md-tabs md-dynamic-height md-selected="selected.tab" md-autoselect md-border-bottom>
-				<md-tab ng-repeat="item in modelArray track by $index">
+				<md-tab sf-field-model="ng-repeat" ng-repeat="item in $$value$$ track by $index">
 					<md-tab-label>
 						{{interp(form.title,{'$index':$index+1, value: item}) || $index+1}}
 						<md-button
@@ -30,7 +30,7 @@
 					<md-tab-body>
 						<div schema-form-array-items></div>
 						<div class="field-errors" ng-if="hasError()">
-							<div class="help-block" sf-message="errorMessage(schemaError())) || form.description"></div>
+							<div class="help-block" ng-bind-html="errorMessage(schemaError()) || form.description"></div>
 						</div>
 					</md-tab-body>
 				</md-tab>

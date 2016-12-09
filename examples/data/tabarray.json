@@ -52,7 +52,7 @@
                     "default": false
                   }
                 },
-                "oneOf": [
+                "anyOf": [
                   {
                     "required": [
                       "answer"
@@ -68,7 +68,7 @@
               "minItems": 1
             }
           },
-          "oneOf": [
+          "anyOf": [
             {
               "required": [
                 "question",
