@@ -1,4 +1,4 @@
-<div  class="schema-form-array {{form.htmlClass}}"
+<div  class="schema-form-array {{::form.htmlClass}}"
       sf-field-model="sf-new-array"
       sf-new-array>
   <label class="control-label" ng-show="showTitle()">{{ form.title }}</label>
@@ -7,7 +7,7 @@
              sf-field-model="ng-repeat"
              ng-repeat="item in modelArray track by $index"
              schema-form-array-items
-             class="{{form.fieldHtmlClass}}">
+             class="{{::form.fieldHtmlClass}}">
       <md-button flex="none" flex-order="2"
                  type="button"
                  ng-hide="form.readonly || form.remove === null"

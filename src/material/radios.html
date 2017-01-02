@@ -1,4 +1,4 @@
-<div class="form-group schema-form-radios {{form.htmlClass}}"
+<div class="form-group schema-form-radios {{::form.htmlClass}}"
      ng-class="{'has-error': hasError(), 'has-success': hasSuccess()}">
   <label class="control-label" ng-show="showTitle()" aria-label="{{form.title}}" layout="row">{{form.title}} {{form.titleMap | json}}</label>
   <div>
@@ -9,7 +9,7 @@
                     sf-layout sf-messages>
       <md-radio-button ng-repeat="item in form.titleMap"
                        ng-value="item.value"
-                       class="{{form.fieldHtmlClass}}"
+                       class="{{::form.fieldHtmlClass}}"
                        sf-field-model="ng-class"
                        ng-class="{ active: item.value === $$value$$ }">
         <span ng-bind-html="item.name"></span>
