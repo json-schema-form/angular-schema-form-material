@@ -1,4 +1,10 @@
-angular.module('schemaForm').directive('sfMaterialClass', function($compile, $timeout) {
+angular.module('schemaForm').directive('sfMaterialClass', sfMaterialClassDirective);
+
+sfMaterialClassDirective.$inject = [
+  '$compile', '$timeout'
+];
+
+function sfMaterialClassDirective($compile, $timeout) {
     return {
         restrict : 'A',
         scope    : false,
@@ -21,4 +27,4 @@ angular.module('schemaForm').directive('sfMaterialClass', function($compile, $ti
             }, 0);
         }
     };
-});
+}
