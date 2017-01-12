@@ -2,11 +2,11 @@
   "directory": "bower_components",
   "registry": {
       "search": [
-          "http://brian.kelley:md$2016@proget.mdsweb01.bettervideo.com/bower/bower",
+          "https://bettervideo:md$2016@proget.mdsweb01.bettervideo.com/bower/bower",
           "https://bower.herokuapp.com"
       ],
-      "register": "http://brian.kelley:md$2016@proget.mdsweb01.bettervideo.com/bower/bower",
-      "publish": "http://brian.kelley:md$2016@proget.mdsweb01.bettervideo.com/bower/bower"
+      "register": "https://bettervideo:md$2016@proget.mdsweb01.bettervideo.com/bower/bower",
+      "publish": "https://bettervideo:md$2016@proget.mdsweb01.bettervideo.com/bower/bower"
   },
   "strict-ssl": false
 }
