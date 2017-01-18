@@ -5,7 +5,7 @@
     "Marcel Bennett <iamanthropic@gmail.com>"
   ],
   "description": "Angular Material decorator for Angular Schema Form",
-  "main": "dist/material-decorator.js",
+  "main": "dist/angular-schema-form-material.js",
   "keywords": [
     "angular-schema-form-decorator",
     "angular material",
