@@ -1,4 +1,4 @@
-<section class="schema-form-submit {{form.htmlClass}}" sf-messages layout="row">
+<section class="schema-form-submit" ng-class="[ form.htmlClass ]" layout="row">
   <md-progress-circular
     class="md-accent md-hue-1"
     md-mode="indeterminate"
@@ -9,12 +9,14 @@
   ></md-progress-circular>
 
     <md-button
-    class="md-raised {{ form.style || 'md-primary' }} {{form.fieldHtmlClass}}"
+    class="md-raised"
+	ng-class="[ form.style || 'md-primary', form.fieldHtmlClass ]"
     type="{{::form.type}}"
     ng-disabled="form.readonly"
     aria-label="{{::form.title}}"
     layout="row"
     layout-align="space-around center"
+    ng-click="buttonClick($event,form)"
   >
 
     <md-tooltip ng-if="::form.tip">{{::form.tip}}</md-tooltip>

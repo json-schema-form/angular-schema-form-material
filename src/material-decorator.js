@@ -27,7 +27,6 @@
     };
   });
 
-
   materialDecoratorConfig.$inject = [
     'schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfBuilderProvider', 'sfPathProvider', '$injector'
   ];
@@ -56,13 +55,22 @@
 
 
     var sfFieldMaterial = function(args) {
+    	
         sfField(args);
-        var field = args.fieldFrag.querySelector('input, textarea, md-select');
+        var container = args.fieldFrag.querySelector( 'md-input-container' );
+        var field = args.fieldFrag.querySelector('input, textarea, md-select, button, md-button');
 
         if ( args.form.required && field ) {
             field.setAttribute('ng-required', 'form.required');
         }
-    }
+        
+        if ( args.form.mdIcon && container ) {
+        	var icon = angular.element('<md-icon ng-if="form.mdIcon" ng-show="form.mdIcon">{{form.mdIcon}}</md-icon>');
+	
+			angular.element( container ).prepend( icon );
+		}
+
+    };
 
     var core = [ sfFieldMaterial, ngModel, ngModelOptions, condition, sfLayout ];
     var defaults = core.concat(sfMessages);
@@ -194,7 +202,6 @@
       var mdSelectFrag = args.fieldFrag.querySelector('md-select');
       var enumTitleMap = [];
       var i;
-      var mdSelectFrag;
 
       args.form.selectOptions = [];
       args.form.getOptions = getOptionsHandler;

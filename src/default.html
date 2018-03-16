@@ -1,26 +1,25 @@
-<div class="{{::form.htmlClass ? form.htmlClass : 'flex-100'}}">
+<md-input-container
+		class="form-group schema-form-input"
+		ng-class="[ form.htmlClass ? form.htmlClass : 'flex-100', {'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false }]"
+		sf-messages sf-layout
 
-<md-input-container  class="schema-form-{{::form.type}}" ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false, 'md-icon-left': !!form.mdIcon }"
-                    sf-messages sf-layout sf-material-class="md-input-has-value" flex="100">
-  <md-icon ng-if="form.mdIcon">{{form.mdIcon}}</md-icon>
-  <label  ng-show="showTitle()" for="{{::form.key|sfCamelKey}}">{{::form.title}}</label>
-  <input sf-field-model
-         ng-show="::form.key"
-         type="{{::form.type}}"
-         step="any"
-         sf-changed="form"
-         placeholder="{{form.placeholder}}"
-         id="{{::form.key|sfCamelKey}}"
-         ng-class="::form.fieldHtmlClass"
-         sf-type-parser="form.schema"
-         ng-disabled="::form.readonly"
-         schema-validate="form"
-         name="{{::form.key|sfCamelKey}}"
-         aria-describedby="{{::form.key|sfCamelKey}}Status"
+>
+	<label  ng-show="showTitle()" for="{{::form.key|sfCamelKey}}">{{::form.title}}</label>
+	<input sf-field-model
+		   ng-show="::form.key"
+		   type="{{::form.type}}"
+		   step="any"
+		   sf-changed="form"
+		   id="{{::form.key|sfCamelKey}}"
+		   ng-class="::form.fieldHtmlClass"
+		   sf-type-parser="form.schema"
+		   ng-disabled="::form.readonly"
+		   schema-validate="form"
+		   name="{{::form.key|sfCamelKey}}"
+		   aria-describedby="{{::form.key|sfCamelKey}}Status"
 
-		 ng-attr-md-maxlength="{{form.maxlength}}"
-		 ng-attr-maxlength="{{form.maxlength}}"
-		  />
+		   ng-attr-md-maxlength="{{form.maxlength}}"
+		   ng-attr-maxlength="{{form.maxlength}}"
+	/>
 
 </md-input-container>
-</div>

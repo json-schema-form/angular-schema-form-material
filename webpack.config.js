@@ -7,7 +7,7 @@ console.log('Angular Schema Form v' + pjson.version);
 module.exports = {
   entry: './src/module.js',
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'dist/'),
     filename: 'angular-schema-form-material.js',
     libraryTarget: 'umd'
   },

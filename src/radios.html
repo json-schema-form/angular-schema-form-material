@@ -10,10 +10,11 @@
                     sf-layout>
       <md-radio-button ng-repeat="item in form.titleMap"
                        ng-value="item.value"
-                       class="{{form.fieldHtmlClass}}"
+
                        sf-field-model="ng-class"
                        ng-class="{ active: item.value === $$value$$ }"
                        aria-label="item.name">
+		  <!--                       class="{{form.fieldHtmlClass}}" -->
         <span ng-bind-html="item.name"></span>
       </md-radio-button>
     </md-radio-group>

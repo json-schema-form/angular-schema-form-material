@@ -4,6 +4,7 @@
   "description": "Angular Material decorator for Angular Schema Form",
   "main": "dist/material-decorator.js",
   "scripts": {
+    "buildAll": "npm run templates && npm run build",
     "templates": "gulp templates",
     "dist": "npm run build && npm run minify",
     "build": "webpack",
