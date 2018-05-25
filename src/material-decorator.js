@@ -50,12 +50,13 @@
     var mdAutocomplete     = mdAutocompleteBuilder;
     var mdSwitch           = mdSwitchBuilder;
     var mdDatepicker       = mdDatepickerBuilder;
+    var mdTimepicker       = mdTimepickerBuilder;
     var mdTabs             = mdTabsBuilder;
     var textarea           = textareaBuilder;
 
 
     var sfFieldMaterial = function(args) {
-    	
+
         sfField(args);
         var container = args.fieldFrag.querySelector( 'md-input-container' );
         var field = args.fieldFrag.querySelector('input, textarea, md-select, button, md-button');
@@ -63,10 +64,10 @@
         if ( args.form.required && field ) {
             field.setAttribute('ng-required', 'form.required');
         }
-        
+
         if ( args.form.mdIcon && container ) {
         	var icon = angular.element('<md-icon ng-if="form.mdIcon" ng-show="form.mdIcon">{{form.mdIcon}}</md-icon>');
-	
+
 			angular.element( container ).prepend( icon );
 		}
 
@@ -78,6 +79,9 @@
 
     schemaFormProvider.defaults.string.unshift(dateDefault);
     schemaFormProvider.defaults.object.unshift(dateObjectDefault);
+
+    schemaFormProvider.defaults.string.unshift(timeDefault);
+    schemaFormProvider.defaults.object.unshift(timeObjectDefault);
 
 
     decoratorsProvider.defineDecorator('materialDecorator', {
@@ -102,6 +106,7 @@
       select: { template: base + 'select.html', builder: defaults.concat(sfOptions) },
       submit: { template: base + 'submit.html', builder: defaults },
       tabs: { template: base + 'tabs.html', builder: [ sfField, mdTabs, condition ] },
+      time: { template: base + 'timepicker.html', builder: defaults.concat(mdTimepicker) },
       tabarray: { template: base + 'tabarray.html', builder: arrays },
       textarea: { template: base + 'textarea.html', builder: defaults.concat(textarea) },
       switch: { template: base + 'switch.html', builder: defaults.concat(mdSwitch) }
@@ -251,6 +256,29 @@
       }
     };
 
+	  function mdTimepickerBuilder(args) {
+		  console.log( "Time Picker", args );
+		  var mdDatepickerFrag = args.fieldFrag.querySelector('md-datepicker');
+		  if (mdDatepickerFrag) {
+			  if (args.form.onChange) {
+				  mdDatepickerFrag.setAttribute('ng-change', 'args.form.onChange(searchText)');
+			  }
+			  // mdDatepickerFrag.setAttribute('md-items', 'item in $filter(''autocomplete'')(searchText);');
+			  var minDate = args.form.minimum || false;
+			  var maxDate = args.form.maximum || false;
+			  if (minDate) {
+				  mdDatepickerFrag.setAttribute('md-min-date', minDate);
+			  }
+			  if (maxDate) {
+				  mdDatepickerFrag.setAttribute('md-max-date', maxDate);
+			  }
+
+			  if ( args.form.mdHideIcons ) {
+				  mdDatepickerFrag.setAttribute('md-hide-icons', args.form.mdHideIcons );
+			  }
+		  }
+	  };
+
     function mdTabsBuilder(args) {
       if (args.form.tabs && args.form.tabs.length > 0) {
         var mdTabsFrag = args.fieldFrag.querySelector('md-tabs');
@@ -284,6 +312,28 @@
         var f = schemaFormProvider.stdFormObj(name, schema, options);
         f.key  = options.path;
         f.type = 'date';
+        options.lookup[sfPathProvider.stringify(options.path)] = f;
+        return f;
+      }
+    };
+
+    /**
+    * Material Timepicker
+    */
+    function timeDefault(name, schema, options) {
+      if (schema.type === 'string' && schema.format === 'time' ) {
+        var f = schemaFormProvider.stdFormObj(name, schema, options);
+        f.key  = options.path;
+        f.type = 'time';
+        options.lookup[sfPathProvider.stringify(options.path)] = f;
+        return f;
+      }
+    };
+    function timeObjectDefault(name, schema, options) {
+      if (schema.type === 'object' && schema.format === 'time' ) {
+        var f = schemaFormProvider.stdFormObj(name, schema, options);
+        f.key  = options.path;
+        f.type = 'time';
         options.lookup[sfPathProvider.stringify(options.path)] = f;
         return f;
       }
