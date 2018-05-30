@@ -21,7 +21,7 @@ gulp minify
 ```
 
 Start favorite http server (http-server or puer for instance) and open
-`examples/material-example.html`
+`examples/index.html`
 
 There is also a `gulp watch` task that minifys on change.
 

@@ -26,5 +26,5 @@ With new features we love to see updates to the docs as well as tests, that make
 easy and fast for us to merge it!
 
 Also consider running any code through the **JavaScript Code Style** checker [jscs](https://github.com/mdevils/node-jscs)
-(or even better use it in your editor) using the .jscsrc file in the repo root, which should be picked up by the IDE. You can also us `gulp jscs` to
+(or even better use it in your editor) using the .jscsrc file in the repo root, which should be picked up by the IDE. You can also use `gulp jscs` to
 check your code.
