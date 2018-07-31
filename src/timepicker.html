@@ -1,6 +1,6 @@
 <md-input-container class="schema-form-date" ng-class="[ form.htmlClass || 'flex-100' ]">
     <label ng-show="showTitle()" for="{{::form.key|sfCamelKey}}">{{::form.title}}</label>
-    <md-datepicker sf-field-model
+    <md-time-picker sf-field-model
                    sf-changed="form"
                    schema-validate="form"
                    sf-type-parser="form.schema"
@@ -10,5 +10,5 @@
                    ng-disabled="::form.readonly"
 
     >
-    </md-datepicker>
+    </md-time-picker>
 </md-input-container>

@@ -3,7 +3,7 @@
     ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false}"
     sf-messages sf-layout>
   <label ng-show="::showTitle()">{{::form.title}}</label>
-  <md-select sf-field-model schema-validate="form" ng-disabled="::form.readonly" name="{{::form.key|sfCamelKey}}">
+  <md-select sf-field-model schema-validate="form" ng-disabled="::form.readonly" name="{{::form.key|sfCamelKey}}" sf-changed="form">
     <md-optgroup ng-repeat-start="(key, opt) in form.getOptions(form, evalExpr) | orderBy:'group' as optGroups"
                  ng-if="opt.group && opt.group != optGroups[key-1].group"
                  label="{{::opt.group}}"
